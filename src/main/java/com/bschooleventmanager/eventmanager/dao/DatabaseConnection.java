@@ -15,11 +15,23 @@ public class DatabaseConnection {
     private Connection connection;
 
     private DatabaseConnection() {
-        connect();
+        // Constructeur privé pour le singleton
+    }
+
+    public static synchronized DatabaseConnection getInstance() {
+        if (instance == null) {
+            instance = new DatabaseConnection();
+        }
+        return instance;
     }
 
     private void connect() {
         try {
+            // Fermer l'ancienne connexion si elle existe
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+            }
+            
             Properties props = new Properties();
         
             // Charger depuis config/application.properties dans resources
@@ -42,30 +54,26 @@ public class DatabaseConnection {
             logger.info("✓ Connexion à la base de données réussie");
         } catch (ClassNotFoundException e) {
             logger.error("Erreur: Driver MySQL non trouvé", e);
+            this.connection = null;
         } catch (SQLException e) {
             logger.error("Erreur de connexion à la BD", e);
+            this.connection = null;
         } catch (IOException e) {
-            logger.error("Erreur lecture fichier config", e);
+            logger.error("Erreur lecture fichier config application.properties", e);
+            this.connection = null;
         }
-    }
-    public static DatabaseConnection getInstance() {
-        if (instance == null) {
-            synchronized (DatabaseConnection.class) {
-                if (instance == null) {
-                    instance = new DatabaseConnection();
-                }
-            }
-        }
-        return instance;
     }
 
-    public Connection getConnection() {
+    public synchronized Connection getConnection() {
         try {
-            if (connection == null || connection.isClosed()) {
+            // Vérifier si la connexion est valide avec un timeout de 3 secondes
+            if (connection == null || connection.isClosed() || !connection.isValid(3)) {
+                logger.warn("Connexion fermée ou invalide, reconnexion en cours...");
                 connect();
             }
         } catch (SQLException e) {
-            logger.error("Erreur vérification connexion", e);
+            logger.error("Erreur vérification connexion, reconnexion en cours...", e);
+            connect();
         }
         return connection;
     }
