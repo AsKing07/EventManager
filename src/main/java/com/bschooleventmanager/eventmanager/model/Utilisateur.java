@@ -4,20 +4,20 @@ import com.bschooleventmanager.eventmanager.model.enums.TypeUtilisateur;
 
 import java.time.LocalDateTime;
 
-public class Utilisateur {
-    private int idUtilisateur;
-    private String nom;
-    private String email;
-    private String motDePasse;
-    private TypeUtilisateur typeUtilisateur;
-    private LocalDateTime dateCreation;
+public abstract class Utilisateur {
+    protected int idUtilisateur;
+    protected String nom;
+    protected String email;
+    protected String motDePasse;
+    protected TypeUtilisateur typeUtilisateur;
+    protected LocalDateTime dateCreation;
 
     // Constructeur vide
-    public Utilisateur() {
+    protected Utilisateur() {
     }
 
     // Constructeur complet
-    public Utilisateur(int idUtilisateur, String nom, String email,
+    protected Utilisateur(int idUtilisateur, String nom, String email,
                        TypeUtilisateur typeUtilisateur, LocalDateTime dateCreation) {
         this.idUtilisateur = idUtilisateur;
         this.nom = nom;
@@ -27,7 +27,7 @@ public class Utilisateur {
     }
 
     // Constructeur pour création
-    public Utilisateur(String nom, String email, TypeUtilisateur typeUtilisateur) {
+    protected Utilisateur(String nom, String email, TypeUtilisateur typeUtilisateur) {
         this.nom = nom;
         this.email = email;
         this.typeUtilisateur = typeUtilisateur;
@@ -51,6 +51,11 @@ public class Utilisateur {
 
     public LocalDateTime getDateCreation() { return dateCreation; }
     public void setDateCreation(LocalDateTime date) { this.dateCreation = date; }
+
+    // Méthodes abstraites à implémenter par les classes filles
+    public abstract String getRole();
+    public abstract void afficherInformations();
+    public abstract boolean peutReserverEvenement();
 
     // Méthode toString
     @Override
