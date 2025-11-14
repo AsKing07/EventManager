@@ -1,63 +1,62 @@
-2025-11-14 11:19:07.709 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Application démarrée
-2025-11-14 12:02:26.374 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Application démarrée
-2025-11-14 12:15:01.363 [com.bschooleventmanager.eventmanager.TestHeritage.main()] ERROR c.b.e.dao.DatabaseConnection - Erreur lecture fichier config
-java.io.FileNotFoundException: config\database.properties (Le chemin d’accès spécifié est introuvable)
-	at java.base/java.io.FileInputStream.open0(Native Method)
-	at java.base/java.io.FileInputStream.open(FileInputStream.java:185)
-	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:139)
-	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:109)
-	at com.bschooleventmanager.eventmanager.dao.DatabaseConnection.connect(DatabaseConnection.java:24)
-	at com.bschooleventmanager.eventmanager.dao.DatabaseConnection.<init>(DatabaseConnection.java:18)
-	at com.bschooleventmanager.eventmanager.dao.DatabaseConnection.getInstance(DatabaseConnection.java:47)
-	at com.bschooleventmanager.eventmanager.dao.BaseDAO.<init>(BaseDAO.java:12)
-	at com.bschooleventmanager.eventmanager.dao.ClientDAO.<init>(ClientDAO.java:16)
-	at com.bschooleventmanager.eventmanager.service.ClientService.<init>(ClientService.java:16)
-	at com.bschooleventmanager.eventmanager.TestHeritage.testServices(TestHeritage.java:74)
-	at com.bschooleventmanager.eventmanager.TestHeritage.main(TestHeritage.java:25)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at org.codehaus.mojo.exec.AbstractExecJavaBase.executeMainMethod(AbstractExecJavaBase.java:402)
-	at org.codehaus.mojo.exec.ExecJavaMojo.executeMainMethod(ExecJavaMojo.java:142)
-	at org.codehaus.mojo.exec.AbstractExecJavaBase.doExecClassLoader(AbstractExecJavaBase.java:377)
-	at org.codehaus.mojo.exec.AbstractExecJavaBase.lambda$execute$0(AbstractExecJavaBase.java:287)
-	at java.base/java.lang.Thread.run(Thread.java:1447)
-2025-11-14 12:15:01.382 [com.bschooleventmanager.eventmanager.TestHeritage.main()] ERROR c.b.e.dao.DatabaseConnection - Erreur lecture fichier config
-java.io.FileNotFoundException: config\database.properties (Le chemin d’accès spécifié est introuvable)
-	at java.base/java.io.FileInputStream.open0(Native Method)
-	at java.base/java.io.FileInputStream.open(FileInputStream.java:185)
-	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:139)
-	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:109)
-	at com.bschooleventmanager.eventmanager.dao.DatabaseConnection.connect(DatabaseConnection.java:24)
-	at com.bschooleventmanager.eventmanager.dao.DatabaseConnection.getConnection(DatabaseConnection.java:57)
-	at com.bschooleventmanager.eventmanager.dao.BaseDAO.<init>(BaseDAO.java:12)
-	at com.bschooleventmanager.eventmanager.dao.ClientDAO.<init>(ClientDAO.java:16)
-	at com.bschooleventmanager.eventmanager.service.ClientService.<init>(ClientService.java:16)
-	at com.bschooleventmanager.eventmanager.TestHeritage.testServices(TestHeritage.java:74)
-	at com.bschooleventmanager.eventmanager.TestHeritage.main(TestHeritage.java:25)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at org.codehaus.mojo.exec.AbstractExecJavaBase.executeMainMethod(AbstractExecJavaBase.java:402)
-	at org.codehaus.mojo.exec.ExecJavaMojo.executeMainMethod(ExecJavaMojo.java:142)
-	at org.codehaus.mojo.exec.AbstractExecJavaBase.doExecClassLoader(AbstractExecJavaBase.java:377)
-	at org.codehaus.mojo.exec.AbstractExecJavaBase.lambda$execute$0(AbstractExecJavaBase.java:287)
-	at java.base/java.lang.Thread.run(Thread.java:1447)
-2025-11-14 12:15:01.441 [com.bschooleventmanager.eventmanager.TestHeritage.main()] ERROR c.b.e.dao.DatabaseConnection - Erreur lecture fichier config
-java.io.FileNotFoundException: config\database.properties (Le chemin d’accès spécifié est introuvable)
-	at java.base/java.io.FileInputStream.open0(Native Method)
-	at java.base/java.io.FileInputStream.open(FileInputStream.java:185)
-	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:139)
-	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:109)
-	at com.bschooleventmanager.eventmanager.dao.DatabaseConnection.connect(DatabaseConnection.java:24)
-	at com.bschooleventmanager.eventmanager.dao.DatabaseConnection.getConnection(DatabaseConnection.java:57)
-	at com.bschooleventmanager.eventmanager.dao.BaseDAO.<init>(BaseDAO.java:12)
-	at com.bschooleventmanager.eventmanager.dao.OrganisateurDAO.<init>(OrganisateurDAO.java:16)
-	at com.bschooleventmanager.eventmanager.service.OrganisateurService.<init>(OrganisateurService.java:16)
-	at com.bschooleventmanager.eventmanager.TestHeritage.testServices(TestHeritage.java:78)
-	at com.bschooleventmanager.eventmanager.TestHeritage.main(TestHeritage.java:25)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
-	at org.codehaus.mojo.exec.AbstractExecJavaBase.executeMainMethod(AbstractExecJavaBase.java:402)
-	at org.codehaus.mojo.exec.ExecJavaMojo.executeMainMethod(ExecJavaMojo.java:142)
-	at org.codehaus.mojo.exec.AbstractExecJavaBase.doExecClassLoader(AbstractExecJavaBase.java:377)
-	at org.codehaus.mojo.exec.AbstractExecJavaBase.lambda$execute$0(AbstractExecJavaBase.java:287)
-	at java.base/java.lang.Thread.run(Thread.java:1447)
+2025-11-17 13:06:29.392 [JavaFX Application Thread] ERROR c.b.eventmanager.dao.EvenementDAO - erreur
+2025-11-17 13:06:29.395 [JavaFX Application Thread] ERROR c.b.eventmanager.dao.EvenementDAO - java.lang.ClassCastException: class java.lang.String cannot be cast to class java.lang.Integer (java.lang.String and java.lang.Integer are in module java.base of loader 'bootstrap')
+2025-11-17 13:06:36.258 [JavaFX Application Thread] ERROR c.b.eventmanager.dao.EvenementDAO - erreur
+2025-11-17 13:06:36.258 [JavaFX Application Thread] ERROR c.b.eventmanager.dao.EvenementDAO - java.lang.ClassCastException: class java.lang.String cannot be cast to class java.lang.Integer (java.lang.String and java.lang.Integer are in module java.base of loader 'bootstrap')
+2025-11-17 13:06:37.925 [JavaFX Application Thread] ERROR c.b.eventmanager.dao.EvenementDAO - erreur
+2025-11-17 13:06:37.925 [JavaFX Application Thread] ERROR c.b.eventmanager.dao.EvenementDAO - java.lang.ClassCastException: class java.lang.String cannot be cast to class java.lang.Integer (java.lang.String and java.lang.Integer are in module java.base of loader 'bootstrap')
+2025-11-17 13:08:49.852 [JavaFX Application Thread] ERROR c.b.eventmanager.dao.EvenementDAO - erreur
+2025-11-17 13:08:49.854 [JavaFX Application Thread] ERROR c.b.eventmanager.dao.EvenementDAO - java.lang.ClassCastException: class java.lang.String cannot be cast to class java.lang.Integer (java.lang.String and java.lang.Integer are in module java.base of loader 'bootstrap')
+2025-11-17 13:14:47.738 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-17 13:14:47.970 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-17 13:19:22.374 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-17 13:19:22.539 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-17 13:22:27.470 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-17 13:22:27.645 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-17 13:26:01.204 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-17 13:26:01.370 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-17 13:27:09.522 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - ✓ Événement créé: gfhg
+2025-11-17 13:27:09.523 [JavaFX Application Thread] INFO  c.b.e.service.EvenementService - ✓ Concert créé: gfhg
+2025-11-17 14:04:33.785 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-17 14:04:34.074 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-17 14:06:46.264 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - ✓ Événement créé: fhhf
+2025-11-17 14:06:46.266 [JavaFX Application Thread] INFO  c.b.e.service.EvenementService - ✓ Spectacle créé: fhhf
+2025-11-17 14:13:48.066 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-17 14:13:48.241 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-17 14:16:42.704 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-17 14:16:42.892 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-17 14:18:57.894 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-17 14:18:58.166 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-17 14:20:24.705 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - ✓ Événement créé: jdvkhv
+2025-11-17 14:20:24.709 [JavaFX Application Thread] INFO  c.b.e.service.EvenementService - ✓ Concert créé: jdvkhv
+2025-11-17 14:24:22.442 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-17 14:24:22.600 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-17 14:28:23.363 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-17 14:28:23.539 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-17 14:28:23.593 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - ✓ Événement créé: concert 14h27
+2025-11-17 14:28:23.594 [JavaFX Application Thread] INFO  c.b.e.service.EvenementService - ✓ Concert créé: concert 14h27
+2025-11-17 14:28:50.530 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - ✓ Événement créé: concert 14h27
+2025-11-17 14:28:50.531 [JavaFX Application Thread] INFO  c.b.e.service.EvenementService - ✓ Spectacle créé: concert 14h27
+2025-11-17 14:34:55.015 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-17 14:34:55.197 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-17 14:34:55.246 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - ✓ Événement SPECTACLE créé: spect H
+2025-11-17 14:34:55.246 [JavaFX Application Thread] INFO  c.b.e.service.EvenementService - ✓ Spectacle créé: spect H
+2025-11-17 14:36:00.637 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - ✓ Événement SPECTACLE créé: spect T
+2025-11-17 14:36:00.638 [JavaFX Application Thread] INFO  c.b.e.service.EvenementService - ✓ Spectacle créé: spect T
+2025-11-17 14:36:19.580 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - ✓ Événement SPECTACLE créé: spect C
+2025-11-17 14:36:19.581 [JavaFX Application Thread] INFO  c.b.e.service.EvenementService - ✓ Spectacle créé: spect C
+2025-11-17 14:36:29.813 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - ✓ Événement SPECTACLE créé: spect C
+2025-11-17 14:36:29.813 [JavaFX Application Thread] INFO  c.b.e.service.EvenementService - ✓ Spectacle créé: spect C
+2025-11-17 14:36:36.220 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - ✓ Événement SPECTACLE créé: spect C
+2025-11-17 14:36:36.221 [JavaFX Application Thread] INFO  c.b.e.service.EvenementService - ✓ Spectacle créé: spect C
+2025-11-17 14:37:45.080 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - ✓ Événement SPECTACLE créé: spect C
+2025-11-17 14:37:45.080 [JavaFX Application Thread] INFO  c.b.e.service.EvenementService - ✓ Spectacle créé: spect C
+2025-11-17 14:38:02.994 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - ✓ Événement SPECTACLE créé: spect C
+2025-11-17 14:38:02.994 [JavaFX Application Thread] INFO  c.b.e.service.EvenementService - ✓ Spectacle créé: spect C
+2025-11-17 14:38:06.130 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - ✓ Événement SPECTACLE créé: spect C
+2025-11-17 14:38:06.131 [JavaFX Application Thread] INFO  c.b.e.service.EvenementService - ✓ Spectacle créé: spect C
+2025-11-17 15:18:17.528 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-17 15:18:17.697 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-17 15:20:25.543 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-17 15:20:25.733 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-17 15:20:25.787 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - ✓ Événement créé: concert 1
+2025-11-17 15:20:25.788 [JavaFX Application Thread] INFO  c.b.e.service.EvenementService - ✓ Concert créé: concert 1

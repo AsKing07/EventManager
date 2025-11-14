@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,13 +15,34 @@ public class DatabaseConnection {
     private Connection connection;
 
     private DatabaseConnection() {
-        connect();
+        // Constructeur privé pour le singleton
+    }
+
+    public static synchronized DatabaseConnection getInstance() {
+        if (instance == null) {
+            instance = new DatabaseConnection();
+        }
+        return instance;
     }
 
     private void connect() {
         try {
+            // Fermer l'ancienne connexion si elle existe
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+            }
+
             Properties props = new Properties();
-            props.load(new FileInputStream("config/database.properties"));
+
+            // Charger depuis config/application.properties dans resources
+            InputStream in = getClass().getClassLoader().getResourceAsStream("application.properties");
+
+            if (in == null) {
+                throw new IOException("Fichier 'config/application.properties' introuvable dans les ressources");
+            }
+
+            props.load(in);
+            in.close();
 
             String url = props.getProperty("db.url");
             String username = props.getProperty("db.username");
@@ -33,31 +54,26 @@ public class DatabaseConnection {
             logger.info("✓ Connexion à la base de données réussie");
         } catch (ClassNotFoundException e) {
             logger.error("Erreur: Driver MySQL non trouvé", e);
+            this.connection = null;
         } catch (SQLException e) {
             logger.error("Erreur de connexion à la BD", e);
+            this.connection = null;
         } catch (IOException e) {
-            logger.error("Erreur lecture fichier config", e);
+            logger.error("Erreur lecture fichier config application.properties", e);
+            this.connection = null;
         }
     }
 
-    public static DatabaseConnection getInstance() {
-        if (instance == null) {
-            synchronized (DatabaseConnection.class) {
-                if (instance == null) {
-                    instance = new DatabaseConnection();
-                }
-            }
-        }
-        return instance;
-    }
-
-    public Connection getConnection() {
+    public synchronized Connection getConnection() {
         try {
-            if (connection == null || connection.isClosed()) {
+            // Vérifier si la connexion est valide avec un timeout de 3 secondes
+            if (connection == null || connection.isClosed() || !connection.isValid(3)) {
+                logger.warn("Connexion fermée ou invalide, reconnexion en cours...");
                 connect();
             }
         } catch (SQLException e) {
-            logger.error("Erreur vérification connexion", e);
+            logger.error("Erreur vérification connexion, reconnexion en cours...", e);
+            connect();
         }
         return connection;
     }
@@ -73,4 +89,3 @@ public class DatabaseConnection {
         }
     }
 }
-
