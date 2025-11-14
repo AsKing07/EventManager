@@ -3,6 +3,8 @@ package com.bschooleventmanager.eventmanager.dao;
 
 import com.bschooleventmanager.eventmanager.exception.DatabaseException;
 import com.bschooleventmanager.eventmanager.model.Utilisateur;
+import com.bschooleventmanager.eventmanager.model.Client;
+import com.bschooleventmanager.eventmanager.model.Organisateur;
 import com.bschooleventmanager.eventmanager.model.enums.TypeUtilisateur;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -152,12 +154,21 @@ public class UtilisateurDAO extends BaseDAO<Utilisateur> {
     }
 
     private Utilisateur mapRowToUtilisateur(ResultSet rs) throws SQLException {
-        Utilisateur user = new Utilisateur();
+        TypeUtilisateur type = TypeUtilisateur.valueOf(rs.getString("type_utilisateur"));
+        Utilisateur user;
+        
+        // Création de l'instance appropriée selon le type
+        if (type == TypeUtilisateur.CLIENT) {
+            user = new Client();
+        } else {
+            user = new Organisateur();
+        }
+        
         user.setIdUtilisateur(rs.getInt("id_utilisateur"));
         user.setNom(rs.getString("nom"));
         user.setEmail(rs.getString("email"));
         user.setMotDePasse(rs.getString("mot_de_passe"));
-        user.setTypeUtilisateur(TypeUtilisateur.valueOf(rs.getString("type_utilisateur")));
+        user.setTypeUtilisateur(type);
         user.setDateCreation(rs.getTimestamp("date_creation").toLocalDateTime());
         return user;
     }

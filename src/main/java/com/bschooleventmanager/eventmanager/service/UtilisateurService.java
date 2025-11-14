@@ -2,6 +2,8 @@ package com.bschooleventmanager.eventmanager.service;
 
 import com.bschooleventmanager.eventmanager.dao.UtilisateurDAO;
 import com.bschooleventmanager.eventmanager.model.Utilisateur;
+import com.bschooleventmanager.eventmanager.model.Client;
+import com.bschooleventmanager.eventmanager.model.Organisateur;
 import com.bschooleventmanager.eventmanager.model.enums.TypeUtilisateur;
 import com.bschooleventmanager.eventmanager.exception.BusinessException;
 import com.bschooleventmanager.eventmanager.exception.DatabaseException;
@@ -39,7 +41,16 @@ public class UtilisateurService {
             }
 
             // Créer l'utilisateur
-            Utilisateur user = new Utilisateur(nom, email, TypeUtilisateur.valueOf(type));
+            TypeUtilisateur typeUtilisateur = TypeUtilisateur.valueOf(type);
+            Utilisateur user;
+            
+            // Création de l'instance appropriée selon le type
+            if (typeUtilisateur == TypeUtilisateur.CLIENT) {
+                user = new Client(nom, email);
+            } else {
+                user = new Organisateur(nom, email);
+            }
+            
             user.setMotDePasse(PasswordUtils.hashPassword(motDePasse));
 
             Utilisateur result = utilisateurDAO.creer(user);

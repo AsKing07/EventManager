@@ -219,15 +219,7 @@ class Spectacle extends Evenement { }
 class Conference extends Evenement { }
 ```
 
-#### Interfaces
-```java
-interface Reservable {
-    void reserver(Utilisateur client, int nombre);
-}
-interface Payable {
-    void effectuerPaiement(double montant);
-}
-```
+
 
 #### Polymorphisme
 - Manipulation des événements via références `Evenement`
