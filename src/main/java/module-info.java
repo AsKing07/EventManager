@@ -15,7 +15,11 @@ module com.bschooleventmanager.eventmanager {
     requires org.slf4j;
     requires jbcrypt;
 
-
-    opens com.bschooleventmanager.eventmanager to javafx.fxml;
+    // Exports pour permettre l'accès aux packages
     exports com.bschooleventmanager.eventmanager;
+    exports com.bschooleventmanager.eventmanager.controller.auth;
+
+    // Opens pour permettre la réflexion JavaFX
+    opens com.bschooleventmanager.eventmanager to javafx.fxml;
+    opens com.bschooleventmanager.eventmanager.controller.auth to javafx.fxml;
 }
