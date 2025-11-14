@@ -6,10 +6,17 @@ import com.bschooleventmanager.eventmanager.exception.DatabaseException;
 import java.util.List;
 
 public abstract class BaseDAO<T> {
-    protected Connection connection;
-
+ 
     protected BaseDAO() {
-        this.connection = DatabaseConnection.getInstance().getConnection();
+        // constructeur vide intentionnel
+    }
+
+    /**
+     * Récupère une connexion valide depuis le gestionnaire de connexion.
+     * Les DAO doivent appeler cette méthode avant d'effectuer des opérations SQL.
+     */
+    protected Connection getConnection() {
+        return DatabaseConnection.getInstance().getConnection();
     }
 
     /**

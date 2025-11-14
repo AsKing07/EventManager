@@ -23,7 +23,7 @@ public class EvenementDAO extends BaseDAO<Evenement> {
                        "description, places_standard_disponibles, places_vip_disponibles, " +
                        "places_premium_disponibles, prix_standard, prix_vip, prix_premium, statut) " +
                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
+Connection connection = getConnection();
         try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setInt(1, evenement.getOrganisateurId());
             pstmt.setString(2, evenement.getNom());
@@ -50,6 +50,7 @@ public class EvenementDAO extends BaseDAO<Evenement> {
                     }
                 }
             }
+            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur création événement", e);
             throw new DatabaseException("Erreur création événement", e);
@@ -64,7 +65,7 @@ public class EvenementDAO extends BaseDAO<Evenement> {
                        "description, places_standard_disponibles, places_vip_disponibles, " +
                        "places_premium_disponibles, prix_standard, prix_vip, prix_premium, " +
                        "date_creation, statut FROM Evenements WHERE id_evenement = ?";
-
+Connection connection = getConnection();
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, id);
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -72,6 +73,7 @@ public class EvenementDAO extends BaseDAO<Evenement> {
                     return mapRowToEvenement(rs);
                 }
             }
+            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur recherche événement", e);
             throw new DatabaseException("Erreur recherche événement", e);
@@ -86,7 +88,7 @@ public class EvenementDAO extends BaseDAO<Evenement> {
                        "description, places_standard_disponibles, places_vip_disponibles, " +
                        "places_premium_disponibles, prix_standard, prix_vip, prix_premium, " +
                        "date_creation, statut FROM Evenements WHERE organisateur_id = ?";
-
+Connection connection = getConnection();
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, organisateurId);
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -94,6 +96,7 @@ public class EvenementDAO extends BaseDAO<Evenement> {
                     evenements.add(mapRowToEvenement(rs));
                 }
             }
+            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur recherche événements par organisateur", e);
             throw new DatabaseException("Erreur recherche événements par organisateur", e);
@@ -108,7 +111,7 @@ public class EvenementDAO extends BaseDAO<Evenement> {
                        "description, places_standard_disponibles, places_vip_disponibles, " +
                        "places_premium_disponibles, prix_standard, prix_vip, prix_premium, " +
                        "date_creation, statut FROM Evenements WHERE type_evenement = ?";
-
+Connection connection = getConnection();
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, type.name());
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -116,6 +119,7 @@ public class EvenementDAO extends BaseDAO<Evenement> {
                     evenements.add(mapRowToEvenement(rs));
                 }
             }
+            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur recherche événements par type", e);
             throw new DatabaseException("Erreur recherche événements par type", e);
@@ -131,13 +135,14 @@ public class EvenementDAO extends BaseDAO<Evenement> {
                        "description, places_standard_disponibles, places_vip_disponibles, " +
                        "places_premium_disponibles, prix_standard, prix_vip, prix_premium, " +
                        "date_creation, statut FROM Evenements";
-
+Connection connection = getConnection();
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
             while (rs.next()) {
                 evenements.add(mapRowToEvenement(rs));
             }
+            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur listage événements", e);
             throw new DatabaseException("Erreur listage événements", e);
@@ -152,7 +157,7 @@ public class EvenementDAO extends BaseDAO<Evenement> {
                        "places_standard_disponibles = ?, places_vip_disponibles = ?, " +
                        "places_premium_disponibles = ?, prix_standard = ?, prix_vip = ?, " +
                        "prix_premium = ?, statut = ? WHERE id_evenement = ?";
-
+Connection connection = getConnection();
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, evenement.getNom());
             pstmt.setTimestamp(2, Timestamp.valueOf(evenement.getDateEvenement()));
@@ -169,6 +174,7 @@ public class EvenementDAO extends BaseDAO<Evenement> {
 
             pstmt.executeUpdate();
             logger.info("✓ Événement mis à jour: {}", evenement.getIdEvenement());
+            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur mise à jour événement", e);
             throw new DatabaseException("Erreur mise à jour événement", e);
@@ -178,11 +184,12 @@ public class EvenementDAO extends BaseDAO<Evenement> {
     @Override
     public void supprimer(int id) throws DatabaseException {
         String query = "DELETE FROM Evenements WHERE id_evenement = ?";
-
+Connection connection = getConnection();
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
             logger.info("✓ Événement supprimé: {}", id);
+            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur suppression événement", e);
             throw new DatabaseException("Erreur suppression événement", e);
