@@ -113,6 +113,24 @@ public class ValidationUtils {
         // Autoriser les lettres, espaces, tirets et apostrophes
         return nom.matches("^[a-zA-ZÀ-ÿ\\s'-]+$") && nom.length() >= 2;
     }
+
+    /**
+     * Valide qu'un nom contient au moins 2 caractères
+     * @param name Le nom à valider
+     * @return true si le nom est valide, false sinon
+     */
+    public static boolean isValidName(String name) {
+        return isNomValid(name);
+    }
+
+    /**
+     * Valide le format d'un email (alias pour isEmailValid)
+     * @param email L'email à valider
+     * @return true si l'email est valide, false sinon
+     */
+    public static boolean isValidEmail(String email) {
+        return isEmailValid(email);
+    }
     
     /**
      * Énumération pour les niveaux de force des mots de passe

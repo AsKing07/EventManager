@@ -16,6 +16,7 @@ import com.bschooleventmanager.eventmanager.service.UtilisateurService;
 import com.bschooleventmanager.eventmanager.util.SessionManager;
 import com.bschooleventmanager.eventmanager.util.NotificationUtils;
 import com.bschooleventmanager.eventmanager.util.AppConfig;
+import com.bschooleventmanager.eventmanager.util.WindowUtils;
 import com.bschooleventmanager.eventmanager.exception.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,18 +103,19 @@ public class LoginController {
             // Obtenir la scène actuelle et changer le contenu
             Stage stage = (Stage) loginButton.getScene().getWindow();
             
-            // Récupérer les dimensions depuis la configuration
-            int windowWidth = AppConfig.getWindowWidth();
-            int windowHeight = AppConfig.getWindowHeight();
+            // Obtenir les dimensions optimales
+            double[] dimensions = WindowUtils.getOptimalDimensions();
             
-            Scene registerScene = new Scene(registerRoot, windowWidth, windowHeight);
+            Scene registerScene = new Scene(registerRoot, dimensions[0], dimensions[1]);
             
             // Appliquer le CSS si disponible
             applyCssIfAvailable(registerScene);
             
             stage.setScene(registerScene);
             stage.setTitle(AppConfig.getAppTitle() + " - Inscription");
-            stage.centerOnScreen();
+            
+            // Configurer la fenêtre selon les paramètres
+            WindowUtils.configureStage(stage);
             
             logger.info("✓ Redirection vers l'inscription réussie");
             
@@ -137,10 +139,54 @@ public class LoginController {
     private void navigateToDashboard(Utilisateur user) {
         logger.info("Navigation vers le dashboard pour l'utilisateur: {}", user.getEmail());
         
-        // Afficher une notification en attendant l'implémentation du dashboard
-        NotificationUtils.showInfo("Navigation", 
-            "Redirection vers le tableau de bord en cours de développement...\n" +
-            "Type d'utilisateur: " + user.getTypeUtilisateur().getLabel());
+        try {
+            String fxmlPath;
+            String title;
+            
+            // Déterminer l'interface à charger selon le type d'utilisateur
+            switch (user.getTypeUtilisateur()) {
+                case ORGANISATEUR:
+                    fxmlPath = "/fxml/organisateur/dashboard.fxml";
+                    title = "Dashboard Organisateur";
+                    break;
+                case CLIENT:
+                    fxmlPath = "/fxml/client/dashboard.fxml";
+                    title = "Dashboard Client";
+                    break;
+                default:
+                    throw new IllegalArgumentException("Type d'utilisateur non reconnu: " + user.getTypeUtilisateur());
+            }
+            
+            // Charger l'interface appropriée
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            Parent dashboardRoot = loader.load();
+            
+            // Obtenir la scène actuelle
+            Stage stage = (Stage) loginButton.getScene().getWindow();
+            
+            // Obtenir les dimensions optimales
+            double[] dimensions = WindowUtils.getOptimalDimensions();
+            
+            Scene dashboardScene = new Scene(dashboardRoot, dimensions[0], dimensions[1]);
+            
+            // Appliquer le CSS si disponible
+            applyCssIfAvailable(dashboardScene);
+            
+            stage.setScene(dashboardScene);
+            stage.setTitle(AppConfig.getAppTitle() + " - " + title);
+            
+            // Configurer la fenêtre selon les paramètres
+            WindowUtils.configureStage(stage);
+            
+            logger.info("✓ Redirection vers le dashboard {} réussie", user.getTypeUtilisateur().getLabel());
+            
+        } catch (IOException e) {
+            logger.error("Erreur lors de la redirection vers le dashboard", e);
+            NotificationUtils.showError("Impossible de charger l'interface du dashboard");
+        } catch (Exception e) {
+            logger.error("Erreur inattendue lors de la navigation", e);
+            NotificationUtils.showError("Erreur lors de la navigation vers le dashboard");
+        }
     }
 }
 

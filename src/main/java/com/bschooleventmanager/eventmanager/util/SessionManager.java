@@ -28,6 +28,10 @@ public class SessionManager {
         dateConnexion = 0;
     }
 
+    public static void clearSession() {
+        deconnecter();
+    }
+
     public static long getDateConnexion() {
         return dateConnexion;
     }

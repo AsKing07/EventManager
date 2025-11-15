@@ -137,4 +137,22 @@ public class AppConfig {
     public static String getAppVersion() {
         return getString("app.version", "1.0.0");
     }
+    
+    /**
+     * Vérifie si la fenêtre doit s'adapter à l'écran
+     * @return true si la fenêtre doit être adaptative
+     */
+    public static boolean isWindowAdaptive() {
+        String adaptive = getString("ui.window.adaptive", "false");
+        return "true".equalsIgnoreCase(adaptive);
+    }
+    
+    /**
+     * Vérifie si la fenêtre doit être maximisée au démarrage
+     * @return true si la fenêtre doit être maximisée
+     */
+    public static boolean isWindowMaximized() {
+        String maximized = getString("ui.window.maximized", "false");
+        return "true".equalsIgnoreCase(maximized);
+    }
 }
