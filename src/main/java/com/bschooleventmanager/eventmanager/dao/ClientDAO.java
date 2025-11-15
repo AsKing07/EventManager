@@ -6,6 +6,7 @@ import com.bschooleventmanager.eventmanager.model.enums.TypeUtilisateur;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,7 +20,7 @@ public class ClientDAO extends BaseDAO<Client> {
     @Override
     public Client creer(Client client) throws DatabaseException {
         String query = "INSERT INTO Utilisateurs (nom, email, mot_de_passe, type_utilisateur) VALUES (?, ?, ?, ?)";
-
+Connection connection = getConnection();
         try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, client.getNom());
             pstmt.setString(2, client.getEmail());
@@ -37,6 +38,7 @@ public class ClientDAO extends BaseDAO<Client> {
                     }
                 }
             }
+            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur création client", e);
             throw new DatabaseException("Erreur création client", e);
@@ -49,7 +51,7 @@ public class ClientDAO extends BaseDAO<Client> {
     public Client chercher(int id) throws DatabaseException {
         String query = "SELECT id_utilisateur, nom, email, mot_de_passe, type_utilisateur, date_creation " +
                        "FROM Utilisateurs WHERE id_utilisateur = ? AND type_utilisateur = ?";
-
+Connection connection = getConnection();
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, id);
             pstmt.setString(2, TypeUtilisateur.CLIENT.name());
@@ -58,6 +60,7 @@ public class ClientDAO extends BaseDAO<Client> {
                     return mapRowToClient(rs);
                 }
             }
+            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur recherche client", e);
             throw new DatabaseException("Erreur recherche client", e);
@@ -69,7 +72,7 @@ public class ClientDAO extends BaseDAO<Client> {
     public Client chercherParEmail(String email) throws DatabaseException {
         String query = "SELECT id_utilisateur, nom, email, mot_de_passe, type_utilisateur, date_creation " +
                        "FROM Utilisateurs WHERE email = ? AND type_utilisateur = ?";
-
+Connection connection = getConnection();
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, email);
             pstmt.setString(2, TypeUtilisateur.CLIENT.name());
@@ -78,6 +81,7 @@ public class ClientDAO extends BaseDAO<Client> {
                     return mapRowToClient(rs);
                 }
             }
+            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur recherche client par email", e);
             throw new DatabaseException("Erreur recherche client par email", e);
@@ -91,7 +95,7 @@ public class ClientDAO extends BaseDAO<Client> {
         List<Client> clients = new ArrayList<>();
         String query = "SELECT id_utilisateur, nom, email, mot_de_passe, type_utilisateur, date_creation " +
                        "FROM Utilisateurs WHERE type_utilisateur = ?";
-
+Connection connection = getConnection();
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, TypeUtilisateur.CLIENT.name());
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -99,6 +103,7 @@ public class ClientDAO extends BaseDAO<Client> {
                     clients.add(mapRowToClient(rs));
                 }
             }
+            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur listage clients", e);
             throw new DatabaseException("Erreur listage clients", e);
@@ -111,7 +116,7 @@ public class ClientDAO extends BaseDAO<Client> {
     @Override
     public void mettreAJour(Client client) throws DatabaseException {
         String query = "UPDATE Utilisateurs SET nom = ?, email = ? WHERE id_utilisateur = ? AND type_utilisateur = ?";
-
+Connection connection = getConnection();
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, client.getNom());
             pstmt.setString(2, client.getEmail());
@@ -120,6 +125,7 @@ public class ClientDAO extends BaseDAO<Client> {
 
             pstmt.executeUpdate();
             logger.info("✓ Client mis à jour: {}", client.getIdUtilisateur());
+            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur mise à jour client", e);
             throw new DatabaseException("Erreur mise à jour client", e);
@@ -129,16 +135,18 @@ public class ClientDAO extends BaseDAO<Client> {
     @Override
     public void supprimer(int id) throws DatabaseException {
         String query = "DELETE FROM Utilisateurs WHERE id_utilisateur = ? AND type_utilisateur = ?";
-
+Connection connection = getConnection();
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, id);
             pstmt.setString(2, TypeUtilisateur.CLIENT.name());
             pstmt.executeUpdate();
             logger.info("✓ Client supprimé: {}", id);
+            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur suppression client", e);
             throw new DatabaseException("Erreur suppression client", e);
         }
+
     }
 
     private Client mapRowToClient(ResultSet rs) throws SQLException {

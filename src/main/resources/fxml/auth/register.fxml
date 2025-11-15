@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/24" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bschooleventmanager.eventmanager.controller.auth.RegisterController">
+    <padding>
+        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0"/>
+    </padding>
+
+    <!-- Titre principal -->
+    <Text text="Créer un compte EventManager" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-fill: #2c3e50;"/>
+    
+    <!-- Sous-titre -->
+    <Text text="Rejoignez notre plateforme pour réserver vos événements préférés" style="-fx-font-size: 14px; -fx-fill: #7f8c8d;"/>
+
+    <!-- Zone d'erreur -->
+    <Label fx:id="errorLabel" style="-fx-text-fill: red; -fx-font-weight: bold;" visible="false" managed="false"/>
+
+    <!-- Formulaire d'inscription -->
+    <GridPane alignment="CENTER" hgap="15" vgap="15" maxWidth="400.0">
+        <!-- Nom complet -->
+        <Label text="Nom complet :" GridPane.columnIndex="0" GridPane.rowIndex="0" style="-fx-font-weight: bold;"/>
+        <TextField fx:id="nomField" promptText="Entrez votre nom complet"
+                   GridPane.columnIndex="0" GridPane.rowIndex="1" 
+                   style="-fx-pref-width: 350px; -fx-pref-height: 35px;"/>
+
+        <!-- Email -->
+        <Label text="Adresse email :" GridPane.columnIndex="0" GridPane.rowIndex="2" style="-fx-font-weight: bold;"/>
+        <TextField fx:id="emailField" promptText="exemple@email.com"
+                   GridPane.columnIndex="0" GridPane.rowIndex="3"
+                   style="-fx-pref-width: 350px; -fx-pref-height: 35px;"/>
+
+        <!-- Mot de passe -->
+        <Label text="Mot de passe :" GridPane.columnIndex="0" GridPane.rowIndex="4" style="-fx-font-weight: bold;"/>
+        <PasswordField fx:id="passwordField" promptText="Au moins 6 caractères"
+                       GridPane.columnIndex="0" GridPane.rowIndex="5"
+                       style="-fx-pref-width: 350px; -fx-pref-height: 35px;"/>
+        
+        <!-- Indicateur force du mot de passe -->
+        <HBox GridPane.columnIndex="0" GridPane.rowIndex="6" spacing="5.0" alignment="CENTER_LEFT">
+            <Label text="Force du mot de passe :" style="-fx-font-size: 11px;"/>
+            <Label fx:id="passwordStrengthLabel" text="Aucun" style="-fx-font-size: 11px; -fx-font-weight: bold;"/>
+        </HBox>
+
+        <!-- Confirmation mot de passe -->
+        <Label text="Confirmer le mot de passe :" GridPane.columnIndex="0" GridPane.rowIndex="7" style="-fx-font-weight: bold;"/>
+        <PasswordField fx:id="confirmPasswordField" promptText="Répétez votre mot de passe"
+                       GridPane.columnIndex="0" GridPane.rowIndex="8"
+                       style="-fx-pref-width: 350px; -fx-pref-height: 35px;"/>
+        
+        <!-- Indicateur correspondance des mots de passe -->
+        <HBox GridPane.columnIndex="0" GridPane.rowIndex="9" spacing="5.0" alignment="CENTER_LEFT">
+            <Label text="Correspondance :" style="-fx-font-size: 11px;"/>
+            <Label fx:id="passwordMatchLabel" text="" style="-fx-font-size: 11px; -fx-font-weight: bold;"/>
+        </HBox>
+
+        <!-- Type de compte -->
+        <Label text="Type de compte :" GridPane.columnIndex="0" GridPane.rowIndex="10" style="-fx-font-weight: bold;"/>
+        <ComboBox fx:id="typeComboBox" GridPane.columnIndex="0" GridPane.rowIndex="11" 
+                  promptText="Choisissez votre rôle"
+                  style="-fx-pref-width: 350px; -fx-pref-height: 35px;"/>
+
+        <!-- Boutons -->
+        <HBox alignment="CENTER" spacing="15.0" GridPane.columnIndex="0" GridPane.rowIndex="12">
+            <Button fx:id="registerButton" text="Créer mon compte" onAction="#handleRegister" 
+                    defaultButton="true"
+                    style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20 10 20; -fx-background-radius: 5;"/>
+            
+            <Button fx:id="cancelButton" text="Annuler" onAction="#handleCancel"
+                    style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20 10 20; -fx-background-radius: 5;"/>
+        </HBox>
+
+        <!-- Lien vers connexion -->
+        <HBox alignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="13" spacing="5.0">
+            <Text text="Déjà inscrit ?" style="-fx-font-size: 13px;"/>
+            <Hyperlink fx:id="loginLink" text="Se connecter" onAction="#handleGoToLogin"
+                       style="-fx-font-size: 13px; -fx-text-fill: #3498db;"/>
+        </HBox>
+    </GridPane>
+
+    <!-- Informations sur la validation -->
+    <VBox alignment="CENTER" spacing="5.0" style="-fx-background-color: #f8f9fa; -fx-padding: 10; -fx-background-radius: 5;">
+        <Text text="Critères du mot de passe :" style="-fx-font-weight: bold; -fx-font-size: 12px;"/>
+        <Text text="• Au moins 6 caractères" style="-fx-font-size: 11px; -fx-fill: #6c757d;"/>
+        <Text text="• Combinaison de lettres et chiffres recommandée" style="-fx-font-size: 11px; -fx-fill: #6c757d;"/>
+    </VBox>
+</VBox>
