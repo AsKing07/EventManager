@@ -9,6 +9,7 @@ import com.bschooleventmanager.eventmanager.model.enums.TypeUtilisateur;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,8 +22,8 @@ public class UtilisateurDAO extends BaseDAO<Utilisateur> {
 
     @Override
     public Utilisateur creer(Utilisateur user) throws DatabaseException {
-        String query = "INSERT INTO Utilisateurs (nom, email, mot_de_passe, type_utilisateur) VALUES (?, ?, ?, ?)";
-
+        String query = "INSERT INTO utilisateurs (nom, email, mot_de_passe, type_utilisateur) VALUES (?, ?, ?, ?)";
+Connection connection = getConnection();
         try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, user.getNom());
             pstmt.setString(2, user.getEmail());
@@ -35,11 +36,11 @@ public class UtilisateurDAO extends BaseDAO<Utilisateur> {
                 try (ResultSet rs = pstmt.getGeneratedKeys()) {
                     if (rs.next()) {
                         user.setIdUtilisateur(rs.getInt(1));
-                        logger.info("✓ Utilisateur créé: {}", user.getEmail());
                         return user;
                     }
                 }
             }
+            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur création utilisateur", e);
             throw new DatabaseException("Erreur création utilisateur", e);
@@ -51,7 +52,7 @@ public class UtilisateurDAO extends BaseDAO<Utilisateur> {
     @Override
     public Utilisateur chercher(int id) throws DatabaseException {
         String query = "SELECT * FROM Utilisateurs WHERE id_utilisateur = ?";
-
+Connection connection = getConnection();
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, id);
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -59,6 +60,7 @@ public class UtilisateurDAO extends BaseDAO<Utilisateur> {
                     return mapRowToUtilisateur(rs);
                 }
             }
+            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur recherche utilisateur", e);
             throw new DatabaseException("Erreur recherche utilisateur", e);
@@ -68,8 +70,8 @@ public class UtilisateurDAO extends BaseDAO<Utilisateur> {
     }
 
     public Utilisateur chercherParEmail(String email) throws DatabaseException {
-        String query = "SELECT * FROM Utilisateurs WHERE email = ?";
-
+        String query = "SELECT * FROM utilisateurs WHERE email = ?";
+Connection connection = getConnection();
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, email);
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -77,17 +79,18 @@ public class UtilisateurDAO extends BaseDAO<Utilisateur> {
                     return mapRowToUtilisateur(rs);
                 }
             }
+            connection.close();
         } catch (SQLException e) {
-            logger.error("Erreur recherche par email", e);
-            throw new DatabaseException("Erreur recherche par email", e);
+            logger.error("Erreur recherche utilisateur par email", e);
+            throw new DatabaseException("Erreur recherche utilisateur par email", e);
         }
 
         return null;
     }
 
     public boolean emailExiste(String email) throws DatabaseException {
-        String query = "SELECT COUNT(*) FROM Utilisateurs WHERE email = ?";
-
+        String query = "SELECT COUNT(*) FROM utilisateurs WHERE email = ?";
+Connection connection = getConnection();
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, email);
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -95,9 +98,10 @@ public class UtilisateurDAO extends BaseDAO<Utilisateur> {
                     return rs.getInt(1) > 0;
                 }
             }
+            connection.close();
         } catch (SQLException e) {
-            logger.error("Erreur vérification email", e);
-            throw new DatabaseException("Erreur vérification email", e);
+            logger.error("Erreur vérification existence email", e);
+            throw new DatabaseException("Erreur vérification existence email", e);
         }
 
         return false;
@@ -106,14 +110,15 @@ public class UtilisateurDAO extends BaseDAO<Utilisateur> {
     @Override
     public List<Utilisateur> listerTous() throws DatabaseException {
         List<Utilisateur> utilisateurs = new ArrayList<>();
-        String query = "SELECT * FROM Utilisateurs";
-
-        try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+        String query = "SELECT * FROM utilisateurs";
+Connection connection = getConnection();
+       try (Statement stmt = connection.createStatement();
+           ResultSet rs = stmt.executeQuery(query)) {
 
             while (rs.next()) {
                 utilisateurs.add(mapRowToUtilisateur(rs));
             }
+            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur listage utilisateurs", e);
             throw new DatabaseException("Erreur listage utilisateurs", e);
@@ -124,15 +129,15 @@ public class UtilisateurDAO extends BaseDAO<Utilisateur> {
 
     @Override
     public void mettreAJour(Utilisateur user) throws DatabaseException {
-        String query = "UPDATE Utilisateurs SET nom = ?, email = ? WHERE id_utilisateur = ?";
-
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+        String query = "UPDATE utilisateurs SET nom = ?, email = ? WHERE id_utilisateur = ?";
+Connection connection = getConnection();
+    try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, user.getNom());
             pstmt.setString(2, user.getEmail());
             pstmt.setInt(3, user.getIdUtilisateur());
 
             pstmt.executeUpdate();
-            logger.info("✓ Utilisateur mis à jour: {}", user.getIdUtilisateur());
+            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur mise à jour utilisateur", e);
             throw new DatabaseException("Erreur mise à jour utilisateur", e);
@@ -141,12 +146,12 @@ public class UtilisateurDAO extends BaseDAO<Utilisateur> {
 
     @Override
     public void supprimer(int id) throws DatabaseException {
-        String query = "DELETE FROM Utilisateurs WHERE id_utilisateur = ?";
-
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+        String query = "DELETE FROM utilisateurs WHERE id_utilisateur = ?";
+Connection connection = getConnection();
+    try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
-            logger.info("✓ Utilisateur supprimé: {}", id);
+            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur suppression utilisateur", e);
             throw new DatabaseException("Erreur suppression utilisateur", e);
