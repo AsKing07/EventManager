@@ -127,20 +127,27 @@ Connection connection = getConnection();
         return utilisateurs;
     }
 
+        /**
+     * Modifie les données d'un utilisateur
+     * @param utilisateur L'utilisateur à modifier
+     * @return true si la modification a réussi, false sinon
+     * @throws DatabaseException En cas d'erreur de base de données
+     */
     @Override
     public void mettreAJour(Utilisateur user) throws DatabaseException {
-        String query = "UPDATE utilisateurs SET nom = ?, email = ? WHERE id_utilisateur = ?";
-Connection connection = getConnection();
-    try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+ String query = "UPDATE utilisateurs SET nom = ?, email = ? WHERE id_utilisateur = ?";
+        Connection connection = getConnection();
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, user.getNom());
             pstmt.setString(2, user.getEmail());
             pstmt.setInt(3, user.getIdUtilisateur());
 
-            pstmt.executeUpdate();
+            int rowsAffected = pstmt.executeUpdate();
             connection.close();
+            
         } catch (SQLException e) {
-            logger.error("Erreur mise à jour utilisateur", e);
-            throw new DatabaseException("Erreur mise à jour utilisateur", e);
+            logger.error("Erreur modification utilisateur", e);
+            throw new DatabaseException("Erreur modification utilisateur", e);
         }
     }
 
@@ -152,9 +159,35 @@ Connection connection = getConnection();
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
             connection.close();
+          
         } catch (SQLException e) {
             logger.error("Erreur suppression utilisateur", e);
             throw new DatabaseException("Erreur suppression utilisateur", e);
+        }
+    }
+
+
+
+    /**
+     * Change le mot de passe d'un utilisateur
+     * @param userId L'ID de l'utilisateur
+     * @param hashedPassword Le nouveau mot de passe hashé
+     * @return true si le changement a réussi, false sinon
+     * @throws DatabaseException En cas d'erreur de base de données
+     */
+    public boolean changerMotDePasse(int userId, String hashedPassword) throws DatabaseException {
+        String query = "UPDATE utilisateurs SET mot_de_passe = ? WHERE id_utilisateur = ?";
+        Connection connection = getConnection();
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setString(1, hashedPassword);
+            pstmt.setInt(2, userId);
+
+            int rowsAffected = pstmt.executeUpdate();
+            connection.close();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            logger.error("Erreur changement mot de passe", e);
+            throw new DatabaseException("Erreur changement mot de passe", e);
         }
     }
 
