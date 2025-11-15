@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<ScrollPane fitToWidth="true" fitToHeight="true" xmlns="http://javafx.com/javafx/24" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bschooleventmanager.eventmanager.controller.shared.ProfileController">
+    <content>
+        <VBox alignment="TOP_CENTER" spacing="30.0" prefWidth="800.0">
+            <padding>
+                <Insets bottom="40.0" left="40.0" right="40.0" top="40.0"/>
+            </padding>
+
+            <!-- Titre -->
+            <Text text="Mon Profil" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-fill: #2c3e50;"/>
+            
+            <!-- Zone de messages -->
+            <Label fx:id="messageLabel" style="-fx-font-weight: bold;" visible="false" managed="false"/>
+
+            <!-- Formulaire de profil -->
+            <VBox spacing="20.0" style="-fx-background-color: white; -fx-padding: 30;  -fy-padding: 30; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" prefWidth="700.0" maxWidth="800.0">
+    
+
+                <!-- Informations utilisateur -->
+                <VBox spacing="15.0">
+                    <Text text="Informations personnelles" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-fill: #34495e;"/>
+                    
+                    <!-- Type d'utilisateur (lecture seule) -->
+                    <VBox spacing="5.0">
+                        <Label text="Type de compte :" style="-fx-font-weight: bold;"/>
+                        <Label fx:id="userTypeLabel" text="Client" style="-fx-font-size: 14px; -fx-text-fill: #3498db; -fx-font-weight: bold;"/>
+                    </VBox>
+                    
+                    <!-- Nom -->
+                    <VBox spacing="5.0">
+                        <Label text="Nom complet :" style="-fx-font-weight: bold;"/>
+                        <TextField fx:id="nomField" promptText="Votre nom complet" style="-fx-pref-height: 35px;" prefWidth="600.0"/>
+                        <Text fx:id="nomValidation" visible="false" style="-fx-font-size: 12px;"/>
+                    </VBox>
+
+                    <!-- Email -->
+                    <VBox spacing="5.0">
+                        <Label text="Adresse email :" style="-fx-font-weight: bold;"/>
+                        <TextField fx:id="emailField" promptText="votre@email.com" style="-fx-pref-height: 35px;" prefWidth="600.0"/>
+                        <Text fx:id="emailValidation" visible="false" style="-fx-font-size: 12px;"/>
+                    </VBox>
+
+                                        <!-- Boutons d'action -->
+                <HBox alignment="CENTER" spacing="15.0" style="-fx-padding: 20 0 0 0;">
+                    <Button fx:id="saveInformationsButton" text="Changer les informations personnelles" onAction="#handleUpdateProfile"
+                            style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20 10 20; -fx-background-radius: 5;"/>
+                    
+                    <Button fx:id="cancelButton" text="Annuler" onAction="#handleCancelChanges"
+                            style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20 10 20; -fx-background-radius: 5;"/>
+                </HBox>
+                </VBox>
+
+                <!-- Séparateur -->
+                <Separator/>
+
+                <!-- Changement de mot de passe -->
+                <VBox spacing="15.0">
+                    <Text text="Changer le mot de passe" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-fill: #34495e;"/>
+                   
+                    
+                    <!-- Mot de passe actuel -->
+                    <VBox spacing="5.0">
+                        <Label text="Mot de passe actuel :" style="-fx-font-weight: bold;"/>
+                        <PasswordField fx:id="currentPasswordField" promptText="Votre mot de passe actuel" style="-fx-pref-height: 35px;" prefWidth="600.0"/>
+                    </VBox>
+
+                    <!-- Nouveau mot de passe -->
+                    <VBox spacing="5.0">
+                        <Label text="Nouveau mot de passe :" style="-fx-font-weight: bold;"/>
+                        <PasswordField fx:id="newPasswordField" promptText="Au moins 8 caractères" style="-fx-pref-height: 35px;" prefWidth="600.0"/>
+                        
+                        <!-- Indicateur force du mot de passe -->
+                        <Text fx:id="passwordStrengthIndicator" visible="false" style="-fx-font-size: 12px;"/>
+                    </VBox>
+
+                    <!-- Confirmer nouveau mot de passe -->
+                    <VBox spacing="5.0">
+                        <Label text="Confirmer le nouveau mot de passe :" style="-fx-font-weight: bold;"/>
+                        <PasswordField fx:id="confirmPasswordField" promptText="Répétez le nouveau mot de passe" style="-fx-pref-height: 35px;" prefWidth="600.0"/>
+                        
+                        <!-- Indicateur correspondance -->
+                        <Text fx:id="passwordMatchIndicator" visible="false" style="-fx-font-size: 12px;"/>
+                    </VBox>
+
+                                    <!-- Boutons d'action -->
+                <HBox alignment="CENTER" spacing="15.0" style="-fx-padding: 20 0 0 0;">
+                    <Button fx:id="changePasswordButton" text="Changer le mot de passe" onAction="#handleChangePassword"
+                            style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10 20 10 20; -fx-background-radius: 5;"/>
+                    
+                  
+                </HBox>
+
+                </VBox>
+
+
+            </VBox>
+
+            <!-- Informations additionnelles -->
+            <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: #f8f9fa; -fx-padding: 15; -fx-background-radius: 5;" prefWidth="700.0" maxWidth="800.0">
+                <Text text="Informations sur le compte" style="-fx-font-weight: bold; -fx-font-size: 12px;"/>
+                <Text fx:id="accountInfoText" text="Membre depuis le ..." style="-fx-font-size: 11px; -fx-fill: #6c757d;"/>
+                <Text text="• Votre email est utilisé pour la connexion" style="-fx-font-size: 11px; -fx-fill: #6c757d;"/>
+                <Text text="• Les modifications seront effectives immédiatement" style="-fx-font-size: 11px; -fx-fill: #6c757d;"/>
+            </VBox>
+        </VBox>
+    </content>
+</ScrollPane>
