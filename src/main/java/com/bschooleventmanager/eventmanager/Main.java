@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import com.bschooleventmanager.eventmanager.util.AppConfig;
+import com.bschooleventmanager.eventmanager.util.WindowUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,12 +24,11 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/auth/login.fxml"));
             Parent root = loader.load();
 
-            // Récupérer les dimensions depuis la configuration
-            int windowWidth = AppConfig.getWindowWidth();
-            int windowHeight = AppConfig.getWindowHeight();
+            // Obtenir les dimensions optimales
+            double[] dimensions = WindowUtils.getOptimalDimensions();
             
-            // Créer la scène avec les dimensions configurées
-            Scene scene = new Scene(root, windowWidth, windowHeight);
+            // Créer la scène avec les dimensions optimales
+            Scene scene = new Scene(root, dimensions[0], dimensions[1]);
             
             // Appliquer les styles CSS
             applyCssToScene(scene);
@@ -36,11 +36,14 @@ public class Main extends Application {
             // Configurer la fenêtre principale
             primaryStage.setTitle(AppConfig.getAppTitle());
             primaryStage.setScene(scene);
-            primaryStage.setResizable(false);
-            primaryStage.centerOnScreen();
+            primaryStage.setResizable(true); // Permettre le redimensionnement
+            
+            // Configurer la fenêtre selon les paramètres
+            WindowUtils.configureStage(primaryStage);
+            
             primaryStage.show();
 
-            logger.info("✓ Application démarrée - Dimensions: {}x{}", windowWidth, windowHeight);
+            logger.info("✓ Application démarrée - Dimensions: {}x{}", (int)dimensions[0], (int)dimensions[1]);
             logger.info("✓ Titre: {}", AppConfig.getAppTitle());
             
         } catch (Exception e) {
