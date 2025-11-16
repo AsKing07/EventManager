@@ -113,6 +113,7 @@ public class ClientEventsController {
         });
     }
 
+
     private void openEventDetails(Evenement event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/client/clientEventDetails.fxml"));
