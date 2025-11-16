@@ -5,10 +5,13 @@ import com.bschooleventmanager.eventmanager.model.Evenement;
 import com.bschooleventmanager.eventmanager.model.enums.StatutEvenement;
 import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +39,11 @@ public class ClientEventsController {
     @FXML private TextField searchLieuField;
     @FXML private ComboBox<String> typeFilter;
 
+    // CORRECTION: Utiliser Evenement comme type générique pour masterData
+    private final ObservableList<Evenement> masterData = FXCollections.observableArrayList();
+    private FilteredList<Evenement> filteredData;
+    private SortedList<Evenement> sortedData;
+
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     @FXML
@@ -44,7 +52,11 @@ public class ClientEventsController {
 
         setupTable();
         loadTypeFilterOptions();
+        // NOUVEAU: Configurer le filtrage/tri avant de charger les données
+        setupFilteringAndSorting();
         loadAllEvents();
+        // NOUVEAU: Configurer les écouteurs de filtre
+        setupCombinedFilterListeners();
     }
 
     private void setupTable() {
@@ -89,7 +101,6 @@ public class ClientEventsController {
             }
         });
 
-        // Set black font for every table row
         eventsTable.setRowFactory(tv -> {
             TableRow<Evenement> row = new TableRow<>();
             row.setStyle("-fx-text-fill: black;");
@@ -98,7 +109,50 @@ public class ClientEventsController {
     }
 
     private void loadTypeFilterOptions() {
-        typeFilter.getItems().setAll("CONCERT", "SPECTACLE", "CONFERENCE");
+        typeFilter.getItems().add("All Types");
+        for (TypeEvenement type : TypeEvenement.values()) {
+            typeFilter.getItems().add(type.name());
+        }
+    }
+
+    private void setupFilteringAndSorting() {
+        filteredData = new FilteredList<>(masterData, p -> true); // Tout afficher par défaut
+        sortedData = new SortedList<>(filteredData);
+
+        sortedData.comparatorProperty().bind(eventsTable.comparatorProperty());
+
+        eventsTable.setItems(sortedData);
+
+        typeFilter.getSelectionModel().selectFirst();
+    }
+
+    //setting up listeners
+    private void setupCombinedFilterListeners() {
+        searchNomField.textProperty().addListener((observable, oldValue, newValue) -> filterEvents());
+        searchLieuField.textProperty().addListener((observable, oldValue, newValue) -> filterEvents());
+        typeFilter.valueProperty().addListener((observable, oldValue, newValue) -> filterEvents());
+    }
+
+    private void filterEvents() {
+        String nomFilter = searchNomField.getText() == null ? "" : searchNomField.getText().toLowerCase();
+        String lieuFilter = searchLieuField.getText() == null ? "" : searchLieuField.getText().toLowerCase();
+        String typeSelection = typeFilter.getValue();
+
+        filteredData.setPredicate(event -> {
+            //Filtre Type
+            boolean typeMatch = true;
+            if (typeSelection != null && !typeSelection.equals("All Types")) {
+                typeMatch = event.getTypeEvenement().name().equals(typeSelection);
+            }
+
+            // Filtre Nom
+            boolean nomMatch = event.getNom().toLowerCase().contains(nomFilter);
+
+            // Filtre Lieu
+            boolean lieuMatch = event.getLieu().toLowerCase().contains(lieuFilter);
+
+            return typeMatch && nomMatch && lieuMatch;
+        });
     }
 
     @FXML
@@ -110,12 +164,21 @@ public class ClientEventsController {
         logger.info("Loaded {} events", events.size());
         events.forEach(e -> System.out.println("EVENT LOADED → " + e));
 
-        eventsTable.getItems().setAll(events);
+        masterData.setAll(events);
+
+        searchNomField.setText("");
+        searchLieuField.setText("");
+        typeFilter.getSelectionModel().select("All Types");
     }
 
     @FXML
     private void searchEvents() {
-        logger.info("Search triggered (not implemented yet)");
-        // implement search later
+        logger.info("Search triggered (now calling filterEvents)");
+        filterEvents();
+    }
+
+    @FXML
+    private void resetFilters() {
+        loadAllEvents();
     }
 }
