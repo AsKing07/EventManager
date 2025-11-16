@@ -10,9 +10,14 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +44,6 @@ public class ClientEventsController {
     @FXML private TextField searchLieuField;
     @FXML private ComboBox<String> typeFilter;
 
-    // CORRECTION: Utiliser Evenement comme type générique pour masterData
     private final ObservableList<Evenement> masterData = FXCollections.observableArrayList();
     private FilteredList<Evenement> filteredData;
     private SortedList<Evenement> sortedData;
@@ -52,23 +56,18 @@ public class ClientEventsController {
 
         setupTable();
         loadTypeFilterOptions();
-        // NOUVEAU: Configurer le filtrage/tri avant de charger les données
         setupFilteringAndSorting();
         loadAllEvents();
-        // NOUVEAU: Configurer les écouteurs de filtre
         setupCombinedFilterListeners();
     }
 
     private void setupTable() {
-
-        // Bind getters to columns
         colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
         colLieu.setCellValueFactory(new PropertyValueFactory<>("lieu"));
         colType.setCellValueFactory(new PropertyValueFactory<>("typeEvenement"));
         colStatut.setCellValueFactory(new PropertyValueFactory<>("statut"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("dateEvenement"));
 
-        // Format enums (Type, Statut)
         colType.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(TypeEvenement item, boolean empty) {
@@ -103,9 +102,39 @@ public class ClientEventsController {
 
         eventsTable.setRowFactory(tv -> {
             TableRow<Evenement> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                    Evenement selectedEvent = row.getItem();
+                    openEventDetails(selectedEvent);
+                }
+            });
             row.setStyle("-fx-text-fill: black;");
             return row;
         });
+    }
+
+    private void openEventDetails(Evenement event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/client/clientEventDetails.fxml"));
+            Parent root = loader.load();
+
+            ClientEventDetailsController detailsController = loader.getController();
+
+            detailsController.setEventData(event);
+
+            Stage stage = new Stage();
+            stage.setTitle("Event Details: " + event.getNom());
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+
+        } catch (Exception e) {
+            logger.error("Error opening event details page", e);
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+            errorAlert.setHeaderText("Display Error");
+            errorAlert.setContentText("Could not open the event details window.");
+            errorAlert.show();
+        }
     }
 
     private void loadTypeFilterOptions() {
@@ -115,8 +144,9 @@ public class ClientEventsController {
         }
     }
 
+    // check if we can split these filters to sth else eg design patterns
     private void setupFilteringAndSorting() {
-        filteredData = new FilteredList<>(masterData, p -> true); // Tout afficher par défaut
+        filteredData = new FilteredList<>(masterData, p -> true);
         sortedData = new SortedList<>(filteredData);
 
         sortedData.comparatorProperty().bind(eventsTable.comparatorProperty());
