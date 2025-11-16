@@ -20,30 +20,25 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            // Charger l'interface de connexion
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/auth/login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/eventsList.fxml"));
             Parent root = loader.load();
 
-            // Obtenir les dimensions optimales
             double[] dimensions = WindowUtils.getOptimalDimensions();
             
-            // Créer la scène avec les dimensions optimales
             Scene scene = new Scene(root, dimensions[0], dimensions[1]);
             
-            // Appliquer les styles CSS
             applyCssToScene(scene);
 
-            // Configurer la fenêtre principale
             primaryStage.setTitle(AppConfig.getAppTitle());
             primaryStage.setScene(scene);
-            primaryStage.setResizable(true); // Permettre le redimensionnement
+            primaryStage.setResizable(true);
             
             // Configurer la fenêtre selon les paramètres
             WindowUtils.configureStage(primaryStage);
             
             primaryStage.show();
 
-            logger.info("✓ Application démarrée - Dimensions: {}x{}", (int)dimensions[0], (int)dimensions[1]);
+            logger.info("Application démarrée - Dimensions: {}x{}", (int)dimensions[0], (int)dimensions[1]);
             logger.info("✓ Titre: {}", AppConfig.getAppTitle());
             
         } catch (Exception e) {
@@ -51,10 +46,7 @@ public class Main extends Application {
             e.printStackTrace();
         }
     }
-    
-    /**
-     * Applique les styles CSS à la scène
-     */
+
     private void applyCssToScene(Scene scene) {
         try {
             scene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());

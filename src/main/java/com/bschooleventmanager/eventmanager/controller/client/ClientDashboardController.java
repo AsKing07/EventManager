@@ -66,9 +66,7 @@ public class ClientDashboardController {
         showEvents();
     }
 
-    /**
-     * Affiche la liste des événements disponibles
-     */
+
     @FXML
     private void showEvents() {
         logger.info("Affichage des événements client");
@@ -168,26 +166,18 @@ public class ClientDashboardController {
         }
     }
 
-    /**
-     * Charge le contenu de la liste des événements
-     */
+
     private void loadEventsContent() {
         contentArea.getChildren().clear();
-        
         try {
-            Text title = new Text("Événements Disponibles");
-            title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #2c3e50;");
-            
-            Text subtitle = new Text("Découvrez et réservez vos places pour les événements à venir");
-            subtitle.setStyle("-fx-font-size: 16px; -fx-fill: #7f8c8d;");
-            
-            javafx.scene.layout.VBox content = new javafx.scene.layout.VBox(20.0, title, subtitle);
-            content.setAlignment(javafx.geometry.Pos.CENTER);
-            
-            contentArea.getChildren().add(content);
-            
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/eventsList.fxml"));
+
+            Parent eventsRoot = loader.load();
+            ClientEventsController eventsController = loader.getController();
+            contentArea.getChildren().add(eventsRoot);
+            logger.info("Events content loaded successfully");
         } catch (Exception e) {
-            logger.error("Erreur lors du chargement des événements", e);
+            logger.error("Error loading events UI", e);
         }
     }
 
