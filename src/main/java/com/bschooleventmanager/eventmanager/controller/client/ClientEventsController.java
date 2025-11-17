@@ -4,6 +4,8 @@ import com.bschooleventmanager.eventmanager.dao.EvenementDAO;
 import com.bschooleventmanager.eventmanager.model.Evenement;
 import com.bschooleventmanager.eventmanager.model.enums.StatutEvenement;
 import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
+import com.bschooleventmanager.eventmanager.util.NotificationUtils;
+
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -116,7 +118,7 @@ public class ClientEventsController {
 
     private void openEventDetails(Evenement event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/client/clientEventDetails.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/clientEventDetails.fxml"));
             Parent root = loader.load();
 
             ClientEventDetailsController detailsController = loader.getController();
@@ -124,17 +126,16 @@ public class ClientEventsController {
             detailsController.setEventData(event);
 
             Stage stage = new Stage();
-            stage.setTitle("Event Details: " + event.getNom());
+            stage.setTitle("Details de l'événement : " + event.getNom());
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
 
         } catch (Exception e) {
-            logger.error("Error opening event details page", e);
+            logger.error("Impossible d'ouvrir la fenêtre des détails de l'événement", e);
+            NotificationUtils.showError("Impossible d'ouvrir la fenêtre des détails de l'événement.");
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-            errorAlert.setHeaderText("Display Error");
-            errorAlert.setContentText("Could not open the event details window.");
-            errorAlert.show();
+    
         }
     }
 
