@@ -14,6 +14,7 @@ module com.bschooleventmanager.eventmanager {
     requires eu.hansolo.tilesfx;
     requires org.slf4j;
     requires jbcrypt;
+    requires java.desktop;
 
     // Exports pour permettre l'accès aux packages
     exports com.bschooleventmanager.eventmanager;

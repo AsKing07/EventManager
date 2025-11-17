@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<VBox xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.bschooleventmanager.eventmanager.controller.client.ClientEventDetailsController">
+
+    <Label text="Event Details" style="-fx-font-size: 20pt; -fx-font-weight: bold;"/>
+
+    <GridPane hgap="10" vgap="10">
+        <columnConstraints>
+            <ColumnConstraints prefWidth="120"/>
+            <ColumnConstraints hgrow="ALWAYS"/>
+        </columnConstraints>
+
+        <Label text="Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <Label fx:id="eventNameLabel" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+        <Label text="Date:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <Label fx:id="eventDateLabel" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+        <Label text="Location:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <Label fx:id="eventLocationLabel" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+        <Label text="Type:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+        <Label fx:id="eventTypeLabel" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+        <Label text="Price (Standard):" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+        <Label fx:id="eventPriceLabel" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+    </GridPane>
+
+    <Label text="Description:" style="-fx-font-weight: bold;"/>
+    <TextArea fx:id="eventDescriptionArea" editable="false" wrapText="true" minHeight="150"/>
+
+</VBox>
