@@ -242,7 +242,15 @@ Connection connection = DatabaseConnection.getInstance().getConnection();
         
 
     private static Evenement mapRowToEvenement(ResultSet rs) throws SQLException {
-        TypeEvenement type = TypeEvenement.valueOf(rs.getString("type_evenement"));
+        // Gestion sécurisée du type d'événement
+        String typeStr = rs.getString("type_evenement");
+        TypeEvenement type;
+        if (typeStr != null && !typeStr.trim().isEmpty()) {
+            type = TypeEvenement.valueOf(typeStr.trim());
+        } else {
+            type = TypeEvenement.CONFERENCE; // Valeur par défaut
+        }
+        
         Evenement evenement;
 
         // Création de l'instance appropriée selon le type
@@ -275,7 +283,14 @@ Connection connection = DatabaseConnection.getInstance().getConnection();
         evenement.setPrixVip(rs.getBigDecimal("prix_vip"));
         evenement.setPrixPremium(rs.getBigDecimal("prix_premium"));
         evenement.setDateCreation(rs.getTimestamp("date_creation").toLocalDateTime());
-        evenement.setStatut(StatutEvenement.valueOf(rs.getString("statut")));
+        
+        // Gestion sécurisée du statut avec valeur par défaut
+        String statutStr = rs.getString("statut");
+        if (statutStr != null && !statutStr.trim().isEmpty()) {
+            evenement.setStatut(StatutEvenement.valueOf(statutStr.trim()));
+        } else {
+            evenement.setStatut(StatutEvenement.A_VENIR); // Valeur par défaut
+        }
 
         return evenement;
     }
