@@ -31,16 +31,14 @@ public class ClientEventsController {
 
     private static final Logger logger = LoggerFactory.getLogger(ClientEventsController.class);
 
-    private final EvenementDAO dao = new EvenementDAO();
-
     @FXML private TableView<Evenement> eventsTable;
 
     @FXML private TableColumn<Evenement, String> colNom;
     @FXML private TableColumn<Evenement, String> colLieu;
-
     @FXML private TableColumn<Evenement, TypeEvenement> colType;
     @FXML private TableColumn<Evenement, StatutEvenement> colStatut;
     @FXML private TableColumn<Evenement, LocalDateTime> colDate;
+    @FXML private TableColumn<Evenement, Void> colActions;
 
     @FXML private TextField searchNomField;
     @FXML private TextField searchLieuField;
@@ -64,12 +62,24 @@ public class ClientEventsController {
     }
 
     private void setupTable() {
+        setupTableColumns();
+        setupActionsColumn();
+        setupTableRowFactory();
+    }
+
+    private void setupTableColumns() {
         colNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
         colLieu.setCellValueFactory(new PropertyValueFactory<>("lieu"));
         colType.setCellValueFactory(new PropertyValueFactory<>("typeEvenement"));
         colStatut.setCellValueFactory(new PropertyValueFactory<>("statut"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("dateEvenement"));
 
+        setupTypeCellFactory();
+        setupStatutCellFactory();
+        setupDateCellFactory();
+    }
+
+    private void setupTypeCellFactory() {
         colType.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(TypeEvenement item, boolean empty) {
@@ -78,7 +88,9 @@ public class ClientEventsController {
                 setStyle("-fx-text-fill: black;");
             }
         });
+    }
 
+    private void setupStatutCellFactory() {
         colStatut.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(StatutEvenement item, boolean empty) {
@@ -87,8 +99,9 @@ public class ClientEventsController {
                 setStyle("-fx-text-fill: black;");
             }
         });
+    }
 
-        // Format date
+    private void setupDateCellFactory() {
         colDate.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(LocalDateTime item, boolean empty) {
@@ -101,18 +114,48 @@ public class ClientEventsController {
                 setStyle("-fx-text-fill: black;");
             }
         });
+    }
 
+    private void setupActionsColumn() {
+        colActions.setCellFactory(param -> new DetailsButtonCell());
+    }
+
+    private void setupTableRowFactory() {
         eventsTable.setRowFactory(tv -> {
             TableRow<Evenement> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
-                    Evenement selectedEvent = row.getItem();
-                    openEventDetails(selectedEvent);
-                }
-            });
             row.setStyle("-fx-text-fill: black;");
             return row;
         });
+    }
+
+    private class DetailsButtonCell extends TableCell<Evenement, Void> {
+        private final Button detailsBtn;
+
+        public DetailsButtonCell() {
+            detailsBtn = new Button("👁️ Voir détails");
+            detailsBtn.setStyle(
+                "-fx-background-color: #3498db; " +
+                "-fx-text-fill: white; " +
+                "-fx-background-radius: 4; " +
+                "-fx-cursor: hand; " +
+                "-fx-font-size: 11px; " +
+                "-fx-padding: 5 10 5 10;"
+            );
+            detailsBtn.setOnAction(event -> {
+                Evenement selectedEvent = getTableView().getItems().get(getIndex());
+                openEventDetails(selectedEvent);
+            });
+        }
+
+        @Override
+        protected void updateItem(Void item, boolean empty) {
+            super.updateItem(item, empty);
+            if (empty) {
+                setGraphic(null);
+            } else {
+                setGraphic(detailsBtn);
+            }
+        }
     }
 
 
@@ -134,8 +177,6 @@ public class ClientEventsController {
         } catch (Exception e) {
             logger.error("Impossible d'ouvrir la fenêtre des détails de l'événement", e);
             NotificationUtils.showError("Impossible d'ouvrir la fenêtre des détails de l'événement.");
-            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-    
         }
     }
 
@@ -191,7 +232,7 @@ public class ClientEventsController {
     private void loadAllEvents() {
         logger.info("Loading all events from DB...");
 
-        List<Evenement> events = dao.getAllEvents();
+        List<Evenement> events = EvenementDAO.getAllEvents();
 
         logger.info("Loaded {} events", events.size());
         events.forEach(e -> System.out.println("EVENT LOADED → " + e));

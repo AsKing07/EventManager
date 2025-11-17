@@ -182,7 +182,7 @@ public class ClientDashboardController {
             logger.info("Events content loaded successfully");
         } catch (Exception e) {
             
-            logger.error("Error loading events UI", e);
+            logger.error("Erreur de chargement de l'UI des éveènements", e);
             NotificationUtils.showError("Impossible de charger la liste des événements");
         }
     }
