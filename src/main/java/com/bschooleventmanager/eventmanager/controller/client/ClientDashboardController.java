@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import com.bschooleventmanager.eventmanager.model.Utilisateur;
+import com.bschooleventmanager.eventmanager.model.Evenement;
 import com.bschooleventmanager.eventmanager.util.SessionManager;
 import com.bschooleventmanager.eventmanager.util.NotificationUtils;
 import com.bschooleventmanager.eventmanager.util.AppConfig;
@@ -70,7 +71,7 @@ public class ClientDashboardController {
      * Affiche la liste des événements disponibles
      */
     @FXML
-    private void showEvents() {
+    public void showEvents() {
         logger.info("Affichage des événements client");
         setActiveTab("events");
         loadEventsContent();
@@ -169,20 +170,53 @@ public class ClientDashboardController {
     }
 
     /**
-     * Charge le contenu de la liste des événements
+     * Affiche les détails d'un événement spécifique
      */
+    public void showEventDetails(Evenement event) {
+        logger.info("Affichage des détails de l'événement: {}", event.getNom());
+        setActiveTab("events"); // Garder l'onglet événements actif
+        loadEventDetailsContent(event);
+    }
+
+    /**
+     * Charge le contenu des détails d'un événement
+     */
+    private void loadEventDetailsContent(Evenement event) {
+        contentArea.getChildren().clear();
+        
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/clientEventDetails.fxml"));
+            Parent eventDetailsRoot = loader.load();
+            
+            // Récupérer le contrôleur et configurer les données
+            ClientEventDetailsController detailsController = loader.getController();
+            detailsController.setDashboardController(this); 
+            detailsController.setEventData(event);
+            
+            contentArea.getChildren().add(eventDetailsRoot);
+            
+            logger.info("Contenu des détails de l'événement chargé avec succès");
+            
+        } catch (IOException e) {
+            logger.error("Erreur lors du chargement des détails de l'événement", e);
+            NotificationUtils.showError("Impossible de charger les détails de l'événement");
+        }
+    }
     private void loadEventsContent()   {
         contentArea.getChildren().clear();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/eventsList.fxml"));
-
             Parent eventsRoot = loader.load();
+            
+            // Récupérer le contrôleur et lui passer une référence au dashboard
             ClientEventsController eventsController = loader.getController();
+            eventsController.setDashboardController(this);
+            
             contentArea.getChildren().add(eventsRoot);
             logger.info("Events content loaded successfully");
         } catch (Exception e) {
             
-            logger.error("Error loading events UI", e);
+            logger.error("Erreur de chargement de l'UI des éveènements", e);
             NotificationUtils.showError("Impossible de charger la liste des événements");
         }
     }
