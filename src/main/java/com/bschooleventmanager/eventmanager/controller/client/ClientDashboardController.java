@@ -66,7 +66,9 @@ public class ClientDashboardController {
         showEvents();
     }
 
-
+    /**
+     * Affiche la liste des événements disponibles
+     */
     @FXML
     private void showEvents() {
         logger.info("Affichage des événements client");
@@ -166,8 +168,10 @@ public class ClientDashboardController {
         }
     }
 
-
-    private void loadEventsContent() {
+    /**
+     * Charge le contenu de la liste des événements
+     */
+    private void loadEventsContent()   {
         contentArea.getChildren().clear();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/eventsList.fxml"));
@@ -177,7 +181,9 @@ public class ClientDashboardController {
             contentArea.getChildren().add(eventsRoot);
             logger.info("Events content loaded successfully");
         } catch (Exception e) {
+            
             logger.error("Error loading events UI", e);
+            NotificationUtils.showError("Impossible de charger la liste des événements");
         }
     }
 

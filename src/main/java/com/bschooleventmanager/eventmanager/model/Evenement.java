@@ -6,7 +6,7 @@ import com.bschooleventmanager.eventmanager.model.enums.StatutEvenement;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class Evenement {
+public abstract class Evenement {
     protected int idEvenement;
     protected int organisateurId;
     protected String nom;
@@ -23,11 +23,12 @@ public class Evenement {
     protected LocalDateTime dateCreation;
     protected StatutEvenement statut;
 
+    // Constructeur vide
     protected Evenement() {
         this.statut = StatutEvenement.A_VENIR;
     }
 
-    //db version
+    // Constructeur complet (pour la base de données)
     public Evenement(int idEvenement,
                      int organisateurId,
                      String nom,
@@ -64,24 +65,36 @@ public class Evenement {
         this.statut = statut;
     }
 
-
-    protected Evenement(int organisateurId, String nom, LocalDateTime dateEvenement,
-                        String lieu, TypeEvenement typeEvenement) {
+    // Constructeur de création (avec places et prix)
+    protected Evenement(int organisateurId, 
+                        String nom, 
+                        LocalDateTime dateEvenement,
+                        String lieu, 
+                        TypeEvenement typeEvenement, 
+                        String description,
+                        int placesStandard,
+                        int placesVip,
+                        int placesPremium,
+                        BigDecimal prixStandard,
+                        BigDecimal prixVip,
+                        BigDecimal prixPremium) {
         this.organisateurId = organisateurId;
         this.nom = nom;
         this.dateEvenement = dateEvenement;
         this.lieu = lieu;
         this.typeEvenement = typeEvenement;
-        this.statut = StatutEvenement.A_VENIR;
-    }
-
-    // Constructeur avec places et prix
-    protected Evenement(int organisateurId, String nom, LocalDateTime dateEvenement,
-                        String lieu, TypeEvenement typeEvenement, String description) {
-        this(organisateurId, nom, dateEvenement, lieu, typeEvenement);
         this.description = description;
+        this.placesStandardDisponibles = placesStandard;
+        this.placesVipDisponibles = placesVip;
+        this.placesPremiumDisponibles = placesPremium;
+        this.prixStandard = prixStandard;
+        this.prixVip = prixVip;
+        this.prixPremium = prixPremium;
+        this.statut = StatutEvenement.A_VENIR;
+        this.dateCreation = LocalDateTime.now();
     }
 
+    // Getters et Setters
     public int getIdEvenement() { return idEvenement; }
     public void setIdEvenement(int idEvenement) { this.idEvenement = idEvenement; }
 
@@ -132,6 +145,12 @@ public class Evenement {
 
     public StatutEvenement getStatut() { return statut; }
     public void setStatut(StatutEvenement statut) { this.statut = statut; }
+
+    // Méthodes abstraites à implémenter par les classes filles
+    public abstract String getCategorie(); 
+    public abstract int getCapaciteTotale();
+    public abstract BigDecimal calculerRecetteMaximale();
+    public abstract boolean peutEtreAnnule();
 
     @Override
     public String toString() {
