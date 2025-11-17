@@ -47,8 +47,16 @@ public class ClientEventsController {
     private final ObservableList<Evenement> masterData = FXCollections.observableArrayList();
     private FilteredList<Evenement> filteredData;
     private SortedList<Evenement> sortedData;
+    private ClientDashboardController dashboardController;
 
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+    /**
+     * Définit le contrôleur parent du dashboard pour la navigation
+     */
+    public void setDashboardController(ClientDashboardController dashboardController) {
+        this.dashboardController = dashboardController;
+    }
 
     @FXML
     public void initialize() {
@@ -143,7 +151,11 @@ public class ClientEventsController {
             );
             detailsBtn.setOnAction(event -> {
                 Evenement selectedEvent = getTableView().getItems().get(getIndex());
-                openEventDetails(selectedEvent);
+                if (dashboardController != null) {
+                    dashboardController.showEventDetails(selectedEvent);
+                } else {
+                    openEventDetails(selectedEvent);
+                }
             });
         }
 
