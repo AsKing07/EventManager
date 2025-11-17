@@ -42,6 +42,9 @@ public class ClientDashboardController {
     private Button eventsTab;
     
     @FXML
+    private Button reservationsTab;
+    
+    @FXML
     private Button profileTab;
     
     @FXML
@@ -85,6 +88,16 @@ public class ClientDashboardController {
         logger.info("Affichage du profil client");
         setActiveTab("profile");
         loadProfileContent();
+    }
+
+    /**
+     * Affiche l'historique des réservations
+     */
+    @FXML
+    private void showReservations() {
+        logger.info("Affichage de l'historique des réservations client");
+        setActiveTab("reservations");
+        loadReservationsContent();
     }
 
     /**
@@ -154,12 +167,16 @@ public class ClientDashboardController {
         
         // Réinitialiser tous les onglets
         eventsTab.setStyle(defaultStyle);
+        reservationsTab.setStyle(defaultStyle);
         profileTab.setStyle(defaultStyle);
         
         // Mettre en évidence l'onglet actif
         switch (tabName) {
             case "events":
                 eventsTab.setStyle(activeStyle);
+                break;
+            case "reservations":
+                reservationsTab.setStyle(activeStyle);
                 break;
             case "profile":
                 profileTab.setStyle(activeStyle);
@@ -241,6 +258,36 @@ public class ClientDashboardController {
         } catch (IOException e) {
             logger.error("Erreur lors du chargement du profil", e);
             NotificationUtils.showError("Impossible de charger l'interface de profil");
+        }
+    }
+
+    /**
+     * Charge le contenu de l'historique des réservations
+     */
+    private void loadReservationsContent() {
+        contentArea.getChildren().clear();
+        
+        try {
+            // Pour l'instant, on affiche un message temporaire
+            // TODO: Créer l'interface des réservations plus tard
+            Text tempMessage = new Text("Historique des réservations");
+            tempMessage.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #2c3e50;");
+            
+            Text tempSubMessage = new Text("Cette fonctionnalité sera disponible prochainement");
+            tempSubMessage.setStyle("-fx-font-size: 16px; -fx-fill: #7f8c8d;");
+            
+            javafx.scene.layout.VBox tempContent = new javafx.scene.layout.VBox();
+            tempContent.setAlignment(javafx.geometry.Pos.CENTER);
+            tempContent.setSpacing(20);
+            tempContent.getChildren().addAll(tempMessage, tempSubMessage);
+            
+            contentArea.getChildren().add(tempContent);
+            
+            logger.info("Contenu temporaire des réservations affiché");
+            
+        } catch (Exception e) {
+            logger.error("Erreur lors du chargement de l'historique des réservations", e);
+            NotificationUtils.showError("Impossible de charger l'historique des réservations");
         }
     }
 }
