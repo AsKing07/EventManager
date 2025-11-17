@@ -1,47 +1,79 @@
 package com.bschooleventmanager.eventmanager.model;
 
+import com.bschooleventmanager.eventmanager.model.enums.NiveauExpertise;
 import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
+import com.bschooleventmanager.eventmanager.model.enums.StatutEvenement;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class Conference extends Evenement {
+    protected String theme;
+    protected String intervenants;
+    protected String domaine;
+    protected NiveauExpertise niveauExpertise;
 
-    // Constructeur vide
+         // Constructeur vide
     public Conference() {
         super();
         this.typeEvenement = TypeEvenement.CONFERENCE;
     }
 
-    // Constructeur de création complet
-    public Conference(int organisateurId, 
-                     String nom, 
-                     LocalDateTime dateEvenement, 
-                     String lieu,
-                     String description,
-                     int placesStandard,
-                     int placesVip,
-                     int placesPremium,
-                     BigDecimal prixStandard,
-                     BigDecimal prixVip,
-                     BigDecimal prixPremium) {
-        super(organisateurId, nom, dateEvenement, lieu, TypeEvenement.CONFERENCE, description,
-              placesStandard, placesVip, placesPremium, prixStandard, prixVip, prixPremium);
+    public Conference(int organisateurId, String nom, LocalDateTime dateEvenement, String lieu, TypeEvenement typeEvenement, String description, int placesStandardDisponibles, int placesVipDisponibles, int placesPremiumDisponibles, BigDecimal prixStandard, BigDecimal prixVip, BigDecimal prixPremium, String intervenants, String domaine, NiveauExpertise niveauExpertise) {
+       super(organisateurId, nom, dateEvenement, lieu, TypeEvenement.CONFERENCE, description, placesStandardDisponibles, placesVipDisponibles, placesPremiumDisponibles, prixStandard, prixVip, prixPremium);
+        //this.theme = theme;
+        this.typeEvenement = TypeEvenement.CONFERENCE;
+        this.intervenants = intervenants;
+        this.domaine = domaine;
+        this.niveauExpertise = niveauExpertise;
     }
 
+
+
+ 
+
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+
+    public String getIntervenants() {
+        return intervenants;
+    }
+
+    public void setIntervenants(String intervenants) {
+        this.intervenants = intervenants;
+    }
+
+    public String getDomaine() {
+        return domaine;
+    }
+
+    public void setDomaine(String domaine) {
+        this.domaine = domaine;
+    }
+
+    public NiveauExpertise getNiveauExpertise() {
+        return niveauExpertise;
+    }
+
+    public void setNiveauExpertise(NiveauExpertise niveauExpertise) {
+        this.niveauExpertise = niveauExpertise;
+    }
+
+   
     // Implémentation des méthodes abstraites
     @Override
     public String getCategorie() {
         return typeEvenement.getLabel();
     }
-
-    @Override
-    public boolean peutEtreAnnule() {
-        
-       // Une conférence peut être annulée si sa date est dans plus de 14 jours
-        return dateEvenement.isAfter(LocalDateTime.now().plusDays(14));
-    }
-
 
     public void afficherInformations() {
         System.out.println("=== Conférence ===");
@@ -55,8 +87,16 @@ public class Conference extends Evenement {
         System.out.println("Recette maximale: " + calculerRecetteMaximale() + "€");
     }
 
+    @Override
 
-
+    public boolean peutEtreAnnule() {
+        LocalDateTime jour = LocalDateTime.now();
+        LocalDateTime jour24 = jour.plusDays(1);
+        // Une conférence peut être annulé que si l'annulation est faite au moins 24 heures avant la date de l'événement
+        return statut == StatutEvenement.A_VENIR &&
+                //dateEvenement.isAfter(LocalDateTime.now().plusHours(24));
+                dateEvenement.isAfter(jour24);
+    }
     @Override
     public int getCapaciteTotale() {
         return placesStandardDisponibles + placesVipDisponibles + placesPremiumDisponibles;

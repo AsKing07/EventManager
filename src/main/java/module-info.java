@@ -30,4 +30,7 @@ module com.bschooleventmanager.eventmanager {
     opens com.bschooleventmanager.eventmanager.controller.organisateur to javafx.fxml;
     opens com.bschooleventmanager.eventmanager.controller.client to javafx.fxml;
     opens com.bschooleventmanager.eventmanager.controller.shared to javafx.fxml;
+    opens com.bschooleventmanager.eventmanager.controller.events to javafx.fxml;
+
+
 }
