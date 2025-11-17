@@ -73,7 +73,7 @@ public class OrganisateurDashboardController {
      * Affiche le contenu du Dashboard
      */
     @FXML
-    private void showDashboard() {
+    public void showDashboard() {
         logger.info("Affichage du dashboard organisateur");
         setActiveTab("dashboard");
         loadDashboardContent();
@@ -97,6 +97,16 @@ public class OrganisateurDashboardController {
         logger.info("Affichage du profil organisateur");
         setActiveTab("profile");
         loadProfileContent();
+    }
+
+    /**
+     * Affiche l'interface de création d'événement
+     */
+    @FXML
+    private void showCreateEvent() {
+        logger.info("Affichage de l'interface de création d'événement");
+        setActiveTab(""); // Aucun onglet actif pour la création d'événement
+        loadCreateEventContent();
     }
 
     /**
@@ -197,8 +207,14 @@ public class OrganisateurDashboardController {
             
             Text subtitle = new Text("Ici sera affiché le tableau de bord avec les statistiques de vos événements");
             subtitle.setStyle("-fx-font-size: 16px; -fx-fill: #7f8c8d;");
+
+            Button button = new Button("Créer un événement");
+            button.setStyle("-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 15 30 15 30; -fx-background-radius: 5; -fx-font-weight: bold;");
+            button.setOnAction(e -> showCreateEvent());
+
+
             
-            javafx.scene.layout.VBox content = new javafx.scene.layout.VBox(20.0, title, subtitle);
+            javafx.scene.layout.VBox content = new javafx.scene.layout.VBox(20.0, title, subtitle, button);
             content.setAlignment(javafx.geometry.Pos.CENTER);
             
             contentArea.getChildren().add(content);
@@ -251,6 +267,29 @@ public class OrganisateurDashboardController {
         } catch (IOException e) {
             logger.error("Erreur lors du chargement du profil", e);
             NotificationUtils.showError("Impossible de charger l'interface de profil");
+        }
+    }
+
+    /**
+     * Charge le contenu de création d'événement
+     */
+    private void loadCreateEventContent() {
+        contentArea.getChildren().clear();
+        
+        try {
+            // Charger l'interface de création d'événement
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/organisateur/Events/addEvent.fxml"));
+            Parent createEventContent = loader.load();
+            
+            // Récupérer le contrôleur pour passer une référence au dashboard
+            com.bschooleventmanager.eventmanager.controller.events.CreateEventController eventController = loader.getController();
+            eventController.setDashboardController(this);
+            
+            contentArea.getChildren().add(createEventContent);
+            
+        } catch (IOException e) {
+            logger.error("Erreur lors du chargement de l'interface de création d'événement", e);
+            NotificationUtils.showError("Impossible de charger l'interface de création d'événement");
         }
     }
 }

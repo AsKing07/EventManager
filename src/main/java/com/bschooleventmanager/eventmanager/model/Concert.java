@@ -1,33 +1,92 @@
 package com.bschooleventmanager.eventmanager.model;
 
+import com.bschooleventmanager.eventmanager.model.enums.TypeConcert;
 import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
 import com.bschooleventmanager.eventmanager.model.enums.StatutEvenement;
 
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class Concert extends Evenement {
+    protected String artiste_groupe;
+    protected TypeConcert type;
+    protected Integer ageMin;
+
 
     // Constructeur vide
     public Concert() {
         super();
         this.typeEvenement = TypeEvenement.CONCERT;
     }
-    // Constructeur de création complet
-    public Concert(int organisateurId, 
-                     String nom, 
-                     LocalDateTime dateEvenement, 
-                     String lieu,
-                     String description,
-                     int placesStandard,
-                     int placesVip,
-                     int placesPremium,
-                     BigDecimal prixStandard,
-                     BigDecimal prixVip,
-                     BigDecimal prixPremium) {
-        super(organisateurId, nom, dateEvenement, lieu, TypeEvenement.CONCERT, description,
-              placesStandard, placesVip, placesPremium, prixStandard, prixVip, prixPremium);
+// Constructeur complet (pour la base de données)
+    public Concert(int organisateurId, String nom, LocalDateTime dateEvenement, String lieu, String description, int placesStandardDisponibles, int placesVipDisponibles, int placesPremiumDisponibles, BigDecimal prixStandard, BigDecimal prixVip, BigDecimal prixPremium, LocalDateTime dateCreation, String artiste_groupe, TypeConcert type, Integer ageMin) {
+        super(organisateurId, nom, dateEvenement, lieu, TypeEvenement.CONCERT, description, placesStandardDisponibles, placesVipDisponibles, placesPremiumDisponibles, prixStandard, prixVip, prixPremium);
+        this.typeEvenement = TypeEvenement.CONCERT;
+        this.artiste_groupe = artiste_groupe;
+        this.type = type;
+        this.ageMin = ageMin;
     }
+
+    //Constructeur de création de concert (avec prix et places)
+    public Concert(int organisateurId, 
+                        String nom, 
+                        LocalDateTime dateEvenement,
+                        String lieu, 
+                        TypeEvenement typeEvenement, 
+                        String description,
+                        int placesStandard,
+                        int placesVip,
+                        int placesPremium,
+                        BigDecimal prixStandard,
+                        BigDecimal prixVip,
+                        BigDecimal prixPremium, String artiste_groupe, TypeConcert type, Integer ageMin) {
+        super( organisateurId, 
+               nom, 
+               dateEvenement, 
+               lieu, 
+               TypeEvenement.CONCERT, 
+               description, 
+               placesStandard, 
+               placesVip, 
+               placesPremium, 
+               prixStandard, 
+               prixVip, 
+               prixPremium);
+        this.typeEvenement = TypeEvenement.CONCERT;
+        this.artiste_groupe = artiste_groupe;
+        this.type = type;
+        this.ageMin = ageMin;
+    }
+
+    public String getArtiste_groupe() {
+        return artiste_groupe;
+    }
+
+    public void setArtiste_groupe(String artiste_groupe) {
+        this.artiste_groupe = artiste_groupe;
+    }
+
+    public TypeConcert getType() {
+        return type;
+    }
+
+    public void setType(TypeConcert type) {
+        this.type = type;
+    }
+
+    public Integer getAgeMin() {
+        return ageMin;
+    }
+
+    public void setAgeMin(Integer ageMin) {
+        this.ageMin = ageMin;
+    }
+
+   
 
     // Implémentation des méthodes abstraites
     @Override
@@ -35,18 +94,11 @@ public class Concert extends Evenement {
         return typeEvenement.getLabel();
     }
 
- 
-    @Override
-    public boolean peutEtreAnnule() {
-        // Un concert peut être annulé si sa date est dans plus de 7 jours
-        return dateEvenement.isAfter(LocalDateTime.now().plusDays(7));
-    }
-
-
+   
     public void afficherInformations() {
         System.out.println("=== Concert ===");
         System.out.println("ID: " + idEvenement);
-        System.out.println("Nom: " + nom);
+        System.out.println("titre: " + nom);
         System.out.println("Date: " + dateEvenement);
         System.out.println("Lieu: " + lieu);
         System.out.println("Description: " + description);
@@ -56,13 +108,24 @@ public class Concert extends Evenement {
     }
 
     @Override
+    public boolean peutEtreAnnule() {
+        LocalDateTime jour = LocalDateTime.now();
+        LocalDateTime jour24 = jour.plusDays(1);
+        // Un concert peut être annulé que si l'annulation est faite au moins 24 heures avant la date de l'événement
+        return statut == StatutEvenement.A_VENIR &&
+                //dateEvenement.isAfter(LocalDateTime.now().plusHours(24));
+                dateEvenement.isAfter(jour24);
+        
+    }
+
+    @Override
     public int getCapaciteTotale() {
         return placesStandardDisponibles + placesVipDisponibles + placesPremiumDisponibles;
     }
 
     @Override
     public BigDecimal calculerRecetteMaximale() {
-        BigDecimal recetteStandard = prixStandard != null ? 
+        BigDecimal recetteStandard = prixStandard != null ?
             prixStandard.multiply(BigDecimal.valueOf(placesStandardDisponibles)) : BigDecimal.ZERO;
         BigDecimal recetteVip = prixVip != null ? 
             prixVip.multiply(BigDecimal.valueOf(placesVipDisponibles)) : BigDecimal.ZERO;

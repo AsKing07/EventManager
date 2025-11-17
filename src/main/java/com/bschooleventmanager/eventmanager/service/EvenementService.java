@@ -1,6 +1,13 @@
 package com.bschooleventmanager.eventmanager.service;
 
+import com.bschooleventmanager.eventmanager.dao.ConcertDAO;
+import com.bschooleventmanager.eventmanager.dao.ConferenceDAO;
 import com.bschooleventmanager.eventmanager.dao.EvenementDAO;
+import com.bschooleventmanager.eventmanager.dao.SpectacleDAO;
+import com.bschooleventmanager.eventmanager.model.*;
+import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
+import com.bschooleventmanager.eventmanager.util.NotificationUtils;
+import com.bschooleventmanager.eventmanager.model.enums.StatutEvenement;
 import com.bschooleventmanager.eventmanager.exception.BusinessException;
 import com.bschooleventmanager.eventmanager.exception.DatabaseException;
 import com.bschooleventmanager.eventmanager.model.*;
@@ -11,13 +18,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 public class EvenementService {
     private static final Logger logger = LoggerFactory.getLogger(EvenementService.class);
-
-    private final EvenementDAO evenementDAO = new EvenementDAO();
+    private static final EvenementDAO evenementDAO = new EvenementDAO();
+    private static final ConcertDAO concertDAO = new ConcertDAO();
+    private static final SpectacleDAO spectacleDao = new SpectacleDAO();
+    private static final ConferenceDAO conferenceDAO = new ConferenceDAO();
 
     public List<Evenement> getAllEvents() {
         logger.info("Service: Fetching all events...");
@@ -30,20 +41,16 @@ public class EvenementService {
     /**
      * Créer un nouveau concert 
      */
-    public Concert creerConcert(int organisateurId, String nom, LocalDateTime dateEvenement, 
-                               String lieu, String description, int placesStandard, 
-                               int placesVip, int placesPremium, BigDecimal prixStandard,
-                               BigDecimal prixVip, BigDecimal prixPremium) throws BusinessException {
+    public static Concert creerConcert(Concert concert) throws BusinessException {
         try {
             // Validation des données
-            validerDonneesEvenement(nom, dateEvenement, lieu, placesStandard, placesVip, placesPremium);
+            validerDonneesEvenement(concert.getNom(), concert.getDateEvenement(), concert.getLieu(), concert.getPlacesStandardDisponibles(), concert.getPlacesVipDisponibles(), concert.getPlacesPremiumDisponibles());
 
-            // Création du concert
-            Concert concert = new Concert(organisateurId, nom, dateEvenement, lieu, description, placesStandard, placesVip, placesPremium, prixStandard, prixVip, prixPremium);
-        
 
-            Concert result = (Concert) evenementDAO.creer(concert);
-            logger.info("✓ Concert créé: {}", nom);
+
+            Concert result = concertDAO.creer(concert);
+            
+            logger.info("✓ Concert créé: {}", concert.getNom());
             return result;
 
         } catch (DatabaseException e) {
@@ -56,29 +63,14 @@ public class EvenementService {
     /**
      * Créer une nouvelle conférence
      */
-    public Conference creerConference(int organisateurId, String nom, LocalDateTime dateEvenement, 
-                                     String lieu, String description, int placesStandard, 
-                                     int placesVip, int placesPremium, BigDecimal prixStandard, BigDecimal prixPremium, BigDecimal prixVip) throws BusinessException {
+    public static Conference creerConference(Conference conference) throws BusinessException {
         try {
             // Validation des données
-            validerDonneesEvenement(nom, dateEvenement, lieu, placesStandard, placesVip, placesPremium);
+            validerDonneesEvenement(conference.getNom(), conference.getDateEvenement(), conference.getLieu(), conference.getPlacesStandardDisponibles(), conference.getPlacesVipDisponibles(), conference.getPlacesPremiumDisponibles());
 
-            // Création de la conférence
-            Conference conference = new Conference(organisateurId, 
-                     nom, 
-                     dateEvenement, 
-                     lieu,
-                     description,
-                     placesStandard,
-                     placesVip,
-                     placesPremium,
-                     prixStandard,
-                     prixVip,
-                     prixPremium);
-            
 
-            Conference result = (Conference) evenementDAO.creer(conference);
-            logger.info("✓ Conférence créée: {}", nom);
+            Conference result = (Conference) conferenceDAO.creer(conference);
+            logger.info("✓ Conférence créée: {}", conference.getNom());
             return result;
 
         } catch (DatabaseException e) {
@@ -90,22 +82,19 @@ public class EvenementService {
 
 
     /**
-     * Créer un nouveau spectacle 
+    /**
+     * Créer un nouveau spectacle
      */
-    public Spectacle creerSpectacle(int organisateurId, String nom, LocalDateTime dateEvenement, 
-                                   String lieu, String description, int placesStandard, 
-                                   int placesVip, int placesPremium, BigDecimal prixPremium, BigDecimal prixStandard, BigDecimal prixVip) throws BusinessException {
+    public static Spectacle creerSpectacle(Spectacle spectacle) throws BusinessException {
         try {
             // Validation des données
-            validerDonneesEvenement(nom, dateEvenement, lieu, placesStandard, placesVip, placesPremium);
+            validerDonneesEvenement(spectacle.getNom(), spectacle.getDateEvenement(), spectacle.getLieu(), spectacle.getPlacesStandardDisponibles(), spectacle.getPlacesVipDisponibles(), spectacle.getPlacesPremiumDisponibles());
 
           
-            // Création du spectacle
-            Spectacle spectacle = new Spectacle (organisateurId, nom, dateEvenement, lieu, description, placesStandard, placesVip, placesPremium, prixStandard, prixVip, prixPremium);
-            
+          
 
-            Spectacle result = (Spectacle) evenementDAO.creer(spectacle);
-            logger.info("✓ Spectacle créé: {}", nom);
+            Spectacle result = (Spectacle) spectacleDao.creer(spectacle);
+            logger.info("✓ Spectacle créé: {}", spectacle.getNom());
             return result;
 
         } catch (DatabaseException e) {
@@ -142,6 +131,7 @@ public class EvenementService {
             logger.error("Erreur récupération événements organisateur", e);
             throw new BusinessException("Erreur récupération événements organisateur", e);
         }
+       
     }
 
     /**
@@ -154,6 +144,7 @@ public class EvenementService {
             logger.error("Erreur récupération événements par type", e);
             throw new BusinessException("Erreur récupération événements par type", e);
         }
+       
     }
 
     /**
@@ -176,6 +167,9 @@ public class EvenementService {
             logger.error("Erreur annulation événement", e);
             throw new BusinessException("Erreur lors de l'annulation", e);
         }
+        catch (BusinessException e) {
+            NotificationUtils.showError(e.getMessage());
+        }
     }
 
     /**
@@ -187,12 +181,15 @@ public class EvenementService {
                 throw new BusinessException("Impossible de modifier un événement terminé");
             }
 
-            evenementDAO.updateEvent(evenement);
+            evenementDAO.mettreAJour(evenement);
             logger.info("✓ Événement modifié: {}", evenement.getNom());
 
         } catch (DatabaseException e) {
             logger.error("Erreur modification événement", e);
             throw new BusinessException("Erreur modification événement", e);
+        }
+        catch (BusinessException e) {
+            NotificationUtils.showError(e.getMessage());
         }
     }
 
@@ -202,8 +199,8 @@ public class EvenementService {
     /**
      * Validation simple des données d'événement
      */
-    private void validerDonneesEvenement(String nom, LocalDateTime dateEvenement, String lieu,
-                                              int placesStandard, int placesVip, int placesPremium) throws BusinessException {
+    private static void validerDonneesEvenement(String nom, LocalDateTime dateEvenement, String lieu,
+                                         int placesStandard, int placesVip, int placesPremium) throws BusinessException {
         if (nom == null || nom.trim().isEmpty()) {
             throw new BusinessException("Le nom de l'événement ne peut pas être vide");
         }
