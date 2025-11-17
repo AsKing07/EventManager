@@ -22,10 +22,20 @@ public abstract class Evenement {
     protected BigDecimal prixPremium;
     protected LocalDateTime dateCreation;
     protected StatutEvenement statut;
+    
+    // Nouvelles colonnes pour le suivi des ventes
+    protected int placeStandardVendues;
+    protected int placePremiumVendues;
+    protected int placeVipVendues;
+    protected boolean etatEvent;
 
     // Constructeur vide
     protected Evenement() {
         this.statut = StatutEvenement.A_VENIR;
+        this.placeStandardVendues = 0;
+        this.placePremiumVendues = 0;
+        this.placeVipVendues = 0;
+        this.etatEvent = true; // Par défaut, l'événement est actif
     }
 
     // Constructeur complet (pour la base de données)
@@ -92,6 +102,11 @@ public abstract class Evenement {
         this.prixPremium = prixPremium;
         this.statut = StatutEvenement.A_VENIR;
         this.dateCreation = LocalDateTime.now();
+        // Initialisation des nouvelles colonnes
+        this.placeStandardVendues = 0;
+        this.placePremiumVendues = 0;
+        this.placeVipVendues = 0;
+        this.etatEvent = true; // Par défaut, l'événement est actif
     }
 
     // Getters et Setters
@@ -145,6 +160,42 @@ public abstract class Evenement {
 
     public StatutEvenement getStatut() { return statut; }
     public void setStatut(StatutEvenement statut) { this.statut = statut; }
+
+    // Getters et Setters pour les nouvelles colonnes
+    public int getPlaceStandardVendues() { return placeStandardVendues; }
+    public void setPlaceStandardVendues(int placeStandardVendues) { this.placeStandardVendues = placeStandardVendues; }
+
+    public int getPlacePremiumVendues() { return placePremiumVendues; }
+    public void setPlacePremiumVendues(int placePremiumVendues) { this.placePremiumVendues = placePremiumVendues; }
+
+    public int getPlaceVipVendues() { return placeVipVendues; }
+    public void setPlaceVipVendues(int placeVipVendues) { this.placeVipVendues = placeVipVendues; }
+
+    public boolean isEtatEvent() { return etatEvent; }
+    public void setEtatEvent(boolean etatEvent) { this.etatEvent = etatEvent; }
+
+    // Méthodes utilitaires pour les ventes
+    public int getPlacesStandardRestantes() {
+        return Math.max(0, placesStandardDisponibles - placeStandardVendues);
+    }
+
+    public int getPlacesVipRestantes() {
+        return Math.max(0, placesVipDisponibles - placeVipVendues);
+    }
+
+    public int getPlacesPremiumRestantes() {
+        return Math.max(0, placesPremiumDisponibles - placePremiumVendues);
+    }
+
+    public int getTotalPlacesVendues() {
+        return placeStandardVendues + placeVipVendues + placePremiumVendues;
+    }
+
+    public double getTauxRemplissage() {
+        int totalPlaces = getCapaciteTotale();
+        if (totalPlaces == 0) return 0.0;
+        return (double) getTotalPlacesVendues() / totalPlaces * 100.0;
+    }
 
     // Méthodes abstraites à implémenter par les classes filles
     public abstract String getCategorie(); 

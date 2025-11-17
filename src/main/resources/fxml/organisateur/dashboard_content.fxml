@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/24" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bschooleventmanager.eventmanager.controller.organisateur.OrganisateurDashboardContentController">
+
+    <top>
+        <HBox spacing="10" style="-fx-padding: 10; -fx-alignment: center-left;">
+            <Label text="Tableau de bord" style="-fx-font-size:18px; -fx-font-weight:bold;"/>
+            <Separator orientation="VERTICAL"/>
+            <Label fx:id="lblSummary" text="Aperçu rapide" />
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button fx:id="btnCreateEvent" text="Créer un événement" />
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="12" style="-fx-padding: 12;">
+            <!-- Filters -->
+            <HBox spacing="10">
+                <Label text="Filtrer :" style="-fx-font-weight:bold;"/>
+                <Label text="Du" />
+                <DatePicker fx:id="dpFrom" />
+                <Label text="Au" />
+                <DatePicker fx:id="dpTo" />
+                <Label text="Type" />
+                <ComboBox fx:id="cbType" prefWidth="160" />
+                <Button fx:id="btnApplyFilters" text="Actualiser" />
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button fx:id="btnExportCsv" text="Exporter CSV" />
+                <Button fx:id="btnExportPdf" text="Exporter PDF" />
+            </HBox>
+
+            <!-- Top metrics -->
+            <HBox spacing="15">
+                <VBox spacing="6" style="-fx-padding:10; -fx-background-color: #ffffff; -fx-border-color: #e1e1e1; -fx-border-radius: 4; -fx-background-radius: 4;">
+                    <Label text="Total événements" style="-fx-font-weight:bold; -fx-font-size:12px;"/>
+                    <Label fx:id="lblTotalEvents" text="0" style="-fx-font-size:18px; -fx-text-fill: #2196F3;"/>
+                </VBox>
+                <VBox spacing="6" style="-fx-padding:10; -fx-background-color: #ffffff; -fx-border-color: #e1e1e1; -fx-border-radius: 4; -fx-background-radius: 4;">
+                    <Label text="Chiffre d'affaires réel" style="-fx-font-weight:bold; -fx-font-size:12px;"/>
+                    <Label fx:id="lblTotalRevenue" text="0 €" style="-fx-font-size:18px; -fx-text-fill: #4CAF50;"/>
+                </VBox>
+                <VBox spacing="6" style="-fx-padding:10; -fx-background-color: #ffffff; -fx-border-color: #e1e1e1; -fx-border-radius: 4; -fx-background-radius: 4;">
+                    <Label text="Taux de remplissage moyen" style="-fx-font-weight:bold; -fx-font-size:12px;"/>
+                    <Label fx:id="lblAvgFillRate" text="N/A" style="-fx-font-size:18px; -fx-text-fill: #FF9800;"/>
+                </VBox>
+                <VBox spacing="6" style="-fx-padding:10; -fx-background-color: #ffffff; -fx-border-color: #e1e1e1; -fx-border-radius: 4; -fx-background-radius: 4;">
+                    <Label text="Total places vendues" style="-fx-font-weight:bold; -fx-font-size:12px;"/>
+                    <Label fx:id="lblTotalTicketsSold" text="0" style="-fx-font-size:18px; -fx-text-fill: #9C27B0;"/>
+                </VBox>
+                <VBox spacing="6" style="-fx-padding:10; -fx-background-color: #ffffff; -fx-border-color: #e1e1e1; -fx-border-radius: 4; -fx-background-radius: 4;">
+                    <Label text="Événements actifs" style="-fx-font-weight:bold; -fx-font-size:12px;"/>
+                    <Label fx:id="lblActiveEvents" text="0" style="-fx-font-size:18px; -fx-text-fill: #607D8B;"/>
+                </VBox>
+            </HBox>
+
+            <!-- Charts -->
+            <HBox spacing="12">
+                <PieChart fx:id="pieByType" prefWidth="360" prefHeight="300" />
+                <BarChart fx:id="barRevenueByType" prefWidth="600" prefHeight="300">
+                    <xAxis>
+                        <CategoryAxis />
+                    </xAxis>
+                    <yAxis>
+                        <NumberAxis />
+                    </yAxis>
+                </BarChart>
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>

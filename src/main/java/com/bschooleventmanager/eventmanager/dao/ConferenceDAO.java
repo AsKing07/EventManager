@@ -17,8 +17,8 @@ public class ConferenceDAO extends BaseDAO<Conference> {
         String query = "INSERT INTO evenements (organisateur_id, nom, date_evenement, lieu, type_evenement, " +
                 "description, places_standard_disponibles, places_vip_disponibles, " +
                 "places_premium_disponibles, prix_standard, prix_vip, prix_premium," +
-                "Domaine,intervenant,niveau_expertise) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "Domaine,intervenant,niveau_expertise, place_standard_vendues, place_p_vendu, place_vip_vendu, etat_event) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 Connection connection = getConnection();
 
         try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -38,6 +38,10 @@ Connection connection = getConnection();
             pstmt.setString(13, conference.getDomaine());
             pstmt.setString(14, conference.getIntervenants());
             pstmt.setString(15, conference.getNiveauExpertise().getLabel());
+            pstmt.setInt(16, conference.getPlaceStandardVendues());
+            pstmt.setInt(17, conference.getPlacePremiumVendues());
+            pstmt.setInt(18, conference.getPlaceVipVendues());
+            pstmt.setBoolean(19, conference.isEtatEvent());
 
             int affectedRows = pstmt.executeUpdate();
             //pstmt.close();

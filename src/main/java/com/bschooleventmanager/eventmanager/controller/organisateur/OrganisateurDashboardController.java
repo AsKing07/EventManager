@@ -103,7 +103,7 @@ public class OrganisateurDashboardController {
      * Affiche l'interface de création d'événement
      */
     @FXML
-    private void showCreateEvent() {
+    public void showCreateEvent() {
         logger.info("Affichage de l'interface de création d'événement");
         setActiveTab(""); // Aucun onglet actif pour la création d'événement
         loadCreateEventContent();
@@ -200,27 +200,34 @@ public class OrganisateurDashboardController {
      */
     private void loadDashboardContent() {
         contentArea.getChildren().clear();
-        
         try {
-            Text title = new Text("Dashboard Organisateur");
-            title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #2c3e50;");
-            
-            Text subtitle = new Text("Ici sera affiché le tableau de bord avec les statistiques de vos événements");
-            subtitle.setStyle("-fx-font-size: 16px; -fx-fill: #7f8c8d;");
+            // Charger le contenu FXML dédié au dashboard
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/organisateur/dashboard_content.fxml"));
+            Parent dashboardContent = loader.load();
 
-            Button button = new Button("Créer un événement");
-            button.setStyle("-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 15 30 15 30; -fx-background-radius: 5; -fx-font-weight: bold;");
-            button.setOnAction(e -> showCreateEvent());
+            // Transmettre la référence du contrôleur parent au contrôleur du contenu afin de pouvoir
+            // rediriger vers la création d'événement
+            com.bschooleventmanager.eventmanager.controller.organisateur.OrganisateurDashboardContentController contentController = loader.getController();
+            contentController.setParentController(this);
 
-
-            
-            javafx.scene.layout.VBox content = new javafx.scene.layout.VBox(20.0, title, subtitle, button);
-            content.setAlignment(javafx.geometry.Pos.CENTER);
-            
-            contentArea.getChildren().add(content);
-            
+            contentArea.getChildren().add(dashboardContent);
         } catch (Exception e) {
             logger.error("Erreur lors du chargement du dashboard", e);
+            // Fallback simple si le FXML échoue
+            try {
+                Text title = new Text("Dashboard Organisateur");
+                title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #2c3e50;");
+                Text subtitle = new Text("Ici sera affiché le tableau de bord avec les statistiques de vos événements");
+                subtitle.setStyle("-fx-font-size: 16px; -fx-fill: #7f8c8d;");
+                Button button = new Button("Créer un événement");
+                button.setStyle("-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 15 30 15 30; -fx-background-radius: 5; -fx-font-weight: bold;");
+                button.setOnAction(e2 -> showCreateEvent());
+                javafx.scene.layout.VBox content = new javafx.scene.layout.VBox(20.0, title, subtitle, button);
+                content.setAlignment(javafx.geometry.Pos.CENTER);
+                contentArea.getChildren().add(content);
+            } catch (Exception ex) {
+                logger.error("Erreur fallback dashboard", ex);
+            }
         }
     }
 

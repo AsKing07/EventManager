@@ -18,8 +18,8 @@ public class SpectacleDAO extends BaseDAO<Spectacle> {
         String query = "INSERT INTO evenements (organisateur_id, nom, date_evenement, lieu, type_evenement, " +
                 "description, places_standard_disponibles, places_vip_disponibles, " +
                 "places_premium_disponibles, prix_standard, prix_vip, prix_premium," +
-                "artiste_groupe,age_min,type_spectacle) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "artiste_groupe,age_min,type_spectacle, place_standard_vendues, place_p_vendu, place_vip_vendu, etat_event) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 Connection connection = getConnection();
 
         try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -38,6 +38,10 @@ Connection connection = getConnection();
             pstmt.setString(13, spectacle.getTroupe_artistes());
             pstmt.setInt(14, spectacle.getAgeMin());
             pstmt.setString(15, spectacle.getTypeSpectacle().getLabel());
+            pstmt.setInt(16, spectacle.getPlaceStandardVendues());
+            pstmt.setInt(17, spectacle.getPlacePremiumVendues());
+            pstmt.setInt(18, spectacle.getPlaceVipVendues());
+            pstmt.setBoolean(19, spectacle.isEtatEvent());
 
             int affectedRows = pstmt.executeUpdate();
            
