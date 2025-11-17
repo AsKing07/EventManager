@@ -36,7 +36,7 @@ public class Main extends Application {
             // Configurer la fenêtre principale
             primaryStage.setTitle(AppConfig.getAppTitle());
             primaryStage.setScene(scene);
-            primaryStage.setResizable(true); // Permettre le redimensionnement
+            primaryStage.setResizable(true);
             
             // Configurer la fenêtre selon les paramètres
             WindowUtils.configureStage(primaryStage);

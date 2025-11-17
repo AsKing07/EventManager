@@ -13,15 +13,20 @@ public class Concert extends Evenement {
         super();
         this.typeEvenement = TypeEvenement.CONCERT;
     }
-
-    // Constructeur de base
-    public Concert(int organisateurId, String nom, LocalDateTime dateEvenement, String lieu) {
-        super(organisateurId, nom, dateEvenement, lieu, TypeEvenement.CONCERT);
-    }
-
-    // Constructeur avec description
-    public Concert(int organisateurId, String nom, LocalDateTime dateEvenement, String lieu, String description) {
-        super(organisateurId, nom, dateEvenement, lieu, TypeEvenement.CONCERT, description);
+    // Constructeur de création complet
+    public Concert(int organisateurId, 
+                     String nom, 
+                     LocalDateTime dateEvenement, 
+                     String lieu,
+                     String description,
+                     int placesStandard,
+                     int placesVip,
+                     int placesPremium,
+                     BigDecimal prixStandard,
+                     BigDecimal prixVip,
+                     BigDecimal prixPremium) {
+        super(organisateurId, nom, dateEvenement, lieu, TypeEvenement.CONCERT, description,
+              placesStandard, placesVip, placesPremium, prixStandard, prixVip, prixPremium);
     }
 
     // Implémentation des méthodes abstraites
@@ -30,7 +35,14 @@ public class Concert extends Evenement {
         return typeEvenement.getLabel();
     }
 
+ 
     @Override
+    public boolean peutEtreAnnule() {
+        // Un concert peut être annulé si sa date est dans plus de 7 jours
+        return dateEvenement.isAfter(LocalDateTime.now().plusDays(7));
+    }
+
+
     public void afficherInformations() {
         System.out.println("=== Concert ===");
         System.out.println("ID: " + idEvenement);
@@ -41,13 +53,6 @@ public class Concert extends Evenement {
         System.out.println("Statut: " + statut.getLabel());
         System.out.println("Capacité totale: " + getCapaciteTotale());
         System.out.println("Recette maximale: " + calculerRecetteMaximale() + "€");
-    }
-
-    @Override
-    public boolean peutEtreAnnule() {
-        // Un concert peut être annulé s'il n'a pas encore commencé
-        return statut == StatutEvenement.A_VENIR && 
-               dateEvenement.isAfter(LocalDateTime.now().plusHours(24));
     }
 
     @Override

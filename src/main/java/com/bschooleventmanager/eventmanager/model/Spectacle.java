@@ -14,14 +14,20 @@ public class Spectacle extends Evenement {
         this.typeEvenement = TypeEvenement.SPECTACLE;
     }
 
-    // Constructeur de base
-    public Spectacle(int organisateurId, String nom, LocalDateTime dateEvenement, String lieu) {
-        super(organisateurId, nom, dateEvenement, lieu, TypeEvenement.SPECTACLE);
-    }
-
-    // Constructeur avec description
-    public Spectacle(int organisateurId, String nom, LocalDateTime dateEvenement, String lieu, String description) {
-        super(organisateurId, nom, dateEvenement, lieu, TypeEvenement.SPECTACLE, description);
+    // Constructeur de création complet
+    public Spectacle(int organisateurId, 
+                     String nom, 
+                     LocalDateTime dateEvenement, 
+                     String lieu,
+                     String description,
+                     int placesStandard,
+                     int placesVip,
+                     int placesPremium,
+                     BigDecimal prixStandard,
+                     BigDecimal prixVip,
+                     BigDecimal prixPremium) {
+        super(organisateurId, nom, dateEvenement, lieu, TypeEvenement.SPECTACLE, description,
+              placesStandard, placesVip, placesPremium, prixStandard, prixVip, prixPremium);
     }
 
     // Implémentation des méthodes abstraites
@@ -30,7 +36,7 @@ public class Spectacle extends Evenement {
         return typeEvenement.getLabel();
     }
 
-    @Override
+    
     public void afficherInformations() {
         System.out.println("=== Spectacle ===");
         System.out.println("ID: " + idEvenement);
@@ -43,16 +49,17 @@ public class Spectacle extends Evenement {
         System.out.println("Recette maximale: " + calculerRecetteMaximale() + "€");
     }
 
-    @Override
-    public boolean peutEtreAnnule() {
-        // Un spectacle peut être annulé jusqu'à 4 heures avant le début
-        return statut == StatutEvenement.A_VENIR && 
-               dateEvenement.isAfter(LocalDateTime.now().plusHours(4));
-    }
+
 
     @Override
     public int getCapaciteTotale() {
         return placesStandardDisponibles + placesVipDisponibles + placesPremiumDisponibles;
+    }
+
+    @Override
+    public boolean peutEtreAnnule() {
+        // Un spectacle peut être annulé si sa date est dans plus de 10 jours
+        return dateEvenement.isAfter(LocalDateTime.now().plusDays(10));
     }
 
     @Override
@@ -76,13 +83,8 @@ public class Spectacle extends Evenement {
         return true; // Un spectacle a généralement des costumes
     }
 
-    public boolean aEntracte() {
-        return getCapaciteTotale() > 200; // Entracte pour les grands spectacles
-    }
 
-    public int getDureeEstimeeMinutes() {
-        return 150; // Durée standard d'un spectacle : 2h30
-    }
+
 
     @Override
     public String toString() {

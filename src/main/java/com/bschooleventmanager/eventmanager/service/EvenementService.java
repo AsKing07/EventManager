@@ -1,11 +1,12 @@
 package com.bschooleventmanager.eventmanager.service;
 
 import com.bschooleventmanager.eventmanager.dao.EvenementDAO;
-import com.bschooleventmanager.eventmanager.model.*;
-import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
-import com.bschooleventmanager.eventmanager.model.enums.StatutEvenement;
 import com.bschooleventmanager.eventmanager.exception.BusinessException;
 import com.bschooleventmanager.eventmanager.exception.DatabaseException;
+import com.bschooleventmanager.eventmanager.model.*;
+import com.bschooleventmanager.eventmanager.model.enums.StatutEvenement;
+import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +16,16 @@ import java.util.List;
 
 public class EvenementService {
     private static final Logger logger = LoggerFactory.getLogger(EvenementService.class);
+
     private final EvenementDAO evenementDAO = new EvenementDAO();
+
+    public List<Evenement> getAllEvents() {
+        logger.info("Service: Fetching all events...");
+        List<Evenement> list = evenementDAO.getAllEvents();
+        logger.info("Service: {} events retrieved : " + list.size());
+        return list;
+    }
+
 
     /**
      * Créer un nouveau concert 
@@ -29,15 +39,8 @@ public class EvenementService {
             validerDonneesEvenement(nom, dateEvenement, lieu, placesStandard, placesVip, placesPremium);
 
             // Création du concert
-            Concert concert = new Concert(organisateurId, nom, dateEvenement, lieu, description);
-            
-            // Configuration des places et prix
-            concert.setPlacesStandardDisponibles(placesStandard);
-            concert.setPlacesVipDisponibles(placesVip);
-            concert.setPlacesPremiumDisponibles(placesPremium);
-            concert.setPrixStandard(prixStandard);
-            concert.setPrixVip(prixVip);
-            concert.setPrixPremium(prixPremium);
+            Concert concert = new Concert(organisateurId, nom, dateEvenement, lieu, description, placesStandard, placesVip, placesPremium, prixStandard, prixVip, prixPremium);
+        
 
             Concert result = (Concert) evenementDAO.creer(concert);
             logger.info("✓ Concert créé: {}", nom);
@@ -61,15 +64,18 @@ public class EvenementService {
             validerDonneesEvenement(nom, dateEvenement, lieu, placesStandard, placesVip, placesPremium);
 
             // Création de la conférence
-            Conference conference = new Conference(organisateurId, nom, dateEvenement, lieu, description);
+            Conference conference = new Conference(organisateurId, 
+                     nom, 
+                     dateEvenement, 
+                     lieu,
+                     description,
+                     placesStandard,
+                     placesVip,
+                     placesPremium,
+                     prixStandard,
+                     prixVip,
+                     prixPremium);
             
-            // Configuration des places et prix
-            conference.setPlacesStandardDisponibles(placesStandard);
-            conference.setPlacesVipDisponibles(placesVip);
-            conference.setPlacesPremiumDisponibles(placesPremium);
-            conference.setPrixStandard(prixStandard);
-            conference.setPrixVip(prixVip);
-            conference.setPrixPremium(prixPremium);
 
             Conference result = (Conference) evenementDAO.creer(conference);
             logger.info("✓ Conférence créée: {}", nom);
@@ -93,17 +99,10 @@ public class EvenementService {
             // Validation des données
             validerDonneesEvenement(nom, dateEvenement, lieu, placesStandard, placesVip, placesPremium);
 
+          
             // Création du spectacle
-            Spectacle spectacle = new Spectacle(organisateurId, nom, dateEvenement, lieu, description);
+            Spectacle spectacle = new Spectacle (organisateurId, nom, dateEvenement, lieu, description, placesStandard, placesVip, placesPremium, prixStandard, prixVip, prixPremium);
             
-            // Configuration des places et prix
-            spectacle.setPlacesStandardDisponibles(placesStandard);
-            spectacle.setPlacesVipDisponibles(placesVip);
-            spectacle.setPlacesPremiumDisponibles(placesPremium);
-            
-            spectacle.setPrixStandard(prixStandard);
-            spectacle.setPrixVip(prixVip);
-            spectacle.setPrixPremium(prixPremium);
 
             Spectacle result = (Spectacle) evenementDAO.creer(spectacle);
             logger.info("✓ Spectacle créé: {}", nom);
@@ -138,7 +137,7 @@ public class EvenementService {
      */
     public List<Evenement> getEvenementsParOrganisateur(int organisateurId) throws BusinessException {
         try {
-            return evenementDAO.chercherParOrganisateur(organisateurId);
+            return evenementDAO.getEventsByOrganizerId(organisateurId);
         } catch (DatabaseException e) {
             logger.error("Erreur récupération événements organisateur", e);
             throw new BusinessException("Erreur récupération événements organisateur", e);
@@ -150,7 +149,7 @@ public class EvenementService {
      */
     public List<Evenement> getEvenementsParType(TypeEvenement type) throws BusinessException {
         try {
-            return evenementDAO.chercherParType(type);
+            return evenementDAO.getEventByType(type);
         } catch (DatabaseException e) {
             logger.error("Erreur récupération événements par type", e);
             throw new BusinessException("Erreur récupération événements par type", e);
@@ -182,13 +181,13 @@ public class EvenementService {
     /**
      * Modifier un événement
      */
-    public void modifierEvenement(Evenement evenement) throws BusinessException {
+    public void updateEvent(Evenement evenement) throws BusinessException {
         try {
             if (evenement.getStatut() == StatutEvenement.TERMINE) {
                 throw new BusinessException("Impossible de modifier un événement terminé");
             }
 
-            evenementDAO.mettreAJour(evenement);
+            evenementDAO.updateEvent(evenement);
             logger.info("✓ Événement modifié: {}", evenement.getNom());
 
         } catch (DatabaseException e) {
@@ -197,17 +196,6 @@ public class EvenementService {
         }
     }
 
-    /**
-     * Lister tous les événements
-     */
-    public List<Evenement> listerTousLesEvenements() throws BusinessException {
-        try {
-            return evenementDAO.listerTous();
-        } catch (DatabaseException e) {
-            logger.error("Erreur listage événements", e);
-            throw new BusinessException("Erreur listage événements", e);
-        }
-    }
 
     // Méthodes privées pour la validation
 
@@ -241,3 +229,5 @@ public class EvenementService {
         }
     }
 }
+
+

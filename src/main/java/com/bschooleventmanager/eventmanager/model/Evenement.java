@@ -28,22 +28,70 @@ public abstract class Evenement {
         this.statut = StatutEvenement.A_VENIR;
     }
 
-    // Constructeur de base avec les informations essentielles
-    protected Evenement(int organisateurId, String nom, LocalDateTime dateEvenement,
-                        String lieu, TypeEvenement typeEvenement) {
+    // Constructeur complet (pour la base de données)
+    public Evenement(int idEvenement,
+                     int organisateurId,
+                     String nom,
+                     LocalDateTime dateEvenement,
+                     String lieu,
+                     TypeEvenement typeEvenement,
+                     String description,
+                     int placesStandard,
+                     int placesVip,
+                     int placesPremium,
+                     BigDecimal prixStandard,
+                     BigDecimal prixVip,
+                     BigDecimal prixPremium,
+                     LocalDateTime dateCreation,
+                     StatutEvenement statut) {
+
+        this.idEvenement = idEvenement;
         this.organisateurId = organisateurId;
         this.nom = nom;
         this.dateEvenement = dateEvenement;
         this.lieu = lieu;
         this.typeEvenement = typeEvenement;
-        this.statut = StatutEvenement.A_VENIR;
+        this.description = description;
+
+        this.placesStandardDisponibles = placesStandard;
+        this.placesVipDisponibles = placesVip;
+        this.placesPremiumDisponibles = placesPremium;
+
+        this.prixStandard = prixStandard;
+        this.prixVip = prixVip;
+        this.prixPremium = prixPremium;
+
+        this.dateCreation = dateCreation;
+        this.statut = statut;
     }
 
-    // Constructeur avec places et prix
-    protected Evenement(int organisateurId, String nom, LocalDateTime dateEvenement,
-                        String lieu, TypeEvenement typeEvenement, String description) {
-        this(organisateurId, nom, dateEvenement, lieu, typeEvenement);
+    // Constructeur de création (avec places et prix)
+    protected Evenement(int organisateurId, 
+                        String nom, 
+                        LocalDateTime dateEvenement,
+                        String lieu, 
+                        TypeEvenement typeEvenement, 
+                        String description,
+                        int placesStandard,
+                        int placesVip,
+                        int placesPremium,
+                        BigDecimal prixStandard,
+                        BigDecimal prixVip,
+                        BigDecimal prixPremium) {
+        this.organisateurId = organisateurId;
+        this.nom = nom;
+        this.dateEvenement = dateEvenement;
+        this.lieu = lieu;
+        this.typeEvenement = typeEvenement;
         this.description = description;
+        this.placesStandardDisponibles = placesStandard;
+        this.placesVipDisponibles = placesVip;
+        this.placesPremiumDisponibles = placesPremium;
+        this.prixStandard = prixStandard;
+        this.prixVip = prixVip;
+        this.prixPremium = prixPremium;
+        this.statut = StatutEvenement.A_VENIR;
+        this.dateCreation = LocalDateTime.now();
     }
 
     // Getters et Setters
@@ -99,11 +147,10 @@ public abstract class Evenement {
     public void setStatut(StatutEvenement statut) { this.statut = statut; }
 
     // Méthodes abstraites à implémenter par les classes filles
-    public abstract String getCategorie();
-    public abstract void afficherInformations();
-    public abstract boolean peutEtreAnnule();
+    public abstract String getCategorie(); 
     public abstract int getCapaciteTotale();
     public abstract BigDecimal calculerRecetteMaximale();
+    public abstract boolean peutEtreAnnule();
 
     @Override
     public String toString() {

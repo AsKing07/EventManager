@@ -1,12 +1,12 @@
 package com.bschooleventmanager.eventmanager.dao;
 
 import com.bschooleventmanager.eventmanager.exception.DatabaseException;
-import com.bschooleventmanager.eventmanager.model.Evenement;
 import com.bschooleventmanager.eventmanager.model.Concert;
 import com.bschooleventmanager.eventmanager.model.Conference;
+import com.bschooleventmanager.eventmanager.model.Evenement;
 import com.bschooleventmanager.eventmanager.model.Spectacle;
-import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
 import com.bschooleventmanager.eventmanager.model.enums.StatutEvenement;
+import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,13 +17,85 @@ import java.util.List;
 public class EvenementDAO extends BaseDAO<Evenement> {
     private static final Logger logger = LoggerFactory.getLogger(EvenementDAO.class);
 
-    @Override
+    //Méthodes de BaseDAO à implémenter
+     @Override
     public Evenement creer(Evenement evenement) throws DatabaseException {
-        String query = "INSERT INTO Evenements (organisateur_id, nom, date_evenement, lieu, type_evenement, " +
+        return createEvent(evenement);
+    }
+
+     @Override
+    public List<Evenement> listerTous() throws DatabaseException {
+       return getAllEvents();
+   
+    }
+
+    @Override
+    public void mettreAJour(Evenement evenement) throws DatabaseException {
+updateEvent(evenement);
+    }
+
+    @Override
+    public void supprimer(int id) throws DatabaseException {
+deleteEventById(id);
+ 
+    }
+
+    @Override
+    public Evenement chercher(int id) throws DatabaseException {
+        return getEventById(id);
+    }
+
+    
+
+    public List<Evenement> getEventByType(TypeEvenement type) throws DatabaseException {
+        List<Evenement> evenements = new ArrayList<>();
+        String query = "SELECT id_evenement, organisateur_id, nom, date_evenement, lieu, type_evenement, " +
+                       "description, places_standard_disponibles, places_vip_disponibles, " +
+                       "places_premium_disponibles, prix_standard, prix_vip, prix_premium, " +
+                       "date_creation, statut FROM Evenements WHERE type_evenement = ?";
+Connection connection = getConnection();
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setString(1, type.name());
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    evenements.add(mapRowToEvenement(rs));
+                }
+            }
+            connection.close();
+        } catch (SQLException e) {
+            logger.error("Erreur recherche événements par type", e);
+            throw new DatabaseException("Erreur recherche événements par type", e);
+        }
+
+        return evenements;
+    }
+
+   
+
+    public static List<Evenement> getAllEvents() {
+        List<Evenement> evenements = new ArrayList<>();
+
+        String sql = "SELECT * FROM evenements ORDER BY date_evenement ASC";
+        try {
+            Connection conn = DatabaseConnection.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                evenements.add(mapRowToEvenement(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return evenements;
+    }
+
+    public static Evenement createEvent(Evenement evenement) throws DatabaseException {
+     
+         String query = "INSERT INTO Evenements (organisateur_id, nom, date_evenement, lieu, type_evenement, " +
                        "description, places_standard_disponibles, places_vip_disponibles, " +
                        "places_premium_disponibles, prix_standard, prix_vip, prix_premium, statut) " +
                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-Connection connection = getConnection();
+Connection connection = DatabaseConnection.getInstance().getConnection();
         try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setInt(1, evenement.getOrganisateurId());
             pstmt.setString(2, evenement.getNom());
@@ -59,144 +131,117 @@ Connection connection = getConnection();
         return null;
     }
 
-    @Override
-    public Evenement chercher(int id) throws DatabaseException {
-        String query = "SELECT id_evenement, organisateur_id, nom, date_evenement, lieu, type_evenement, " +
-                       "description, places_standard_disponibles, places_vip_disponibles, " +
-                       "places_premium_disponibles, prix_standard, prix_vip, prix_premium, " +
-                       "date_creation, statut FROM Evenements WHERE id_evenement = ?";
-Connection connection = getConnection();
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setInt(1, id);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return mapRowToEvenement(rs);
-                }
+    public static Evenement updateEvent(Evenement evenement) throws DatabaseException {
+        String sql = "UPDATE evenements SET " +
+                "organisateur_id = ?, nom = ?, date_evenement = ?, lieu = ?, " +
+                "type_evenement = ?, description = ?, places_standard_disponibles = ?, " +
+                "places_vip_disponibles = ?, places_premium_disponibles = ?, " +
+                "prix_standard = ?, prix_vip = ?, prix_premium = ?, statut = ? " +
+                "WHERE id_evenement = ?";
+
+        try {
+            Connection conn = DatabaseConnection.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            stmt.setInt(1, evenement.getOrganisateurId());
+            stmt.setString(2, evenement.getNom());
+            stmt.setTimestamp(3, Timestamp.valueOf(evenement.getDateEvenement()));
+            stmt.setString(4, evenement.getLieu());
+            stmt.setString(5, evenement.getTypeEvenement().name());
+            stmt.setString(6, evenement.getDescription());
+            stmt.setInt(7, evenement.getPlacesStandardDisponibles());
+            stmt.setInt(8, evenement.getPlacesVipDisponibles());
+            stmt.setInt(9, evenement.getPlacesPremiumDisponibles());
+            stmt.setBigDecimal(10, evenement.getPrixStandard());
+            stmt.setBigDecimal(11, evenement.getPrixVip());
+            stmt.setBigDecimal(12, evenement.getPrixPremium());
+            stmt.setString(13, evenement.getStatut().name());
+            stmt.setInt(14, evenement.getIdEvenement());
+
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new DatabaseException("Aucun événement trouvé avec l'ID: " + evenement.getIdEvenement());
             }
-            connection.close();
+
+            logger.info("Événement mis à jour avec succès: {}", evenement.getNom());
+            return evenement;
+
         } catch (SQLException e) {
-            logger.error("Erreur recherche événement", e);
-            throw new DatabaseException("Erreur recherche événement", e);
+            logger.error("Erreur lors de la mise à jour de l'événement", e);
+            throw new DatabaseException("Erreur lors de la mise à jour de l'événement", e);
         }
 
-        return null;
     }
 
-    public List<Evenement> chercherParOrganisateur(int organisateurId) throws DatabaseException {
-        List<Evenement> evenements = new ArrayList<>();
-        String query = "SELECT id_evenement, organisateur_id, nom, date_evenement, lieu, type_evenement, " +
-                       "description, places_standard_disponibles, places_vip_disponibles, " +
-                       "places_premium_disponibles, prix_standard, prix_vip, prix_premium, " +
-                       "date_creation, statut FROM Evenements WHERE organisateur_id = ?";
-Connection connection = getConnection();
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setInt(1, organisateurId);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    evenements.add(mapRowToEvenement(rs));
-                }
+    public static Evenement getEventById(int id) throws DatabaseException {
+        String sql = "SELECT * FROM evenements WHERE id_evenement = ?";
+
+        try {
+            Connection conn = DatabaseConnection.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return mapRowToEvenement(rs);
+            } else {
+                throw new DatabaseException("Aucun événement trouvé avec l'ID: " + id);
             }
-            connection.close();
-        } catch (SQLException e) {
-            logger.error("Erreur recherche événements par organisateur", e);
-            throw new DatabaseException("Erreur recherche événements par organisateur", e);
-        }
 
-        return evenements;
+        
+
+        } catch (SQLException e) {
+            logger.error("Erreur lors de la récupération de l'événement", e);
+            throw new DatabaseException("Erreur lors de la récupération de l'événement", e);
+        }
     }
 
-    public List<Evenement> chercherParType(TypeEvenement type) throws DatabaseException {
+    public static List<Evenement> getEventsByOrganizerId(int organizerId) throws DatabaseException {
         List<Evenement> evenements = new ArrayList<>();
-        String query = "SELECT id_evenement, organisateur_id, nom, date_evenement, lieu, type_evenement, " +
-                       "description, places_standard_disponibles, places_vip_disponibles, " +
-                       "places_premium_disponibles, prix_standard, prix_vip, prix_premium, " +
-                       "date_creation, statut FROM Evenements WHERE type_evenement = ?";
-Connection connection = getConnection();
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setString(1, type.name());
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    evenements.add(mapRowToEvenement(rs));
-                }
-            }
-            connection.close();
-        } catch (SQLException e) {
-            logger.error("Erreur recherche événements par type", e);
-            throw new DatabaseException("Erreur recherche événements par type", e);
-        }
+        String sql = "SELECT * FROM evenements WHERE organisateur_id = ? ORDER BY date_evenement ASC";
 
-        return evenements;
-    }
-
-    @Override
-    public List<Evenement> listerTous() throws DatabaseException {
-        List<Evenement> evenements = new ArrayList<>();
-        String query = "SELECT id_evenement, organisateur_id, nom, date_evenement, lieu, type_evenement, " +
-                       "description, places_standard_disponibles, places_vip_disponibles, " +
-                       "places_premium_disponibles, prix_standard, prix_vip, prix_premium, " +
-                       "date_creation, statut FROM Evenements";
-Connection connection = getConnection();
-        try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+        try {
+            Connection conn = DatabaseConnection.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, organizerId);
+            ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 evenements.add(mapRowToEvenement(rs));
             }
-            connection.close();
+
+            return evenements;
+
         } catch (SQLException e) {
-            logger.error("Erreur listage événements", e);
-            throw new DatabaseException("Erreur listage événements", e);
-        }
-
-        return evenements;
-    }
-
-    @Override
-    public void mettreAJour(Evenement evenement) throws DatabaseException {
-        String query = "UPDATE Evenements SET nom = ?, date_evenement = ?, lieu = ?, description = ?, " +
-                       "places_standard_disponibles = ?, places_vip_disponibles = ?, " +
-                       "places_premium_disponibles = ?, prix_standard = ?, prix_vip = ?, " +
-                       "prix_premium = ?, statut = ? WHERE id_evenement = ?";
-Connection connection = getConnection();
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setString(1, evenement.getNom());
-            pstmt.setTimestamp(2, Timestamp.valueOf(evenement.getDateEvenement()));
-            pstmt.setString(3, evenement.getLieu());
-            pstmt.setString(4, evenement.getDescription());
-            pstmt.setInt(5, evenement.getPlacesStandardDisponibles());
-            pstmt.setInt(6, evenement.getPlacesVipDisponibles());
-            pstmt.setInt(7, evenement.getPlacesPremiumDisponibles());
-            pstmt.setBigDecimal(8, evenement.getPrixStandard());
-            pstmt.setBigDecimal(9, evenement.getPrixVip());
-            pstmt.setBigDecimal(10, evenement.getPrixPremium());
-            pstmt.setString(11, evenement.getStatut().name());
-            pstmt.setInt(12, evenement.getIdEvenement());
-
-            pstmt.executeUpdate();
-            logger.info("✓ Événement mis à jour: {}", evenement.getIdEvenement());
-            connection.close();
-        } catch (SQLException e) {
-            logger.error("Erreur mise à jour événement", e);
-            throw new DatabaseException("Erreur mise à jour événement", e);
+            logger.error("Erreur lors de la récupération des événements de l'organisateur", e);
+            throw new DatabaseException("Erreur lors de la récupération des événements de l'organisateur", e);
         }
     }
 
-    @Override
-    public void supprimer(int id) throws DatabaseException {
-        String query = "DELETE FROM Evenements WHERE id_evenement = ?";
-Connection connection = getConnection();
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setInt(1, id);
-            pstmt.executeUpdate();
-            logger.info("✓ Événement supprimé: {}", id);
-            connection.close();
+    public static boolean deleteEventById(int id) throws DatabaseException {
+        String sql = "DELETE FROM evenements WHERE id_evenement = ?";
+
+        try {
+            Connection conn = DatabaseConnection.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new DatabaseException("Aucun événement trouvé avec l'ID: " + id);
+            }
+
+            logger.info("Événement supprimé avec succès, ID: {}", id);
+            return true;
+
         } catch (SQLException e) {
-            logger.error("Erreur suppression événement", e);
-            throw new DatabaseException("Erreur suppression événement", e);
+            logger.error("Erreur lors de la suppression de l'événement", e);
+            throw new DatabaseException("Erreur lors de la suppression de l'événement", e);
         }
     }
+        
 
-    private Evenement mapRowToEvenement(ResultSet rs) throws SQLException {
+    private static Evenement mapRowToEvenement(ResultSet rs) throws SQLException {
         TypeEvenement type = TypeEvenement.valueOf(rs.getString("type_evenement"));
         Evenement evenement;
 

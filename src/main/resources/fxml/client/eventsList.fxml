@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.bschooleventmanager.eventmanager.controller.client.ClientEventsController">
+
+    <top>
+        <HBox spacing="10">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <children>
+                <Label text="Name:"/>
+                <TextField fx:id="searchNomField" promptText="Event name"/>
+
+                <Label text="Location:"/>
+                <TextField fx:id="searchLieuField" promptText="City"/>
+
+                <Label text="Type:"/>
+                <ComboBox fx:id="typeFilter"/>
+
+                <Button text="Search" onAction="#searchEvents"/>
+                <Button text="Reset" onAction="#loadAllEvents"/>
+            </children>
+        </HBox>
+    </top>
+
+    <center>
+        <TableView fx:id="eventsTable" style="-fx-text-fill: black;">
+            <columns>
+                <TableColumn fx:id="colNom"    text="Name"      prefWidth="150"/>
+                <TableColumn fx:id="colLieu"   text="Location"  prefWidth="120"/>
+                <TableColumn fx:id="colType"   text="Type"      prefWidth="120"/>
+                <TableColumn fx:id="colStatut" text="Status"    prefWidth="120"/>
+                <TableColumn fx:id="colDate"   text="Date"      prefWidth="180"/>
+            </columns>
+        </TableView>
+    </center>
+</BorderPane>

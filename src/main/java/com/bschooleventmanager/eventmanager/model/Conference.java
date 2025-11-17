@@ -1,7 +1,6 @@
 package com.bschooleventmanager.eventmanager.model;
 
 import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
-import com.bschooleventmanager.eventmanager.model.enums.StatutEvenement;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -14,14 +13,20 @@ public class Conference extends Evenement {
         this.typeEvenement = TypeEvenement.CONFERENCE;
     }
 
-    // Constructeur de base
-    public Conference(int organisateurId, String nom, LocalDateTime dateEvenement, String lieu) {
-        super(organisateurId, nom, dateEvenement, lieu, TypeEvenement.CONFERENCE);
-    }
-
-    // Constructeur avec description
-    public Conference(int organisateurId, String nom, LocalDateTime dateEvenement, String lieu, String description) {
-        super(organisateurId, nom, dateEvenement, lieu, TypeEvenement.CONFERENCE, description);
+    // Constructeur de création complet
+    public Conference(int organisateurId, 
+                     String nom, 
+                     LocalDateTime dateEvenement, 
+                     String lieu,
+                     String description,
+                     int placesStandard,
+                     int placesVip,
+                     int placesPremium,
+                     BigDecimal prixStandard,
+                     BigDecimal prixVip,
+                     BigDecimal prixPremium) {
+        super(organisateurId, nom, dateEvenement, lieu, TypeEvenement.CONFERENCE, description,
+              placesStandard, placesVip, placesPremium, prixStandard, prixVip, prixPremium);
     }
 
     // Implémentation des méthodes abstraites
@@ -31,6 +36,13 @@ public class Conference extends Evenement {
     }
 
     @Override
+    public boolean peutEtreAnnule() {
+        
+       // Une conférence peut être annulée si sa date est dans plus de 14 jours
+        return dateEvenement.isAfter(LocalDateTime.now().plusDays(14));
+    }
+
+
     public void afficherInformations() {
         System.out.println("=== Conférence ===");
         System.out.println("ID: " + idEvenement);
@@ -43,12 +55,7 @@ public class Conference extends Evenement {
         System.out.println("Recette maximale: " + calculerRecetteMaximale() + "€");
     }
 
-    @Override
-    public boolean peutEtreAnnule() {
-        // Une conférence peut être annulée jusqu'à 2 heures avant le début
-        return statut == StatutEvenement.A_VENIR && 
-               dateEvenement.isAfter(LocalDateTime.now().plusHours(2));
-    }
+
 
     @Override
     public int getCapaciteTotale() {
