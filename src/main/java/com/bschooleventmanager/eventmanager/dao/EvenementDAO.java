@@ -93,8 +93,9 @@ Connection connection = getConnection();
      
          String query = "INSERT INTO Evenements (organisateur_id, nom, date_evenement, lieu, type_evenement, " +
                        "description, places_standard_disponibles, places_vip_disponibles, " +
-                       "places_premium_disponibles, prix_standard, prix_vip, prix_premium, statut) " +
-                       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                       "places_premium_disponibles, prix_standard, prix_vip, prix_premium, statut, " +
+                       "place_standard_vendues, place_p_vendu, place_vip_vendu, etat_event) " +
+                       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 Connection connection = DatabaseConnection.getInstance().getConnection();
         try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setInt(1, evenement.getOrganisateurId());
@@ -110,6 +111,10 @@ Connection connection = DatabaseConnection.getInstance().getConnection();
             pstmt.setBigDecimal(11, evenement.getPrixVip());
             pstmt.setBigDecimal(12, evenement.getPrixPremium());
             pstmt.setString(13, evenement.getStatut().name());
+            pstmt.setInt(14, evenement.getPlaceStandardVendues());
+            pstmt.setInt(15, evenement.getPlacePremiumVendues());
+            pstmt.setInt(16, evenement.getPlaceVipVendues());
+            pstmt.setBoolean(17, evenement.isEtatEvent());
 
             int affectedRows = pstmt.executeUpdate();
 
@@ -136,7 +141,8 @@ Connection connection = DatabaseConnection.getInstance().getConnection();
                 "organisateur_id = ?, nom = ?, date_evenement = ?, lieu = ?, " +
                 "type_evenement = ?, description = ?, places_standard_disponibles = ?, " +
                 "places_vip_disponibles = ?, places_premium_disponibles = ?, " +
-                "prix_standard = ?, prix_vip = ?, prix_premium = ?, statut = ? " +
+                "prix_standard = ?, prix_vip = ?, prix_premium = ?, statut = ?, " +
+                "place_standard_vendues = ?, place_p_vendu = ?, place_vip_vendu = ?, etat_event = ? " +
                 "WHERE id_evenement = ?";
 
         try {
@@ -156,7 +162,11 @@ Connection connection = DatabaseConnection.getInstance().getConnection();
             stmt.setBigDecimal(11, evenement.getPrixVip());
             stmt.setBigDecimal(12, evenement.getPrixPremium());
             stmt.setString(13, evenement.getStatut().name());
-            stmt.setInt(14, evenement.getIdEvenement());
+            stmt.setInt(14, evenement.getPlaceStandardVendues());
+            stmt.setInt(15, evenement.getPlacePremiumVendues());
+            stmt.setInt(16, evenement.getPlaceVipVendues());
+            stmt.setBoolean(17, evenement.isEtatEvent());
+            stmt.setInt(18, evenement.getIdEvenement());
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected == 0) {
@@ -169,6 +179,58 @@ Connection connection = DatabaseConnection.getInstance().getConnection();
         } catch (SQLException e) {
             logger.error("Erreur lors de la mise à jour de l'événement", e);
             throw new DatabaseException("Erreur lors de la mise à jour de l'événement", e);
+        }
+    }
+
+    /**
+     * Met à jour les places vendues pour un événement
+     */
+    public static void mettreAJourPlacesVendues(int idEvenement, int placesStandardVendues, 
+                                               int placesVipVendues, int placesPremiumVendues) throws DatabaseException {
+        String sql = "UPDATE evenements SET place_standard_vendues = ?, place_vip_vendu = ?, place_p_vendu = ? " +
+                    "WHERE id_evenement = ?";
+        
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setInt(1, placesStandardVendues);
+            stmt.setInt(2, placesVipVendues);
+            stmt.setInt(3, placesPremiumVendues);
+            stmt.setInt(4, idEvenement);
+            
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new DatabaseException("Aucun événement trouvé avec l'ID: " + idEvenement);
+            }
+            
+            logger.info("Places vendues mises à jour pour l'événement ID: {}", idEvenement);
+        } catch (SQLException e) {
+            logger.error("Erreur lors de la mise à jour des places vendues", e);
+            throw new DatabaseException("Erreur lors de la mise à jour des places vendues", e);
+        }
+    }
+
+    /**
+     * Active ou désactive un événement
+     */
+    public static void changerEtatEvenement(int idEvenement, boolean actif) throws DatabaseException {
+        String sql = "UPDATE evenements SET etat_event = ? WHERE id_evenement = ?";
+        
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setBoolean(1, actif);
+            stmt.setInt(2, idEvenement);
+            
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected == 0) {
+                throw new DatabaseException("Aucun événement trouvé avec l'ID: " + idEvenement);
+            }
+            
+            logger.info("État de l'événement {} changé à: {}", idEvenement, actif ? "actif" : "inactif");
+        } catch (SQLException e) {
+            logger.error("Erreur lors du changement d'état de l'événement", e);
+            throw new DatabaseException("Erreur lors du changement d'état de l'événement", e);
         }
 
     }
@@ -283,6 +345,12 @@ Connection connection = DatabaseConnection.getInstance().getConnection();
         evenement.setPrixVip(rs.getBigDecimal("prix_vip"));
         evenement.setPrixPremium(rs.getBigDecimal("prix_premium"));
         evenement.setDateCreation(rs.getTimestamp("date_creation").toLocalDateTime());
+        
+        // Nouvelles colonnes pour les ventes
+        evenement.setPlaceStandardVendues(rs.getInt("place_standard_vendues"));
+        evenement.setPlacePremiumVendues(rs.getInt("place_p_vendu"));
+        evenement.setPlaceVipVendues(rs.getInt("place_vip_vendu"));
+        evenement.setEtatEvent(rs.getBoolean("etat_event"));
         
         // Gestion sécurisée du statut avec valeur par défaut
         String statutStr = rs.getString("statut");

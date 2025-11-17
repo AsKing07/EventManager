@@ -18,8 +18,8 @@ public class ConcertDAO extends BaseDAO<Concert> {
         String query = "INSERT INTO evenements (organisateur_id, nom, date_evenement, lieu, type_evenement, " +
                 "description, places_standard_disponibles, places_vip_disponibles, " +
                 "places_premium_disponibles, prix_standard, prix_vip, prix_premium," +
-                "artiste_groupe,age_min,type_concert) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "artiste_groupe,age_min,type_concert, place_standard_vendues, place_p_vendu, place_vip_vendu, etat_event) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 Connection connection = getConnection();
 
         try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -38,6 +38,10 @@ Connection connection = getConnection();
             pstmt.setString(13, concert.getArtiste_groupe());
             pstmt.setInt(14, concert.getAgeMin());
             pstmt.setString(15, concert.getType().getLabel());
+            pstmt.setInt(16, concert.getPlaceStandardVendues());
+            pstmt.setInt(17, concert.getPlacePremiumVendues());
+            pstmt.setInt(18, concert.getPlaceVipVendues());
+            pstmt.setBoolean(19, concert.isEtatEvent());
 
             int affectedRows = pstmt.executeUpdate();
     
