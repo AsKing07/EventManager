@@ -1,34 +1,39 @@
-2025-11-15 00:10:04.633 [main] INFO  c.b.eventmanager.util.AppConfig - ✓ Propriétés d'application chargées
-2025-11-15 00:10:04.637 [main] INFO  c.b.eventmanager.Main - Démarrage de EventManager v1.0.0
-2025-11-15 00:10:04.979 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
-2025-11-15 00:10:05.344 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Application démarrée - Dimensions: 1280x720
-2025-11-15 00:10:05.345 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Titre: EventManager - Rï¿½servez vos ï¿½vï¿½nements Facilement
-2025-11-15 00:10:07.894 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Redirection vers l'interface d'inscription
-2025-11-15 00:10:07.967 [JavaFX Application Thread] INFO  c.b.e.c.auth.RegisterController - Initialisation de l'interface d'inscription
-2025-11-15 00:10:08.126 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Redirection vers l'inscription réussie
-2025-11-15 00:10:36.094 [JavaFX Application Thread] INFO  c.b.e.c.auth.RegisterController - Tentative d'inscription d'un nouvel utilisateur
-2025-11-15 00:10:36.098 [JavaFX Application Thread] INFO  c.b.e.c.auth.RegisterController - Mot de passe fort détecté
-2025-11-15 00:10:36.100 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
-2025-11-15 00:10:36.394 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
-2025-11-15 00:10:36.839 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.UtilisateurDAO - ✓ Utilisateur créé: charbelsnn@gmail.com
-2025-11-15 00:10:36.839 [JavaFX Application Thread] INFO  c.b.e.service.UtilisateurService - ✓ Inscription réussie: charbelsnn@gmail.com
-2025-11-15 00:10:36.840 [JavaFX Application Thread] INFO  c.b.e.c.auth.RegisterController - ✓ Inscription réussie pour l'utilisateur: charbelsnn@gmail.com
-2025-11-15 00:10:59.919 [JavaFX Application Thread] INFO  c.b.e.c.auth.RegisterController - Redirection vers l'interface de connexion
-2025-11-15 00:10:59.943 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
-2025-11-15 00:10:59.966 [JavaFX Application Thread] INFO  c.b.e.c.auth.RegisterController - ✓ Redirection vers la connexion réussie
-2025-11-15 00:11:18.940 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
-2025-11-15 00:11:19.003 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
-2025-11-15 00:11:19.349 [JavaFX Application Thread] INFO  c.b.e.service.UtilisateurService - ✓ Authentification réussie: charbelsnn@gmail.com
-2025-11-15 00:11:19.350 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Connexion réussie: charbelsnn@gmail.com
-2025-11-15 00:11:27.273 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Navigation vers le dashboard pour l'utilisateur: charbelsnn@gmail.com
-2025-11-15 00:11:33.427 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Redirection vers l'interface d'inscription
-2025-11-15 00:11:33.460 [JavaFX Application Thread] INFO  c.b.e.c.auth.RegisterController - Initialisation de l'interface d'inscription
-2025-11-15 00:11:33.498 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Redirection vers l'inscription réussie
-2025-11-15 00:21:41.971 [main] INFO  c.b.eventmanager.util.AppConfig - ✓ Propriétés d'application chargées
-2025-11-15 00:21:41.975 [main] INFO  c.b.eventmanager.Main - Démarrage de EventManager v1.0.0
-2025-11-15 00:21:42.398 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
-2025-11-15 00:21:42.887 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Application démarrée - Dimensions: 1280x720
-2025-11-15 00:21:42.888 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Titre: EventManager - Rï¿½servez vos ï¿½vï¿½nements Facilement
-2025-11-15 00:21:44.794 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Redirection vers l'interface d'inscription
-2025-11-15 00:21:44.873 [JavaFX Application Thread] INFO  c.b.e.c.auth.RegisterController - Initialisation de l'interface d'inscription
-2025-11-15 00:21:45.027 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Redirection vers l'inscription réussie
+2025-11-17 09:21:09.292 [main] INFO  c.b.eventmanager.util.AppConfig - ✓ Propriétés d'application chargées
+2025-11-17 09:21:09.296 [main] INFO  c.b.eventmanager.Main - Démarrage de EventManager v1.0.0
+2025-11-17 09:21:09.685 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
+2025-11-17 09:21:09.740 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-17 09:21:09.741 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-17 09:21:10.356 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Application démarrée - Dimensions: 1454x734
+2025-11-17 09:21:10.357 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Titre: EventManager - Rï¿½servez vos ï¿½vï¿½nements Facilement
+2025-11-17 09:22:43.573 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-17 09:22:43.920 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-17 09:22:44.247 [JavaFX Application Thread] WARN  c.b.e.c.auth.LoginController - Erreur authentification: Mot de passe incorrect
+2025-11-17 09:23:15.894 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-17 09:23:15.959 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-17 09:23:16.184 [JavaFX Application Thread] WARN  c.b.e.c.auth.LoginController - Erreur authentification: Mot de passe incorrect
+2025-11-17 09:23:25.423 [JavaFX Application Thread] WARN  c.b.e.c.auth.LoginController - Erreur authentification: Mot de passe incorrect
+2025-11-17 09:23:27.937 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Redirection vers l'interface d'inscription
+2025-11-17 09:23:28.082 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-17 09:23:28.083 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-17 09:23:28.083 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Redirection vers l'inscription réussie
+2025-11-17 09:24:15.229 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-17 09:24:15.294 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-17 09:24:15.563 [JavaFX Application Thread] INFO  c.b.e.service.UtilisateurService - ✓ Inscription réussie: charbelsnn@gmail.com
+2025-11-17 09:24:15.564 [JavaFX Application Thread] INFO  c.b.e.c.auth.RegisterController - ✓ Inscription réussie pour l'utilisateur: charbelsnn@gmail.com
+2025-11-17 09:24:27.609 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
+2025-11-17 09:24:27.619 [JavaFX Application Thread] INFO  c.b.e.c.auth.RegisterController - ✓ Redirection vers la connexion réussie
+2025-11-17 09:25:02.470 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-17 09:25:02.546 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-17 09:25:02.789 [JavaFX Application Thread] INFO  c.b.e.service.UtilisateurService - ✓ Authentification réussie: charbelsnn@gmail.com
+2025-11-17 09:25:02.800 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Connexion réussie: charbelsnn@gmail.com
+2025-11-17 09:25:06.454 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Navigation vers le dashboard pour l'utilisateur: charbelsnn@gmail.com
+2025-11-17 09:25:06.486 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Initialisation de l'interface organisateur
+2025-11-17 09:25:06.487 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage du dashboard organisateur
+2025-11-17 09:25:06.491 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-17 09:25:06.491 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-17 09:25:06.492 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Redirection vers le dashboard Organisateur réussie
+2025-11-17 09:25:15.464 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage des événements organisateur
+2025-11-17 09:25:17.031 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage du profil organisateur
+2025-11-17 09:25:17.074 [JavaFX Application Thread] INFO  c.b.e.c.shared.ProfileController - Initialisation du profil utilisateur
+2025-11-17 09:25:26.852 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage des événements organisateur
+2025-11-17 09:25:29.685 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage du dashboard organisateur
