@@ -11,6 +11,8 @@ public class ReservationDetail {
     private CategorieTicket categoriePlace;
     private int nombreTickets;
     private double prixUnitaire;
+    private double sousTotal;
+
 
     // Constructeur vide
     public ReservationDetail() {
@@ -18,12 +20,13 @@ public class ReservationDetail {
 
     // Constructeur complet
     public ReservationDetail(int idDetail, int idReservation, CategorieTicket categoriePlace,
-                             int nombreTickets, double prixUnitaire) {
+                             int nombreTickets, double prixUnitaire, double sousTotal) {
         this.idDetail = idDetail;
         this.idReservation = idReservation;
         this.categoriePlace = categoriePlace;
         this.nombreTickets = nombreTickets;
         this.prixUnitaire = prixUnitaire;
+        this.sousTotal = sousTotal;
     }
 
     // Constructeur pour création
@@ -33,6 +36,7 @@ public class ReservationDetail {
         this.categoriePlace = categoriePlace;
         this.nombreTickets = nombreTickets;
         this.prixUnitaire = prixUnitaire;
+        this.sousTotal = prixUnitaire * nombreTickets;
     }
 
     // Getters et Setters
@@ -51,7 +55,8 @@ public class ReservationDetail {
     public double getPrixUnitaire() { return prixUnitaire; }
     public void setPrixUnitaire(double prixUnitaire) { this.prixUnitaire = prixUnitaire; }
 
-    public double getSousTotal() { return prixUnitaire * nombreTickets; }
+    public double getSousTotal() { return sousTotal; }
+    public void setSousTotal(double sousTotal) { this.sousTotal = sousTotal; }
 
     // Méthode toString
     @Override
