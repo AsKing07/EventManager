@@ -1,26 +1,25 @@
 package com.bschooleventmanager.eventmanager.controller.events;
-import com.bschooleventmanager.eventmanager.dao.EvenementDAO;
+
 import com.bschooleventmanager.eventmanager.exception.BusinessException;
-import com.bschooleventmanager.eventmanager.model.enums.*;
+import com.bschooleventmanager.eventmanager.model.Concert;
+import com.bschooleventmanager.eventmanager.model.Conference;
+import com.bschooleventmanager.eventmanager.model.Spectacle;
+import com.bschooleventmanager.eventmanager.model.enums.NiveauExpertise;
+import com.bschooleventmanager.eventmanager.model.enums.TypeConcert;
+import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
+import com.bschooleventmanager.eventmanager.model.enums.TypeSpectacle;
 import com.bschooleventmanager.eventmanager.service.EvenementService;
 import com.bschooleventmanager.eventmanager.util.NotificationUtils;
 import com.bschooleventmanager.eventmanager.util.SessionManager;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import com.bschooleventmanager.eventmanager.model.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.FileChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class CreateEventController {
     @FXML private Label lbtfAge, lbtfArtits, lbtyConcert, lbTySpectacle, lbNvExpert, lbDomaine, lbIntervenant;
@@ -34,7 +33,10 @@ public class CreateEventController {
     @FXML private Label lblError;
     @FXML private ImageView imgPreview;
     private static final Logger logger = LoggerFactory.getLogger(CreateEventController.class);
-    
+
+    //Initialisation du service Evenement
+    private EvenementService evenementService = new EvenementService();
+
     // Référence au contrôleur dashboard pour permettre le retour
     private com.bschooleventmanager.eventmanager.controller.organisateur.OrganisateurDashboardController dashboardController;
 
@@ -134,7 +136,24 @@ public class CreateEventController {
         }
     }
 
+    /**
+     *
+     * @param idEvent
+     * @throws BusinessException
+     * @Author Loic Vanel
+     *
+     */
     @FXML
+    public void suppEvent(int idEvent) throws BusinessException {
+        try {
+            logger.info("Fonction suppEvent dans le controller CreateEventController");
+            evenementService.suppEvent(idEvent);
+        } catch (Exception e) {
+            logger.error("Erreur dans la fonction suppEvent du controller CreateEventController", e);
+        }
+
+    }
+@FXML
     private void createEvent() throws BusinessException {
         clearAllErrors();
 

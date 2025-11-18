@@ -37,6 +37,22 @@ public class EvenementService {
         return list;
     }
 
+       /**
+     * Supprime un événement identifié par son identifiant.
+     *
+     * <p>Cette méthode loggue l'appel puis délègue la suppression au DAO
+     * `EvenementDAO`. L'exception SQLException par le DAO
+     * est propagée au caller.</p>
+     *
+     * @param idEvent identifiant de l'événement à supprimer
+     * @throws RuntimeException si le DAO lève une exception non contrôlée
+     */
+    public void suppEvent(int idEvent){
+        logger.info("Fonction suppEven dans le service EvenementService");
+        evenementDAO.suppEvent(idEvent);
+
+    }
+
 
     /**
      * Créer un nouveau concert 
@@ -226,5 +242,4 @@ public class EvenementService {
         }
     }
 }
-
 

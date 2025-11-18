@@ -5,6 +5,7 @@ import com.bschooleventmanager.eventmanager.model.Concert;
 import com.bschooleventmanager.eventmanager.model.Conference;
 import com.bschooleventmanager.eventmanager.model.Evenement;
 import com.bschooleventmanager.eventmanager.model.Spectacle;
+import com.bschooleventmanager.eventmanager.model.enums.EtatEvent;
 import com.bschooleventmanager.eventmanager.model.enums.StatutEvenement;
 import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
 import org.slf4j.Logger;
@@ -70,6 +71,31 @@ Connection connection = getConnection();
         return evenements;
     }
 
+    /**
+     * Marque un événement comme supprimé (mise à jour de la colonne `etat_event` dans la base de données).
+     *
+     * Effets et logique:
+     *  - exécute une mise à jour sur la table `evenements`
+     *  - ferme correctement la connexion et le PreparedStatement grâce à try-with-resources
+     *
+     * Remarques :
+     *  - le premier paramètre SQL correspond à la valeur d'état (ici `EtatEvent.SUPPRIME.getCode()`),
+     *    le second à l'identifiant de l'événement.
+     *  - on capture et re-propage l'exception SQL en RuntimeException
+     */
+    public void suppEvent(int id){
+        try {
+            Connection conn = DatabaseConnection.getInstance().getConnection();
+            String query = "UPDATE evenements SET etat_event=? WHERE id_evenement=?;";
+            PreparedStatement st = conn.prepareStatement(query);
+            st.setInt(1,id);
+            st.setInt(2, EtatEvent.SUPPRIME.getCode());
+            st.executeUpdate();
+            conn.close();
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
    
 
     public static List<Evenement> getAllEvents() {
