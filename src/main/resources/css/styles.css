@@ -2,6 +2,27 @@
     -fx-background-color: #f5f5f5;
 }
 
+/* Optimisation pour les conteneurs avec ombre */
+.card-container {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-border-color: #e1e5e9;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-cache: true;
+    -fx-cache-hint: speed;
+}
+
+/* Alternative légère à dropshadow pour le scrolling fluide */
+.card-light-shadow {
+    -fx-background-color: white;
+    -fx-background-radius: 10px;
+    -fx-border-color: rgba(0,0,0,0.08);
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+    -fx-translate-y: 0px;
+}
+
 .button {
     -fx-background-color: #2196f3;
     -fx-text-fill: white;

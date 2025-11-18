@@ -3,6 +3,7 @@ package com.bschooleventmanager.eventmanager.service;
 import com.bschooleventmanager.eventmanager.dao.EvenementDAO;
 import com.bschooleventmanager.eventmanager.dao.ReservationDAO;
 import com.bschooleventmanager.eventmanager.dao.ReservationDetailsDAO;
+import com.bschooleventmanager.eventmanager.exception.AnnulationTardiveException;
 import com.bschooleventmanager.eventmanager.exception.BusinessException;
 import com.bschooleventmanager.eventmanager.exception.DatabaseException;
 import com.bschooleventmanager.eventmanager.exception.PlacesInsuffisantesException;
@@ -139,9 +140,10 @@ public class ReservationService {
     }
 
     /**
-     * Annule une réservation
+     * Annule une réservation avec vérification des délais
      */
-    public void annulerReservation(int reservationId, Utilisateur utilisateur) throws BusinessException {
+    public void annulerReservation(int reservationId, Utilisateur utilisateur) 
+            throws BusinessException, AnnulationTardiveException {
         try {
             Reservation reservation = reservationDAO.chercher(reservationId);
             if (reservation == null) {
@@ -158,51 +160,78 @@ public class ReservationService {
                 throw new BusinessException("Cette réservation est déjà annulée");
             }
             
-            // Mettre à jour le statut
-            reservation.setStatut(StatutReservation.ANNULEE);
-            reservation.setDateAnnulation(LocalDateTime.now());
-            
-            reservationDAO.mettreAJour(reservation);
-            
-            // Remettre les places disponibles dans l'événement
-            List<ReservationDetail> details = detailsDAO.getDetailsParReservation(reservationId);
-            for (ReservationDetail detail : details) {
-                // Récupérer l'événement et remettre les places
-                Evenement evenement = evenementDAO.chercher(reservation.getIdEvenement());
-                if (evenement != null) {
-                    int nouvellesPlacesStandard = evenement.getPlaceStandardVendues();
-                    int nouvellesPlacesVip = evenement.getPlaceVipVendues();
-                    int nouvellesPlacesPremium = evenement.getPlacePremiumVendues();
-                    
-                    // Réduire le nombre de places vendues selon la catégorie
-                    switch (detail.getCategoriePlace()) {
-                        case STANDARD:
-                            nouvellesPlacesStandard = Math.max(0, nouvellesPlacesStandard - detail.getNombreTickets());
-                            break;
-                        case VIP:
-                            nouvellesPlacesVip = Math.max(0, nouvellesPlacesVip - detail.getNombreTickets());
-                            break;
-                        case PREMIUM:
-                            nouvellesPlacesPremium = Math.max(0, nouvellesPlacesPremium - detail.getNombreTickets());
-                            break;
-                    }
-                    
-                    // Mettre à jour l'événement
-                    EvenementDAO.mettreAJourPlacesVendues(
-                        evenement.getIdEvenement(),
-                        nouvellesPlacesStandard,
-                        nouvellesPlacesVip,
-                        nouvellesPlacesPremium
-                    );
-                }
+            // Récupérer l'événement pour vérifier la date
+            Evenement evenement = evenementDAO.chercher(reservation.getIdEvenement());
+            if (evenement == null) {
+                throw new BusinessException("Événement associé à la réservation introuvable");
             }
             
-            logger.info("✓ Réservation {} annulée par utilisateur {}", reservationId, utilisateur.getIdUtilisateur());
+            // Vérifier le délai d'annulation (24 heures)
+            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime eventDateTime = evenement.getDateEvenement();
+            LocalDateTime limitAnnulation = eventDateTime.minusHours(24);
+            
+            // Si on est dans les 24h ET que la réservation est confirmée (payée)
+            if (now.isAfter(limitAnnulation) && reservation.getStatut() == StatutReservation.CONFIRMEE) {
+                throw new AnnulationTardiveException("Impossible d'annuler une réservation confirmée moins de 24 heures avant l'événement");
+            }
+            
+            // Si la réservation est en attente de paiement, elle peut toujours être annulée
+            logger.info("Annulation autorisée - Statut: {}, Délai: {} heures avant événement", 
+                       reservation.getStatut(), 
+                       java.time.Duration.between(now, eventDateTime).toHours());
+            
+            // Procéder à l'annulation
+            performCancellation(reservation, evenement);
             
         } catch (DatabaseException e) {
             logger.error("Erreur annulation réservation {}", reservationId, e);
             throw new BusinessException("Erreur lors de l'annulation de la réservation", e);
         }
+    }
+
+    /**
+     * Effectue l'annulation de la réservation (logique commune)
+     */
+    private void performCancellation(Reservation reservation, Evenement evenement) throws DatabaseException {
+        // Mettre à jour le statut
+        reservation.setStatut(StatutReservation.ANNULEE);
+        reservation.setDateAnnulation(LocalDateTime.now());
+        
+        reservationDAO.mettreAJour(reservation);
+        
+        // Remettre les places disponibles dans l'événement
+        List<ReservationDetail> details = detailsDAO.getDetailsParReservation(reservation.getIdReservation());
+        
+        int nouvellesPlacesStandard = evenement.getPlaceStandardVendues();
+        int nouvellesPlacesVip = evenement.getPlaceVipVendues();
+        int nouvellesPlacesPremium = evenement.getPlacePremiumVendues();
+        
+        for (ReservationDetail detail : details) {
+            // Réduire le nombre de places vendues selon la catégorie
+            switch (detail.getCategoriePlace()) {
+                case STANDARD:
+                    nouvellesPlacesStandard = Math.max(0, nouvellesPlacesStandard - detail.getNombreTickets());
+                    break;
+                case VIP:
+                    nouvellesPlacesVip = Math.max(0, nouvellesPlacesVip - detail.getNombreTickets());
+                    break;
+                case PREMIUM:
+                    nouvellesPlacesPremium = Math.max(0, nouvellesPlacesPremium - detail.getNombreTickets());
+                    break;
+            }
+        }
+        
+        // Mettre à jour l'événement avec les nouvelles quantités
+        EvenementDAO.mettreAJourPlacesVendues(
+            evenement.getIdEvenement(),
+            nouvellesPlacesStandard,
+            nouvellesPlacesVip,
+            nouvellesPlacesPremium
+        );
+        
+        logger.info("✓ Réservation {} annulée - Places restituées: Standard={}, VIP={}, Premium={}", 
+                   reservation.getIdReservation(), nouvellesPlacesStandard, nouvellesPlacesVip, nouvellesPlacesPremium);
     }
 
     // === MÉTHODES PRIVÉES DE VALIDATION ===

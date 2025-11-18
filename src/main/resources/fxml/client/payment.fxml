@@ -9,9 +9,13 @@
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.bschooleventmanager.eventmanager.controller.client.PaymentController"
             fitToWidth="true" 
+            vbarPolicy="AS_NEEDED" 
+            hbarPolicy="NEVER"
+            pannable="false"
             style="-fx-background-color: #f8f9fa; -fx-background: #f8f9fa;">
 
-<VBox spacing="25" style="-fx-background-color: #f8f9fa;">
+<VBox spacing="25" style="-fx-background-color: #f8f9fa; -fx-cache: true;"
+      cache="true" cacheHint="SPEED">
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
@@ -32,10 +36,7 @@
     <Separator style="-fx-background-color: #bdc3c7;"/>
 
     <!-- Résumé de la réservation -->
-    <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);">
-        <padding>
-            <Insets top="20" right="20" bottom="20" left="20"/>
-        </padding>
+    <VBox spacing="15" styleClass="card-light-shadow" style="-fx-padding: 20px;">
         
         <Label text="📋 Résumé de votre réservation" 
                style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #34495e;"/>
@@ -63,10 +64,7 @@
     </HBox>
 
     <!-- Méthode de paiement -->
-    <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);">
-        <padding>
-            <Insets top="25" right="25" bottom="25" left="25"/>
-        </padding>
+    <VBox spacing="15" styleClass="card-light-shadow" style="-fx-padding: 25px;">
         
         <Label text="💳 Méthode de paiement" 
                style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #34495e;"/>

@@ -79,11 +79,11 @@ public class UtilisateurService {
             Utilisateur user = utilisateurDAO.chercherParEmail(email);
 
             if (user == null) {
-                throw new BusinessException("Utilisateur non trouvé");
+                throw new BusinessException("Mot de passe ou email incorrect");
             }
 
             if (!PasswordUtils.verifyPassword(motDePasse, user.getMotDePasse())) {
-                throw new BusinessException("Mot de passe incorrect");
+                throw new BusinessException("Mot de passe ou email incorrect");
             }
 
             logger.info("✓ Authentification réussie: {}", email);

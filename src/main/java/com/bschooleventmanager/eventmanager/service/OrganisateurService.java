@@ -68,7 +68,7 @@ public class OrganisateurService {
             }
 
             if (!PasswordUtils.verifyPassword(motDePasse, organisateur.getMotDePasse())) {
-                throw new BusinessException("Mot de passe incorrect");
+                throw new BusinessException("Mot de passe ou email incorrect");
             }
 
             logger.info("✓ Authentification organisateur réussie: {}", email);

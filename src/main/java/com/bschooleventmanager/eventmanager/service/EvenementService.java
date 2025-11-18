@@ -291,5 +291,28 @@ public class EvenementService {
             throw new BusinessException("L'événement doit avoir au moins une place disponible");
         }
     }
+
+    /**
+     * Récupère un événement par son ID
+     * @param eventId L'ID de l'événement
+     * @return L'événement trouvé ou null si non trouvé
+     * @throws BusinessException En cas d'erreur
+     */
+    public Evenement getEvenementById(int eventId) throws BusinessException {
+        logger.info("Recherche de l'événement avec ID: {}", eventId);
+        
+        try {
+            Evenement evenement = evenementDAO.chercher(eventId);
+            if (evenement != null) {
+                logger.info("Événement trouvé: {}", evenement.getNom());
+            } else {
+                logger.warn("Aucun événement trouvé avec l'ID: {}", eventId);
+            }
+            return evenement;
+        } catch (DatabaseException e) {
+            logger.error("Erreur lors de la recherche de l'événement {}", eventId, e);
+            throw new BusinessException("Erreur lors de la recherche de l'événement: " + e.getMessage());
+        }
+    }
 }
 

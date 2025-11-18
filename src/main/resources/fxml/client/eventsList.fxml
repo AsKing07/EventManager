@@ -24,10 +24,7 @@
     </VBox>
 
     <!-- Search and Filter Section -->
-    <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);">
-        <padding>
-            <Insets top="20" right="20" bottom="20" left="20"/>
-        </padding>
+    <VBox spacing="15" styleClass="card-light-shadow" style="-fx-padding: 20px;">
         
         <Label text="Recherche et Filtres" 
                style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #34495e;"/>
@@ -81,10 +78,7 @@
 
     <!-- Events Table Section -->
     <VBox spacing="10" VBox.vgrow="ALWAYS" 
-          style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);">
-        <padding>
-            <Insets top="20" right="20" bottom="20" left="20"/>
-        </padding>
+          styleClass="card-light-shadow" style="-fx-padding: 20px;">
         
         <HBox alignment="CENTER_LEFT" spacing="10">
             <Label text="Événements Disponibles" 

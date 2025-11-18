@@ -64,11 +64,11 @@ public class ClientService {
             Client client = clientDAO.chercherParEmail(email);
 
             if (client == null) {
-                throw new BusinessException("Client non trouvé");
+                throw new BusinessException("Mot de passe ou email incorrect");
             }
 
             if (!PasswordUtils.verifyPassword(motDePasse, client.getMotDePasse())) {
-                throw new BusinessException("Mot de passe incorrect");
+                throw new BusinessException("Mot de passe ou email incorrect");
             }
 
             logger.info("✓ Authentification client réussie: {}", email);
