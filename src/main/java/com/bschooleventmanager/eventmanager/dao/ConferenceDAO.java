@@ -19,9 +19,9 @@ public class ConferenceDAO extends BaseDAO<Conference> {
                 "places_premium_disponibles, prix_standard, prix_vip, prix_premium," +
                 "Domaine,intervenant,niveau_expertise, place_standard_vendues, place_p_vendu, place_vip_vendu, etat_event) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-Connection connection = getConnection();
 
-        try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
+        try (Connection connection = getConnection(); PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setInt(1, conference.getOrganisateurId());
             pstmt.setString(2, conference.getNom());
             pstmt.setTimestamp(3, Timestamp.valueOf(conference.getDateEvenement()));
@@ -44,7 +44,7 @@ Connection connection = getConnection();
             pstmt.setBoolean(19, conference.isEtatEvent());
 
             int affectedRows = pstmt.executeUpdate();
-            //pstmt.close();
+         
 
             if (affectedRows > 0) {
                 try (ResultSet rs = pstmt.getGeneratedKeys()) {
@@ -55,7 +55,6 @@ Connection connection = getConnection();
                     }
                 }
             }
-            connection.close();
             throw new DatabaseException("Erreur lors de la création de l'événement.");
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -86,9 +85,9 @@ Connection connection = getConnection();
                 "    prix_standard = ?, prix_vip = ?, prix_premium = ?, artiste_groupe = ?, age_min = ?, domaine = ?, " +
                 "    intervenant = ?, type_concert = ?, type_spectacle = ?, niveau_expertise = ? WHERE id_evenement = ?;";
 
-        Connection connection = getConnection();
+        
 
-        try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection connection = getConnection(); PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setInt(1, conference.getOrganisateurId());
             pstmt.setString(2, conference.getNom());
             pstmt.setTimestamp(3, Timestamp.valueOf(conference.getDateEvenement()));
@@ -118,12 +117,11 @@ Connection connection = getConnection();
                     if (rs.next()) {
                         conference.setIdEvenement(rs.getInt(1));
                         logger.info("✓ Conference modifié: {}", conference.getNom());
-                        connection.close();
                         return conference;
                     }
                 }
             }
-            connection.close();
+            
             throw new DatabaseException("Erreur lors de la mise a jour de la conference.");
         } catch (SQLException e) {
             throw new RuntimeException(e);

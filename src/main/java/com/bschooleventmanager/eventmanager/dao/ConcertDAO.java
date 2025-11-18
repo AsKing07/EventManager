@@ -19,9 +19,9 @@ public class ConcertDAO extends BaseDAO<Concert> {
                 "places_premium_disponibles, prix_standard, prix_vip, prix_premium," +
                 "artiste_groupe,age_min,type_concert, place_standard_vendues, place_p_vendu, place_vip_vendu, etat_event) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        Connection connection = getConnection();
+        
 
-        try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection connection = getConnection(); PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setInt(1, concert.getOrganisateurId());
             pstmt.setString(2, concert.getNom());
             pstmt.setTimestamp(3, Timestamp.valueOf(concert.getDateEvenement()));
@@ -85,9 +85,9 @@ public class ConcertDAO extends BaseDAO<Concert> {
                 "    prix_standard = ?, prix_vip = ?, prix_premium = ?, artiste_groupe = ?, age_min = ?, domaine = ?, " +
                 "    intervenant = ?, type_concert = ?, type_spectacle = ?, niveau_expertise = ? WHERE id_evenement = ?;";
 
-        Connection connection = getConnection();
+      
 
-        try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection connection = getConnection(); PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setInt(1, concert.getOrganisateurId());
             pstmt.setString(2, concert.getNom());
             pstmt.setTimestamp(3, Timestamp.valueOf(concert.getDateEvenement()));

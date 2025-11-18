@@ -20,8 +20,10 @@ public class OrganisateurDAO extends BaseDAO<Organisateur> {
     @Override
     public Organisateur creer(Organisateur organisateur) throws DatabaseException {
         String query = "INSERT INTO Utilisateurs (nom, email, mot_de_passe, type_utilisateur) VALUES (?, ?, ?, ?)";
-Connection connection = getConnection();
-        try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            
             pstmt.setString(1, organisateur.getNom());
             pstmt.setString(2, organisateur.getEmail());
             pstmt.setString(3, organisateur.getMotDePasse());
@@ -38,7 +40,6 @@ Connection connection = getConnection();
                     }
                 }
             }
-            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur création organisateur", e);
             throw new DatabaseException("Erreur création organisateur", e);
@@ -51,16 +52,18 @@ Connection connection = getConnection();
     public Organisateur chercher(int id) throws DatabaseException {
         String query = "SELECT id_utilisateur, nom, email, mot_de_passe, type_utilisateur, date_creation " +
                        "FROM Utilisateurs WHERE id_utilisateur = ? AND type_utilisateur = ?";
-Connection connection = getConnection();
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+        
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+            
             pstmt.setInt(1, id);
             pstmt.setString(2, TypeUtilisateur.ORGANISATEUR.name());
+            
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     return mapRowToOrganisateur(rs);
                 }
             }
-            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur recherche organisateur", e);
             throw new DatabaseException("Erreur recherche organisateur", e);
@@ -72,16 +75,18 @@ Connection connection = getConnection();
     public Organisateur chercherParEmail(String email) throws DatabaseException {
         String query = "SELECT id_utilisateur, nom, email, mot_de_passe, type_utilisateur, date_creation " +
                        "FROM Utilisateurs WHERE email = ? AND type_utilisateur = ?";
-Connection connection = getConnection();
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+        
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+            
             pstmt.setString(1, email);
             pstmt.setString(2, TypeUtilisateur.ORGANISATEUR.name());
+            
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     return mapRowToOrganisateur(rs);
                 }
             }
-            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur recherche organisateur par email", e);
             throw new DatabaseException("Erreur recherche organisateur par email", e);
@@ -95,15 +100,17 @@ Connection connection = getConnection();
         List<Organisateur> organisateurs = new ArrayList<>();
         String query = "SELECT id_utilisateur, nom, email, mot_de_passe, type_utilisateur, date_creation " +
                        "FROM Utilisateurs WHERE type_utilisateur = ?";
-Connection connection = getConnection();
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+        
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+            
             pstmt.setString(1, TypeUtilisateur.ORGANISATEUR.name());
+            
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     organisateurs.add(mapRowToOrganisateur(rs));
                 }
             }
-            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur listage organisateurs", e);
             throw new DatabaseException("Erreur listage organisateurs", e);
@@ -115,27 +122,20 @@ Connection connection = getConnection();
     @Override
     public Organisateur mettreAJour(Organisateur organisateur) throws DatabaseException {
         String query = "UPDATE Utilisateurs SET nom = ?, email = ? WHERE id_utilisateur = ? AND type_utilisateur = ?";
-        Connection connection = getConnection();
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+        
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+            
             pstmt.setString(1, organisateur.getNom());
             pstmt.setString(2, organisateur.getEmail());
             pstmt.setInt(3, organisateur.getIdUtilisateur());
             pstmt.setString(4, TypeUtilisateur.ORGANISATEUR.name());
 
-            //pstmt.executeUpdate();
-
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
-                try (ResultSet rs = pstmt.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        organisateur.setIdUtilisateur(rs.getInt(1));
-                        logger.info("✓ Organisateur mis à jour: {}", organisateur.getIdUtilisateur());
-                        connection.close();
-                        return organisateur;
-                    }
-                }
+                logger.info("✓ Organisateur mis à jour: {}", organisateur.getIdUtilisateur());
+                return organisateur;
             }
-            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur mise à jour organisateur", e);
             throw new DatabaseException("Erreur mise à jour organisateur", e);
@@ -146,13 +146,14 @@ Connection connection = getConnection();
     @Override
     public void supprimer(int id) throws DatabaseException {
         String query = "DELETE FROM Utilisateurs WHERE id_utilisateur = ? AND type_utilisateur = ?";
-        Connection connection = getConnection();
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+        
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+            
             pstmt.setInt(1, id);
             pstmt.setString(2, TypeUtilisateur.ORGANISATEUR.name());
             pstmt.executeUpdate();
             logger.info("✓ Organisateur supprimé: {}", id);
-            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur suppression organisateur", e);
             throw new DatabaseException("Erreur suppression organisateur", e);
