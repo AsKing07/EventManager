@@ -288,8 +288,15 @@ public class ReservationController {
         );
 
         
-        // Afficher la confirmation et rediriger selon le choix de paiement
-        if (payNowRadio.isSelected()) {
+        // Calculer le montant total pour déterminer le comportement
+        BigDecimal totalAmount = calculateTotalAmount();
+        
+        // Afficher la confirmation et rediriger selon le choix de paiement et le montant
+        if (totalAmount.compareTo(BigDecimal.ZERO) == 0) {
+            // Réservation gratuite - validation automatique et redirection vers l'historique
+            NotificationUtils.showSuccess("Réservation gratuite validée ! Vos places sont confirmées.");
+            redirectToReservationsHistory();
+        } else if (payNowRadio.isSelected()) {
             // Paiement immédiat - rediriger vers l'interface de paiement
             NotificationUtils.showSuccess("Réservation créée ! Redirection vers le paiement...");
             redirectToPayment();
