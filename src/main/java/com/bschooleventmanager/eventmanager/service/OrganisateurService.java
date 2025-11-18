@@ -96,9 +96,7 @@ public class OrganisateurService {
         }
     }
 
-    /**
-     * Créer un événement
-     */
+
     public void creerEvenement(int idOrganisateur, String nomEvenement) throws BusinessException {
         // Vérifier que l'organisateur existe
         Organisateur organisateur = getOrganisateur(idOrganisateur);

@@ -112,6 +112,23 @@ public class OrganisateurDashboardController {
         redirectToLogin();
     }
 
+    @FXML
+    private void handleButtonEvents() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/organisateur/eventsList.fxml"));
+            Parent eventsRoot = loader.load();
+
+            OrganisateurEventController controller = loader.getController();
+
+            int id = SessionManager.getUtilisateurConnecte().getIdUtilisateur();
+            controller.setOrganisateurId(id);
+
+            contentArea.getChildren().setAll(eventsRoot);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * Redirige vers la page de connexion
      */
@@ -208,24 +225,17 @@ public class OrganisateurDashboardController {
         }
     }
 
-    /**
-     * Charge le contenu de la liste des événements
-     */
+
+
     private void loadEventsContent() {
         contentArea.getChildren().clear();
         
         try {
-            Text title = new Text("Liste de mes Événements");
-            title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #2c3e50;");
-            
-            Text subtitle = new Text("Ici sera affichée la liste de tous vos événements créés");
-            subtitle.setStyle("-fx-font-size: 16px; -fx-fill: #7f8c8d;");
-            
-            javafx.scene.layout.VBox content = new javafx.scene.layout.VBox(20.0, title, subtitle);
-            content.setAlignment(javafx.geometry.Pos.CENTER);
-            
-            contentArea.getChildren().add(content);
-            
+            Parent eventsView = FXMLLoader.load(
+                    getClass().getResource("/fxml/organisateur/eventsList.fxml")
+            );
+
+            contentArea.getChildren().add(eventsView);
         } catch (Exception e) {
             logger.error("Erreur lors du chargement des événements", e);
         }
