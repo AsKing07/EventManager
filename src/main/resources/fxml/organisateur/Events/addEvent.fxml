@@ -7,6 +7,7 @@
 
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
+<?import java.lang.Integer?>
 <?import javafx.scene.image.ImageView?>
 
 
@@ -139,20 +140,20 @@
                         <ComboBox managed="false" visible="false" fx:id="tfAge" promptText="Age minimal accepté" GridPane.rowIndex="18" GridPane.columnIndex="1">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
-                                    <String fx:value="5"/>
-                                    <String fx:value="6"/>
-                                    <String fx:value="7"/>
-                                    <String fx:value="8"/>
-                                    <String fx:value="9"/>
-                                    <String fx:value="10"/>
-                                    <String fx:value="11"/>
-                                    <String fx:value="12"/>
-                                    <String fx:value="13"/>
-                                    <String fx:value="14"/>
-                                    <String fx:value="15"/>
-                                    <String fx:value="16"/>
-                                    <String fx:value="17"/>
-                                    <String fx:value="18"/>
+                                    <java.lang.Integer fx:value="5"/>
+                                    <java.lang.Integer fx:value="6"/>
+                                    <java.lang.Integer fx:value="7"/>
+                                    <java.lang.Integer fx:value="8"/>
+                                    <java.lang.Integer fx:value="9"/>
+                                    <java.lang.Integer fx:value="10"/>
+                                    <java.lang.Integer fx:value="11"/>
+                                    <java.lang.Integer fx:value="12"/>
+                                    <java.lang.Integer fx:value="13"/>
+                                    <java.lang.Integer fx:value="14"/>
+                                    <java.lang.Integer fx:value="15"/>
+                                    <java.lang.Integer fx:value="16"/>
+                                    <java.lang.Integer fx:value="17"/>
+                                    <java.lang.Integer fx:value="18"/>
                                 </FXCollections>
                             </items>
                         </ComboBox>
