@@ -72,8 +72,62 @@ Connection connection = getConnection();
         return List.of();
     }
 
+
+    /**
+     * Mettre à jour une conférence
+     * @param conference
+     * @return
+     * @throws DatabaseException
+     */
     @Override
-    public void mettreAJour(Conference entity) throws DatabaseException {
+    public Conference mettreAJour(Conference conference) throws DatabaseException {
+        String query = "UPDATE evenements SET organisateur_id = ?, nom = ?, date_evenement = ?, lieu = ?, type_evenement = ?," +
+                "    description = ?, places_standard_disponibles = ?, places_vip_disponibles = ?, places_premium_disponibles = ?," +
+                "    prix_standard = ?, prix_vip = ?, prix_premium = ?, artiste_groupe = ?, age_min = ?, domaine = ?, " +
+                "    intervenant = ?, type_concert = ?, type_spectacle = ?, niveau_expertise = ? WHERE id_evenement = ?;";
+
+        Connection connection = getConnection();
+
+        try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            pstmt.setInt(1, conference.getOrganisateurId());
+            pstmt.setString(2, conference.getNom());
+            pstmt.setTimestamp(3, Timestamp.valueOf(conference.getDateEvenement()));
+            pstmt.setString(4, conference.getLieu());
+            pstmt.setString(5, conference.getTypeEvenement().getLabel());
+            pstmt.setString(6, conference.getDescription());
+            pstmt.setInt(7, conference.getPlacesStandardDisponibles());
+            pstmt.setInt(8, conference.getPlacesVipDisponibles());
+            pstmt.setInt(9, conference.getPlacesPremiumDisponibles());
+            pstmt.setBigDecimal(10, conference.getPrixStandard());
+            pstmt.setBigDecimal(11, conference.getPrixVip());
+            pstmt.setBigDecimal(12, conference.getPrixPremium());
+            pstmt.setNull(13, java.sql.Types.VARCHAR); // Artiste/Groupe n'est pas necessaire pour une conference
+            pstmt.setInt(14, java.sql.Types.NULL); // Age min n'est pas necessaire pour une conference
+            pstmt.setString(15,conference.getDomaine());
+            pstmt.setString(16,conference.getIntervenants());
+            pstmt.setNull(17, Types.NULL);// Type concert n'est pas necessaire pour une conference
+            pstmt.setNull(18, Types.NULL);// Type spectacle n'est pas necessaire pour une conference
+            pstmt.setString(19,conference.getNiveauExpertise().getLabel());
+            pstmt.setInt(20, conference.getIdEvenement());
+
+            int affectedRows = pstmt.executeUpdate();
+
+
+            if (affectedRows > 0) {
+                try (ResultSet rs = pstmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        conference.setIdEvenement(rs.getInt(1));
+                        logger.info("✓ Conference modifié: {}", conference.getNom());
+                        connection.close();
+                        return conference;
+                    }
+                }
+            }
+            connection.close();
+            throw new DatabaseException("Erreur lors de la mise a jour de la conference.");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
