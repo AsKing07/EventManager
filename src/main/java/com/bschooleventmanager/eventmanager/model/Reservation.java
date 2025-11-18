@@ -3,6 +3,8 @@ package com.bschooleventmanager.eventmanager.model;
 
 import com.bschooleventmanager.eventmanager.model.enums.StatutReservation;
 import com.bschooleventmanager.eventmanager.model.ReservationDetail;
+
+import java.time.LocalDateTime;
 import java.util.List;
 public class Reservation {
 
@@ -13,6 +15,7 @@ public class Reservation {
     private StatutReservation statut;
     private double totalPaye;
     private List<ReservationDetail> details;
+    private LocalDateTime dateAnnulation;
 
     // Constructeur vide
     public Reservation() {
@@ -20,13 +23,15 @@ public class Reservation {
 
     // Constructeur complet
     public Reservation(int idReservation, int clientId, int idEvenement,
-                       String dateReservation, StatutReservation statut, double totalPaye) {
+                       String dateReservation, StatutReservation statut, double totalPaye, List<ReservationDetail> details, LocalDateTime dateAnnulation) {
         this.idReservation = idReservation;
         this.clientId = clientId;
         this.idEvenement = idEvenement;
         this.dateReservation = dateReservation;
         this.statut = statut;
         this.totalPaye = totalPaye;
+        this.details = details;
+        this.dateAnnulation = dateAnnulation;
 
     }
 
@@ -61,6 +66,9 @@ public class Reservation {
 
     public List<ReservationDetail> getDetails() { return details; }
     public void setDetails(List<ReservationDetail> details) { this.details = details; }
+
+    public LocalDateTime getDateAnnulation() { return dateAnnulation; }
+    public void setDateAnnulation(LocalDateTime dateAnnulation) { this.dateAnnulation = dateAnnulation; }
 
     // Méthode toString
     @Override

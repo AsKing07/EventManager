@@ -40,10 +40,6 @@ public class CreateEventController {
     // Référence au contrôleur dashboard pour permettre le retour
     private com.bschooleventmanager.eventmanager.controller.organisateur.OrganisateurDashboardController dashboardController;
 
-    public CreateEventController(ComboBox<Integer> tfAge) {
-        this.tfAge = tfAge;
-    }
-
     public CreateEventController() {
         // Constructeur requis par JavaFX
     }
@@ -139,14 +135,6 @@ public class CreateEventController {
             Intervenant.setVisible(true); Intervenant.setManaged(true); lbIntervenant.setVisible(true);lbIntervenant.setManaged(true);
         }
     }
-    /*@FXML
-    private void ChangeDate(){
-        LocalDate date = dpDate.getValue();
-        LocalDateTime dT = LocalDateTime.now();
-        System.out.println("la date "+dT);
-        NotificationUtils.showError(dT.toString());
-        if(date.equals(LocalDate.now())) NotificationUtils.showError("bonjour");
-    }*/
 
     /**
      *
@@ -165,8 +153,7 @@ public class CreateEventController {
         }
 
     }
-
-    @FXML
+@FXML
     private void createEvent() throws BusinessException {
         clearAllErrors();
 
@@ -227,13 +214,13 @@ public class CreateEventController {
                     return;
                 }
 
-                TypeConcert typeConcert = tyConcert.getValue().equals(TypeConcert.LIVE.getLabel()) ? TypeConcert.LIVE : TypeConcert.ACOUSTIQUE;
+                TypeConcert typeConcert = tyConcert.getValue().equals(TypeConcert.LIVE) ? TypeConcert.LIVE : TypeConcert.ACOUSTIQUE;
                 int ageMin = tfAge.getValue();
-                String artiste_groupe = tfArtits.getText();
+                String artisteGroupe = tfArtits.getText();
                 int organisateurId = SessionManager.getUtilisateurConnecte().getIdUtilisateur();
 
-                Concert concert = new Concert(organisateurId, titre, dateEvent, lieu, valDescription, nbreStandard, nbreVip, nbrePremium, BigDecimal.valueOf(prixStand), BigDecimal.valueOf(prixVip), BigDecimal.valueOf(prixPremium), LocalDateTime.now(), artiste_groupe, typeConcert, ageMin);
-                evenementService.creerConcert(concert);
+                Concert concert = new Concert(organisateurId, titre, dateEvent, lieu, valDescription, nbreStandard, nbreVip, nbrePremium, BigDecimal.valueOf(prixStand), BigDecimal.valueOf(prixVip), BigDecimal.valueOf(prixPremium), LocalDateTime.now(), artisteGroupe, typeConcert, ageMin);
+                EvenementService.creerConcert(concert);
                 NotificationUtils.showSuccess("Création du concert réussie !");
                 if (dashboardController != null) dashboardController.showDashboard();
 
@@ -257,11 +244,11 @@ public class CreateEventController {
                 else typeSpect = TypeSpectacle.THEATRE;
 
                 int ageMin = tfAge.getValue();
-                String artiste_groupe = tfArtits.getText();
+                String artisteGroupe = tfArtits.getText();
                 int organisateurId = SessionManager.getUtilisateurConnecte().getIdUtilisateur();
 
-                Spectacle spectacle = new Spectacle(organisateurId, titre, dateEvent, lieu, valDescription, nbreStandard, nbreVip, nbrePremium, BigDecimal.valueOf(prixStand), BigDecimal.valueOf(prixVip), BigDecimal.valueOf(prixPremium), typeSpect, artiste_groupe, ageMin);
-                evenementService.creerSpectacle(spectacle);
+                Spectacle spectacle = new Spectacle(organisateurId, titre, dateEvent, lieu, valDescription, nbreStandard, nbreVip, nbrePremium, BigDecimal.valueOf(prixStand), BigDecimal.valueOf(prixVip), BigDecimal.valueOf(prixPremium), typeSpect, artisteGroupe, ageMin);
+                EvenementService.creerSpectacle(spectacle);
                 NotificationUtils.showSuccess("Création du spectacle réussie !");
                 if (dashboardController != null) dashboardController.showDashboard();
 
@@ -284,7 +271,7 @@ public class CreateEventController {
 
                 int organisateurId = SessionManager.getUtilisateurConnecte().getIdUtilisateur();
                 Conference conference = new Conference(organisateurId, titre, dateEvent, lieu, TypeEvenement.CONFERENCE, valDescription, nbreStandard, nbreVip, nbrePremium, BigDecimal.valueOf(prixStand), BigDecimal.valueOf(prixVip), BigDecimal.valueOf(prixPremium), intervenants, domaine, nivExpert);
-                evenementService.creerConference(conference);
+                EvenementService.creerConference(conference);
                 NotificationUtils.showSuccess("Création de la conférence réussie !");
                 if (dashboardController != null) dashboardController.showDashboard();
             }
@@ -316,7 +303,7 @@ public class CreateEventController {
                 return null;
             }
             return Integer.parseInt(txt.trim());
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException _) {
             globalErrorLabel.setText("Le champ '" + fieldName + "' doit être un nombre valide.");
             return null;
         }
