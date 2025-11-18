@@ -20,7 +20,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/eventsList.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/auth/login.fxml"));
             Parent root = loader.load();
 
             double[] dimensions = WindowUtils.getOptimalDimensions();

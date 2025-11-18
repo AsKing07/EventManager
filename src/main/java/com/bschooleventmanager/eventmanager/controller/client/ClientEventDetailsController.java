@@ -11,7 +11,7 @@ public class ClientEventDetailsController {
     @FXML private Label eventDateLabel;
     @FXML private Label eventLocationLabel;
     @FXML private Label eventTypeLabel;
-    @FXML private Label eventPriceLabel; // Example
+    @FXML private Label eventPriceLabel;
     @FXML private TextArea eventDescriptionArea;
 
     private Evenement currentEvent;
@@ -22,7 +22,6 @@ public class ClientEventDetailsController {
      */
     public void setEventData(Evenement event) {
         this.currentEvent = event;
-        // Call a method to populate the UI fields
         populateUI();
     }
 
