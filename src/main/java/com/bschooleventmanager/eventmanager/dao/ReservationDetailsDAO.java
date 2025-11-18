@@ -87,7 +87,7 @@ public class ReservationDetailsDAO extends BaseDAO<ReservationDetail> {
     }
 
     @Override
-    public void mettreAJour(ReservationDetail detail) throws DatabaseException {
+    public ReservationDetail mettreAJour(ReservationDetail detail) throws DatabaseException {
         String query = "UPDATE reservationdetails SET id_reservation = ?, categorie_place = ?, nombre_tickets = ?, " +
                        "prix_unitaire = ?, sous_total = ? WHERE id_detail = ?";
         
@@ -110,6 +110,7 @@ public class ReservationDetailsDAO extends BaseDAO<ReservationDetail> {
             logger.error("Erreur mise à jour détail réservation", e);
             throw new DatabaseException("Erreur mise à jour détail réservation", e);
         }
+        return detail;
     }
 
     @Override

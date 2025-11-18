@@ -1,31 +1,28 @@
+// java
 package com.bschooleventmanager.eventmanager.model.enums;
 
+/**
+ * Représente l'état logique d'un événement.
+ * Utilisé pour obtenir un code entier stocké en base (ex: 1 = ACTIF, 0 = SUPPRIME).
+ */
 public enum EtatEvent {
-    SUPPRIME(0, "Supprimé"),
-    ACTIF(1, "Actif");
+    ACTIF(1),
+    SUPPRIME(0);
 
     private final int code;
-    private final String label;
 
-    EtatEvent(int code, String label) {
+    EtatEvent(int code) {
         this.code = code;
-        this.label = label;
     }
 
     public int getCode() {
         return code;
     }
 
-    public String getLabel() {
-        return label;
-    }
-
     public static EtatEvent fromCode(int code) {
-        for (EtatEvent etat : values()) {
-            if (etat.code == code) {
-                return etat;
-            }
+        for (EtatEvent e : values()) {
+            if (e.code == code) return e;
         }
-        throw new IllegalArgumentException("Code d'état de compte inconnu : " + code);
+        throw new IllegalArgumentException("Code EtatEvent inconnu: " + code);
     }
 }

@@ -4,23 +4,19 @@ import com.bschooleventmanager.eventmanager.dao.ConcertDAO;
 import com.bschooleventmanager.eventmanager.dao.ConferenceDAO;
 import com.bschooleventmanager.eventmanager.dao.EvenementDAO;
 import com.bschooleventmanager.eventmanager.dao.SpectacleDAO;
-import com.bschooleventmanager.eventmanager.model.*;
-import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
-import com.bschooleventmanager.eventmanager.util.NotificationUtils;
-import com.bschooleventmanager.eventmanager.model.enums.StatutEvenement;
 import com.bschooleventmanager.eventmanager.exception.BusinessException;
 import com.bschooleventmanager.eventmanager.exception.DatabaseException;
-import com.bschooleventmanager.eventmanager.model.*;
+import com.bschooleventmanager.eventmanager.model.Concert;
+import com.bschooleventmanager.eventmanager.model.Conference;
+import com.bschooleventmanager.eventmanager.model.Evenement;
+import com.bschooleventmanager.eventmanager.model.Spectacle;
 import com.bschooleventmanager.eventmanager.model.enums.StatutEvenement;
 import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
-
+import com.bschooleventmanager.eventmanager.util.NotificationUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 public class EvenementService {
@@ -57,7 +53,7 @@ public class EvenementService {
     /**
      * Créer un nouveau concert 
      */
-    public static Concert creerConcert(Concert concert) throws BusinessException {
+    public Concert creerConcert(Concert concert) throws BusinessException {
         try {
             // Validation des données
             validerDonneesEvenement(concert.getNom(), concert.getDateEvenement(), concert.getLieu(), concert.getPlacesStandardDisponibles(), concert.getPlacesVipDisponibles(), concert.getPlacesPremiumDisponibles());
@@ -75,11 +71,68 @@ public class EvenementService {
         }
     }
 
+    /**
+     * Modifier un concert
+     * @param concert
+     */
+    public Concert modifierConcert(Concert concert) throws BusinessException {
+        try {
+            // Validation des données
+            validerDonneesEvenement(concert.getNom(), concert.getDateEvenement(), concert.getLieu(), concert.getPlacesStandardDisponibles(), concert.getPlacesVipDisponibles(), concert.getPlacesPremiumDisponibles());
+            Concert result = concertDAO.mettreAJour(concert);
+
+            logger.info("✓ Concert modifé: {}", concert.getNom());
+            return result;
+
+        } catch (DatabaseException e) {
+            logger.error("Erreur modification concert", e);
+            throw new BusinessException("Erreur lors de la modif du concert", e);
+        }
+    }
+
+    /**
+     * Modifier une conférence
+     * @param conference
+     */
+    public Conference modifierConference(Conference conference) throws BusinessException {
+        try {
+            // Validation des données
+            validerDonneesEvenement(conference.getNom(), conference.getDateEvenement(), conference.getLieu(), conference.getPlacesStandardDisponibles(), conference.getPlacesVipDisponibles(), conference.getPlacesPremiumDisponibles());
+            Conference result = conferenceDAO.mettreAJour(conference);
+
+            logger.info("✓ Concert modifé: {}", conference.getNom());
+            return result;
+
+        } catch (DatabaseException e) {
+            logger.error("Erreur modification concert", e);
+            throw new BusinessException("Erreur lors de la modif du concert", e);
+        }
+    }
+
+    /**
+     * Modifier un spectacle
+     * @param spectacle
+     */
+    public Spectacle modifierSpectacle(Spectacle spectacle) throws BusinessException {
+        try {
+            // Validation des données
+            validerDonneesEvenement(spectacle.getNom(), spectacle.getDateEvenement(), spectacle.getLieu(), spectacle.getPlacesStandardDisponibles(), spectacle.getPlacesVipDisponibles(), spectacle.getPlacesPremiumDisponibles());
+            Spectacle result = spectacleDao.mettreAJour(spectacle);
+
+            logger.info("✓ Concert modifé: {}", spectacle.getNom());
+            return result;
+
+        } catch (DatabaseException e) {
+            logger.error("Erreur modification concert", e);
+            throw new BusinessException("Erreur lors de la modif du concert", e);
+        }
+    }
+
 
     /**
      * Créer une nouvelle conférence
      */
-    public static Conference creerConference(Conference conference) throws BusinessException {
+    public Conference creerConference(Conference conference) throws BusinessException {
         try {
             // Validation des données
             validerDonneesEvenement(conference.getNom(), conference.getDateEvenement(), conference.getLieu(), conference.getPlacesStandardDisponibles(), conference.getPlacesVipDisponibles(), conference.getPlacesPremiumDisponibles());
@@ -101,13 +154,10 @@ public class EvenementService {
     /**
      * Créer un nouveau spectacle
      */
-    public static Spectacle creerSpectacle(Spectacle spectacle) throws BusinessException {
+    public Spectacle creerSpectacle(Spectacle spectacle) throws BusinessException {
         try {
             // Validation des données
             validerDonneesEvenement(spectacle.getNom(), spectacle.getDateEvenement(), spectacle.getLieu(), spectacle.getPlacesStandardDisponibles(), spectacle.getPlacesVipDisponibles(), spectacle.getPlacesPremiumDisponibles());
-
-          
-          
 
             Spectacle result = (Spectacle) spectacleDao.creer(spectacle);
             logger.info("✓ Spectacle créé: {}", spectacle.getNom());

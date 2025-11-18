@@ -3,6 +3,7 @@ package com.bschooleventmanager.eventmanager.controller.events;
 import com.bschooleventmanager.eventmanager.exception.BusinessException;
 import com.bschooleventmanager.eventmanager.model.Concert;
 import com.bschooleventmanager.eventmanager.model.Conference;
+import com.bschooleventmanager.eventmanager.model.EventBaseData;
 import com.bschooleventmanager.eventmanager.model.Spectacle;
 import com.bschooleventmanager.eventmanager.model.enums.NiveauExpertise;
 import com.bschooleventmanager.eventmanager.model.enums.TypeConcert;
@@ -24,7 +25,7 @@ import java.time.LocalDateTime;
 public class CreateEventController {
     @FXML private Label lbtfAge, lbtfArtits, lbtyConcert, lbTySpectacle, lbNvExpert, lbDomaine, lbIntervenant;
     @FXML private Label lblErrDate, lblErrTitre, lbErrLieu, lblErrTyEvent, lblErrTypeConcert, lblErrTypeSpectacle, lblErrNvExpert, lblErrDomaine, lblErrAge, lblErrArtiste;
-    @FXML private TextField tfNom, tfLieu, prixPlaceStandard, nbPlacesVip, prixPlaceVip, nbPlacesPremium, prixPlacePremium, nbPlacesStandard, tfArtits, Domaine, Intervenant;
+    @FXML private TextField tfNom, tfLieu, prixPlaceStandard, nbPlacesVip, prixPlaceVip, nbPlacesPremium, prixPlacePremium, nbPlacesStandard, tfArtits, Domaine, Intervenant,tfIdEvent;
     @FXML private TextArea Description;
     @FXML private DatePicker dpDate;
     @FXML private Spinner<Integer> spHour, spMinute;
@@ -153,30 +154,209 @@ public class CreateEventController {
         }
 
     }
-@FXML
+    /**
+     * Création de l'évènement en fonction du type sélectionné
+     * @Author Loic Vanel & Charbel SONON
+     * @throws BusinessException
+     */
+    @FXML
     private void createEvent() throws BusinessException {
         clearAllErrors();
+        // Validation du formulaire (Champs basiques)
+        Boolean valid = validateForm();
+        if (!valid) return;
 
-        // Vérifications basiques
-        if (isEmpty(tfNom) || dpDate.getValue() == null || isEmpty(tfLieu) || evType.getValue() == null) {
-            if (dpDate.getValue() == null) {
-                setError(lblErrDate, "La date de l'évènement ne peut pas être vide !");
-            } else if (dpDate.getValue().isBefore(LocalDate.now())) {
-                setError(lblErrDate, "La date de l'évènement ne peut pas être avant la date du jour !");
+        //Chargement des valeurs communes a tous les types d'évènements
+        EventBaseData baseData = loadCommonValues();
+        if (baseData == null) {
+            logger.info("loadCommonValues a déjà positionné lblError");
+            return;
+        }
+        // Création de l'évènement en fonction du type
+        try {
+            if (baseData.typeEvent.equals(TypeEvenement.CONCERT.getLabel())) {
+                createConcert(1,baseData);
+                NotificationUtils.showSuccess("Création du concert réussie !");
+                if (dashboardController != null) dashboardController.showDashboard();
+
+            } else if (baseData.typeEvent.equals(TypeEvenement.SPECTACLE.getLabel())) {
+                createSpectacle(1,baseData);
+                NotificationUtils.showSuccess("Création du spectacle réussie !");
+                if (dashboardController != null) dashboardController.showDashboard();
+
+            } else {
+                createConference(1,baseData);
+                NotificationUtils.showSuccess("Création de la conférence réussie !");
+                if (dashboardController != null) dashboardController.showDashboard();
             }
-            if (isEmpty(tfNom)) setError(lblErrTitre, "Le titre ne peut pas être vide");
-            if (isEmpty(tfLieu)) setError(lbErrLieu, "Le lieu de l'évènement ne peut pas être vide");
-            if (evType.getValue() == null) setError(lblErrTyEvent, "Le type d'évènement est obligatoire");
+        } catch (Exception e) {
+            logger.error("Erreur lors de la création de l'évènement", e);
+            NotificationUtils.showError("Une erreur est survenue lors de la création de l'évènement. Vérifiez les champs et réessayez.");
+        }
+    }
 
-            lblError.setText("⚠️ Veuillez remplir tous les champs obligatoires (*) !");
+    /**
+     * Modification de l'évènement en fonction du type sélectionné
+     * @Author Loic Vanel
+     * @throws BusinessException
+     */
+    private void modificationEvent() throws BusinessException {
+        clearAllErrors();
+        // Validation du formulaire (Champs basiques)
+        Boolean valid = validateForm();
+        if (!valid) return;
+
+        //Chargement des valeurs communes a tous les types d'évènements
+        EventBaseData baseData = loadCommonValues();
+        if (baseData == null) {
+            logger.info("loadCommonValues a déjà positionné lblError");
+            return;
+        }
+        // Création de l'évènement en fonction du type
+        try {
+            if (baseData.typeEvent.equals(TypeEvenement.CONCERT.getLabel())) {
+                createConcert(2,baseData);
+                NotificationUtils.showSuccess("Modification du concert réussie !");
+                if (dashboardController != null) dashboardController.showDashboard();
+
+            } else if (baseData.typeEvent.equals(TypeEvenement.SPECTACLE.getLabel())) {
+                createSpectacle(2,baseData);
+                NotificationUtils.showSuccess("Création du spectacle réussie !");
+                if (dashboardController != null) dashboardController.showDashboard();
+
+            } else {
+                createConference(2,baseData);
+                NotificationUtils.showSuccess("Création de la conférence réussie !");
+                if (dashboardController != null) dashboardController.showDashboard();
+            }
+        } catch (Exception e) {
+            logger.error("Erreur lors de la création de l'évènement", e);
+            NotificationUtils.showError("Une erreur est survenue lors de la création de l'évènement. Vérifiez les champs et réessayez.");
+        }
+    }
+
+
+    /**
+     * Création d'un concert
+     * @param baseData
+     * @param create_or_modif pour savoir si on est en création ou modification (1 = création, 2 = modification)
+     * @Author Loic Vanel
+     * @throws BusinessException
+     */
+    private  void createConcert(int create_or_modif, EventBaseData baseData) throws BusinessException {
+        // Implémentation de la création de concert
+        if (tyConcert.getValue() == null) {
+            setError(lblErrTypeConcert, "Le type de concert est obligatoire");
+            return;
+        }
+        if (tfAge.getValue() == null) {
+            setError(lblErrAge, "Veuillez choisir un âge minimum !");
+            return;
+        }
+        if (isEmpty(tfArtits)) {
+            setError(lblErrArtiste, "Veuillez renseigner l'artiste(s) / groupe en spectacle");
             return;
         }
 
-        if (dpDate.getValue().isBefore(LocalDate.now())) {
-            setError(lblErrDate, "La date de l'évènement ne peut pas être avant la date du jour !");
+        TypeConcert typeConcert = tyConcert.getValue().equals(TypeConcert.LIVE) ? TypeConcert.LIVE : TypeConcert.ACOUSTIQUE;
+        int ageMin = tfAge.getValue();
+        String artisteGroupe = tfArtits.getText();
+        int organisateurId = SessionManager.getUtilisateurConnecte().getIdUtilisateur();
+
+        Concert concert = new Concert(organisateurId, baseData.titre, baseData.dateEvent, baseData.lieu, baseData.description, baseData.nbreStandard, baseData.nbreVip, baseData.nbrePremium, BigDecimal.valueOf(baseData.prixStand), BigDecimal.valueOf(baseData.prixVip), BigDecimal.valueOf(baseData.prixPremium), LocalDateTime.now(), artisteGroupe, typeConcert, ageMin);
+        if (create_or_modif == 2) {
+            int idConcert = Integer.parseInt(tfIdEvent.getText());
+            concert.setIdEvenement(idConcert);
+            Concert concert1 = evenementService.modifierConcert(concert);
+        } else if (create_or_modif == 1) {
+            evenementService.creerConcert(concert);
+        }
+    }
+
+    /**
+     * Création d'un spectacle
+     * @param baseData
+     * @param create_or_modif pour savoir si on est en création ou modification du spectacle (1 = création, 2 = modification)
+     * @Author Loic Vanel
+     * @throws BusinessException
+     */
+    private void createSpectacle(int create_or_modif,EventBaseData baseData) throws BusinessException {
+        // Implémentation de la création de spectacle
+        if (tySpectacle.getValue() == null) {
+            setError(lblErrTypeSpectacle, "Le type du spectacle est obligatoire");
+            return;
+        }
+        if (tfAge.getValue() == null) {
+            setError(lblErrAge, "Veuillez choisir un âge minimum !");
+            return;
+        }
+        if (isEmpty(tfArtits)) {
+            setError(lblErrArtiste, "Veuillez renseigner l'artiste(s) / groupe en spectacle");
             return;
         }
 
+        TypeSpectacle typeSpect;
+        if (tySpectacle.getValue().equals(TypeSpectacle.CIRQUE.getLabel())) typeSpect = TypeSpectacle.CIRQUE;
+        else if (tySpectacle.getValue().equals(TypeSpectacle.HUMOUR.getLabel())) typeSpect = TypeSpectacle.HUMOUR;
+        else typeSpect = TypeSpectacle.THEATRE;
+
+        int ageMin = tfAge.getValue();
+        String artisteGroupe = tfArtits.getText();
+        int organisateurId = SessionManager.getUtilisateurConnecte().getIdUtilisateur();
+
+        Spectacle spectacle = new Spectacle(organisateurId, baseData.titre, baseData.dateEvent, baseData.lieu, baseData.description, baseData.nbreStandard, baseData.nbreVip, baseData.nbrePremium, BigDecimal.valueOf(baseData.prixStand), BigDecimal.valueOf(baseData.prixVip), BigDecimal.valueOf(baseData.prixPremium), typeSpect, artisteGroupe, ageMin);
+        if (create_or_modif == 2) {
+            int idEvent = Integer.parseInt(tfIdEvent.getText());
+            spectacle.setIdEvenement(idEvent);
+            Spectacle spectacle1 = evenementService.modifierSpectacle(spectacle);
+        } else if (create_or_modif == 1) {
+            evenementService.creerSpectacle(spectacle);
+        }
+        //evenementService.creerSpectacle(spectacle);
+    }
+
+    /**
+     * Création d'une conférence
+     * @param create_or_modif pour savoir si on est en création ou modification de la conférence (1 = création, 2 = modification)
+     * @param baseData
+     * @Author Loic Vanel
+     * @throws BusinessException
+     */
+    private void createConference(int create_or_modif,EventBaseData baseData) throws BusinessException {
+        // Implémentation de la création de conférence
+        if (nvExpert.getValue() == null) {
+            setError(lblErrNvExpert, "Le Niveau d'expertise est obligatoire");
+            return;
+        }
+        if (isEmpty(Domaine)) {
+            setError(lblErrDomaine, "Le domaine est obligatoire");
+            return;
+        }
+
+        String domaine = Domaine.getText();
+        String intervenants = Intervenant.getText();
+        NiveauExpertise nivExpert = null;
+        if (nvExpert.getValue().equals(NiveauExpertise.DEBUTANT.getLabel())) nivExpert = NiveauExpertise.DEBUTANT;
+        if (nvExpert.getValue().equals(NiveauExpertise.INTERMEDIAIRE.getLabel())) nivExpert = NiveauExpertise.INTERMEDIAIRE;
+        if (nvExpert.getValue().equals(NiveauExpertise.PROFESSIONNEL.getLabel())) nivExpert = NiveauExpertise.PROFESSIONNEL;
+
+        int organisateurId = SessionManager.getUtilisateurConnecte().getIdUtilisateur();
+        Conference conference = new Conference(organisateurId, baseData.titre, baseData.dateEvent, baseData.lieu, TypeEvenement.CONFERENCE, baseData.description, baseData.nbreStandard, baseData.nbreVip, baseData.nbrePremium, BigDecimal.valueOf(baseData.prixStand), BigDecimal.valueOf(baseData.prixVip), BigDecimal.valueOf(baseData.prixPremium), intervenants, domaine, nivExpert);
+        if (create_or_modif == 2) {
+            int idEvent = Integer.parseInt(tfIdEvent.getText());
+            conference.setIdEvenement(idEvent);
+            Conference conference1 = evenementService.modifierConference(conference);
+        } else if (create_or_modif == 1) {
+            evenementService.creerConference(conference);
+        }
+        //evenementService.creerConference(conference);
+    }
+
+    /** Charge les valeurs communes à tous les types d'évènements
+     * @return EventBaseData contenant les valeurs communes, ou null en cas d'erreur de parsing
+     * @Author Loic Vanel
+     */
+    private EventBaseData loadCommonValues() {
         // Lecture et parsing des champs numériques avec gestion d'erreur
         Integer nbreStandard = parseInteger(nbPlacesStandard, lblError, "nombre de places standard");
         Integer nbreVip = parseInteger(nbPlacesVip, lblError, "nombre de places VIP");
@@ -187,9 +367,9 @@ public class CreateEventController {
 
         if (nbreStandard == null || nbreVip == null || nbrePremium == null || prixStand == null || prixVip == null || prixPremium == null) {
             // parseInteger a déjà positionné lblError
-            return;
+            logger.error("Erreur de parsing des champs numériques lors de la création d'un évènement (LES PRIX ET NOMBRE DE PLACES PAR CATEGORIE SONT OBLIGATOIRES)");
+            return null;
         }
-
         String titre = tfNom.getText();
         String valDescription = Description.getText();
         LocalDate selectedDate = dpDate.getValue();
@@ -199,86 +379,37 @@ public class CreateEventController {
         String lieu = tfLieu.getText();
         String typeEvent = evType.getValue();
 
-        try {
-            if (typeEvent.equals(TypeEvenement.CONCERT.getLabel())) {
-                if (tyConcert.getValue() == null) {
-                    setError(lblErrTypeConcert, "Le type de concert est obligatoire");
-                    return;
-                }
-                if (tfAge.getValue() == null) {
-                    setError(lblErrAge, "Veuillez choisir un âge minimum !");
-                    return;
-                }
-                if (isEmpty(tfArtits)) {
-                    setError(lblErrArtiste, "Veuillez renseigner l'artiste(s) / groupe en spectacle");
-                    return;
-                }
+        return new EventBaseData(titre, valDescription, dateEvent, lieu, typeEvent, nbreStandard, nbreVip, nbrePremium, prixStand, prixVip, prixPremium);
+    }
 
-                TypeConcert typeConcert = tyConcert.getValue().equals(TypeConcert.LIVE) ? TypeConcert.LIVE : TypeConcert.ACOUSTIQUE;
-                int ageMin = tfAge.getValue();
-                String artisteGroupe = tfArtits.getText();
-                int organisateurId = SessionManager.getUtilisateurConnecte().getIdUtilisateur();
 
-                Concert concert = new Concert(organisateurId, titre, dateEvent, lieu, valDescription, nbreStandard, nbreVip, nbrePremium, BigDecimal.valueOf(prixStand), BigDecimal.valueOf(prixVip), BigDecimal.valueOf(prixPremium), LocalDateTime.now(), artisteGroupe, typeConcert, ageMin);
-                EvenementService.creerConcert(concert);
-                NotificationUtils.showSuccess("Création du concert réussie !");
-                if (dashboardController != null) dashboardController.showDashboard();
+    /** Valide les champs du formulaire commun à de tout type d'évènement  avant la soumission
+     * @return true si le formulaire est valide, false sinon
+     * @Author Loic Vanel
+     */
+    private boolean validateForm(){
+        // Implémenter les validations de formulaire ici si nécessaire
+        clearAllErrors();
 
-            } else if (typeEvent.equals(TypeEvenement.SPECTACLE.getLabel())) {
-                if (tySpectacle.getValue() == null) {
-                    setError(lblErrTypeSpectacle, "Le type du spectacle est obligatoire");
-                    return;
-                }
-                if (tfAge.getValue() == null) {
-                    setError(lblErrAge, "Veuillez choisir un âge minimum !");
-                    return;
-                }
-                if (isEmpty(tfArtits)) {
-                    setError(lblErrArtiste, "Veuillez renseigner l'artiste(s) / groupe en spectacle");
-                    return;
-                }
-
-                TypeSpectacle typeSpect;
-                if (tySpectacle.getValue().equals(TypeSpectacle.CIRQUE.getLabel())) typeSpect = TypeSpectacle.CIRQUE;
-                else if (tySpectacle.getValue().equals(TypeSpectacle.HUMOUR.getLabel())) typeSpect = TypeSpectacle.HUMOUR;
-                else typeSpect = TypeSpectacle.THEATRE;
-
-                int ageMin = tfAge.getValue();
-                String artisteGroupe = tfArtits.getText();
-                int organisateurId = SessionManager.getUtilisateurConnecte().getIdUtilisateur();
-
-                Spectacle spectacle = new Spectacle(organisateurId, titre, dateEvent, lieu, valDescription, nbreStandard, nbreVip, nbrePremium, BigDecimal.valueOf(prixStand), BigDecimal.valueOf(prixVip), BigDecimal.valueOf(prixPremium), typeSpect, artisteGroupe, ageMin);
-                EvenementService.creerSpectacle(spectacle);
-                NotificationUtils.showSuccess("Création du spectacle réussie !");
-                if (dashboardController != null) dashboardController.showDashboard();
-
-            } else {
-                if (nvExpert.getValue() == null) {
-                    setError(lblErrNvExpert, "Le Niveau d'expertise est obligatoire");
-                    return;
-                }
-                if (isEmpty(Domaine)) {
-                    setError(lblErrDomaine, "Le domaine est obligatoire");
-                    return;
-                }
-
-                String domaine = Domaine.getText();
-                String intervenants = Intervenant.getText();
-                NiveauExpertise nivExpert = null;
-                if (nvExpert.getValue().equals(NiveauExpertise.DEBUTANT.getLabel())) nivExpert = NiveauExpertise.DEBUTANT;
-                if (nvExpert.getValue().equals(NiveauExpertise.INTERMEDIAIRE.getLabel())) nivExpert = NiveauExpertise.INTERMEDIAIRE;
-                if (nvExpert.getValue().equals(NiveauExpertise.PROFESSIONNEL.getLabel())) nivExpert = NiveauExpertise.PROFESSIONNEL;
-
-                int organisateurId = SessionManager.getUtilisateurConnecte().getIdUtilisateur();
-                Conference conference = new Conference(organisateurId, titre, dateEvent, lieu, TypeEvenement.CONFERENCE, valDescription, nbreStandard, nbreVip, nbrePremium, BigDecimal.valueOf(prixStand), BigDecimal.valueOf(prixVip), BigDecimal.valueOf(prixPremium), intervenants, domaine, nivExpert);
-                EvenementService.creerConference(conference);
-                NotificationUtils.showSuccess("Création de la conférence réussie !");
-                if (dashboardController != null) dashboardController.showDashboard();
+        if (isEmpty(tfNom) || dpDate.getValue() == null || isEmpty(tfLieu) || evType.getValue() == null) {
+            if (dpDate.getValue() == null) {
+                setError(lblErrDate, "La date de l'évènement ne peut pas être vide !");
+            } else if (dpDate.getValue().isBefore(LocalDate.now())) {
+                setError(lblErrDate, "La date de l'évènement ne peut pas être avant la date du jour !");
             }
-        } catch (Exception e) {
-            logger.error("Erreur lors de la création de l'évènement", e);
-            NotificationUtils.showError("Une erreur est survenue lors de la création de l'évènement. Vérifiez les champs et réessayez.");
+            if (isEmpty(tfNom)) setError(lblErrTitre, "Le titre ne peut pas être vide");
+            if (isEmpty(tfLieu)) setError(lbErrLieu, "Le lieu ne peut pas être vide");
+            if (evType.getValue() == null) setError(lblErrTyEvent, "Le type est obligatoire");
+            lblError.setText("⚠️ Veuillez remplir tous les champs obligatoires (*) !");
+            return false;
         }
+
+        if (dpDate.getValue().isBefore(LocalDate.now())) {
+            setError(lblErrDate, "La date ne peut pas être avant aujourd'hui !");
+            return false;
+        }
+
+        return true;
     }
 
     /* ------------------ Helpers ------------------ */

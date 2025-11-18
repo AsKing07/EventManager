@@ -114,7 +114,7 @@ Connection connection = getConnection();
     }
 
     @Override
-    public void mettreAJour(Client client) throws DatabaseException {
+    public Client mettreAJour(Client client) throws DatabaseException {
         String query = "UPDATE Utilisateurs SET nom = ?, email = ? WHERE id_utilisateur = ? AND type_utilisateur = ?";
 Connection connection = getConnection();
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -130,6 +130,7 @@ Connection connection = getConnection();
             logger.error("Erreur mise à jour client", e);
             throw new DatabaseException("Erreur mise à jour client", e);
         }
+        return client;
     }
 
     @Override

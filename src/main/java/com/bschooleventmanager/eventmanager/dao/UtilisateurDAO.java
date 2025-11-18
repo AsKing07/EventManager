@@ -129,12 +129,12 @@ Connection connection = getConnection();
 
         /**
      * Modifie les données d'un utilisateur
-     * @param utilisateur L'utilisateur à modifier
+     * @param user L'utilisateur à modifier
      * @return true si la modification a réussi, false sinon
      * @throws DatabaseException En cas d'erreur de base de données
      */
     @Override
-    public void mettreAJour(Utilisateur user) throws DatabaseException {
+    public Utilisateur mettreAJour(Utilisateur user) throws DatabaseException {
  String query = "UPDATE utilisateurs SET nom = ?, email = ? WHERE id_utilisateur = ?";
         Connection connection = getConnection();
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -149,6 +149,7 @@ Connection connection = getConnection();
             logger.error("Erreur modification utilisateur", e);
             throw new DatabaseException("Erreur modification utilisateur", e);
         }
+        return user;
     }
 
     @Override
