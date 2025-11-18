@@ -14,15 +14,15 @@ public class SpectacleDAO extends BaseDAO<Spectacle> {
 
     @Override
     public Spectacle creer(Spectacle spectacle) throws DatabaseException {
-        Integer idOrg = 1;
         String query = "INSERT INTO evenements (organisateur_id, nom, date_evenement, lieu, type_evenement, " +
                 "description, places_standard_disponibles, places_vip_disponibles, " +
                 "places_premium_disponibles, prix_standard, prix_vip, prix_premium," +
                 "artiste_groupe,age_min,type_spectacle, place_standard_vendues, place_p_vendu, place_vip_vendu, etat_event) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-Connection connection = getConnection();
 
-        try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
+        try ( Connection connection = DatabaseConnection.getInstance().getConnection();
+            PreparedStatement stmt = connection.prepareStatement(query); PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setInt(1, spectacle.getOrganisateurId());
             pstmt.setString(2, spectacle.getNom());
             pstmt.setTimestamp(3, Timestamp.valueOf(spectacle.getDateEvenement()));
@@ -55,7 +55,7 @@ Connection connection = getConnection();
                     }
                 }
             }
-            connection.close();
+           
             throw new DatabaseException("Erreur lors de la création de l'événement.");
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -85,9 +85,10 @@ Connection connection = getConnection();
                 "    prix_standard = ?, prix_vip = ?, prix_premium = ?, artiste_groupe = ?, age_min = ?, domaine = ?, " +
                 "    intervenant = ?, type_concert = ?, type_spectacle = ?, niveau_expertise = ? WHERE id_evenement = ?;";
 
-        Connection connection = getConnection();
+        
 
-        try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try ( Connection connection = DatabaseConnection.getInstance().getConnection();
+            PreparedStatement stmt = connection.prepareStatement(query);PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setInt(1, spectacle.getOrganisateurId());
             pstmt.setString(2, spectacle.getNom());
             pstmt.setTimestamp(3, Timestamp.valueOf(spectacle.getDateEvenement()));
@@ -117,12 +118,12 @@ Connection connection = getConnection();
                     if (rs.next()) {
                         spectacle.setIdEvenement(rs.getInt(1));
                         logger.info("✓ spectacle modifié: {}", spectacle.getNom());
-                        connection.close();
+                       
                         return spectacle;
                     }
                 }
             }
-            connection.close();
+            
             throw new DatabaseException("Erreur lors de la mise a jour du du spectacle.");
         } catch (SQLException e) {
             throw new RuntimeException(e);

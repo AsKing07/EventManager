@@ -23,8 +23,10 @@ public class UtilisateurDAO extends BaseDAO<Utilisateur> {
     @Override
     public Utilisateur creer(Utilisateur user) throws DatabaseException {
         String query = "INSERT INTO utilisateurs (nom, email, mot_de_passe, type_utilisateur) VALUES (?, ?, ?, ?)";
-Connection connection = getConnection();
-        try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            
             pstmt.setString(1, user.getNom());
             pstmt.setString(2, user.getEmail());
             pstmt.setString(3, user.getMotDePasse());
@@ -40,7 +42,6 @@ Connection connection = getConnection();
                     }
                 }
             }
-            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur création utilisateur", e);
             throw new DatabaseException("Erreur création utilisateur", e);
@@ -52,15 +53,17 @@ Connection connection = getConnection();
     @Override
     public Utilisateur chercher(int id) throws DatabaseException {
         String query = "SELECT * FROM Utilisateurs WHERE id_utilisateur = ?";
-Connection connection = getConnection();
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+        
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+            
             pstmt.setInt(1, id);
+            
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     return mapRowToUtilisateur(rs);
                 }
             }
-            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur recherche utilisateur", e);
             throw new DatabaseException("Erreur recherche utilisateur", e);
@@ -71,15 +74,17 @@ Connection connection = getConnection();
 
     public Utilisateur chercherParEmail(String email) throws DatabaseException {
         String query = "SELECT * FROM utilisateurs WHERE email = ?";
-Connection connection = getConnection();
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+        
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+            
             pstmt.setString(1, email);
+            
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     return mapRowToUtilisateur(rs);
                 }
             }
-            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur recherche utilisateur par email", e);
             throw new DatabaseException("Erreur recherche utilisateur par email", e);
@@ -90,18 +95,20 @@ Connection connection = getConnection();
 
     public boolean emailExiste(String email) throws DatabaseException {
         String query = "SELECT COUNT(*) FROM utilisateurs WHERE email = ?";
-Connection connection = getConnection();
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+        
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+            
             pstmt.setString(1, email);
+            
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     return rs.getInt(1) > 0;
                 }
             }
-            connection.close();
         } catch (SQLException e) {
-            logger.error("Erreur vérification existence email", e);
-            throw new DatabaseException("Erreur vérification existence email", e);
+            logger.error("Erreur vérification email existant", e);
+            throw new DatabaseException("Erreur vérification email existant", e);
         }
 
         return false;
@@ -111,14 +118,14 @@ Connection connection = getConnection();
     public List<Utilisateur> listerTous() throws DatabaseException {
         List<Utilisateur> utilisateurs = new ArrayList<>();
         String query = "SELECT * FROM utilisateurs";
-Connection connection = getConnection();
-       try (Statement stmt = connection.createStatement();
-           ResultSet rs = stmt.executeQuery(query)) {
+        
+        try (Connection connection = getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
 
             while (rs.next()) {
                 utilisateurs.add(mapRowToUtilisateur(rs));
             }
-            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur listage utilisateurs", e);
             throw new DatabaseException("Erreur listage utilisateurs", e);
@@ -135,15 +142,16 @@ Connection connection = getConnection();
      */
     @Override
     public Utilisateur mettreAJour(Utilisateur user) throws DatabaseException {
- String query = "UPDATE utilisateurs SET nom = ?, email = ? WHERE id_utilisateur = ?";
-        Connection connection = getConnection();
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+        String query = "UPDATE utilisateurs SET nom = ?, email = ? WHERE id_utilisateur = ?";
+        
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+            
             pstmt.setString(1, user.getNom());
             pstmt.setString(2, user.getEmail());
             pstmt.setInt(3, user.getIdUtilisateur());
 
-            int rowsAffected = pstmt.executeUpdate();
-            connection.close();
+            pstmt.executeUpdate();
             
         } catch (SQLException e) {
             logger.error("Erreur modification utilisateur", e);
@@ -155,11 +163,12 @@ Connection connection = getConnection();
     @Override
     public void supprimer(int id) throws DatabaseException {
         String query = "DELETE FROM utilisateurs WHERE id_utilisateur = ?";
-Connection connection = getConnection();
-    try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+        
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+            
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
-            connection.close();
           
         } catch (SQLException e) {
             logger.error("Erreur suppression utilisateur", e);
@@ -178,13 +187,14 @@ Connection connection = getConnection();
      */
     public boolean changerMotDePasse(int userId, String hashedPassword) throws DatabaseException {
         String query = "UPDATE utilisateurs SET mot_de_passe = ? WHERE id_utilisateur = ?";
-        Connection connection = getConnection();
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+        
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+            
             pstmt.setString(1, hashedPassword);
             pstmt.setInt(2, userId);
 
             int rowsAffected = pstmt.executeUpdate();
-            connection.close();
             return rowsAffected > 0;
         } catch (SQLException e) {
             logger.error("Erreur changement mot de passe", e);

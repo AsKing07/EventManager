@@ -46,24 +46,21 @@ deleteEventById(id);
     public Evenement chercher(int id) throws DatabaseException {
         return getEventById(id);
     }
-
-    
-
     public List<Evenement> getEventByType(TypeEvenement type) throws DatabaseException {
         List<Evenement> evenements = new ArrayList<>();
         String query = "SELECT id_evenement, organisateur_id, nom, date_evenement, lieu, type_evenement, " +
                        "description, places_standard_disponibles, places_vip_disponibles, " +
                        "places_premium_disponibles, prix_standard, prix_vip, prix_premium, " +
                        "date_creation, statut FROM Evenements WHERE type_evenement = ?";
-Connection connection = getConnection();
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+
+        try (Connection connection = getConnection();PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, type.name());
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     evenements.add(mapRowToEvenement(rs));
                 }
             }
-            connection.close();
+            
         } catch (SQLException e) {
             logger.error("Erreur recherche événements par type", e);
             throw new DatabaseException("Erreur recherche événements par type", e);
@@ -138,8 +135,9 @@ Connection connection = getConnection();
                        "places_premium_disponibles, prix_standard, prix_vip, prix_premium, statut, " +
                        "place_standard_vendues, place_p_vendu, place_vip_vendu, etat_event) " +
                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-Connection connection = DatabaseConnection.getInstance().getConnection();
-        try (PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+
+
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setInt(1, evenement.getOrganisateurId());
             pstmt.setString(2, evenement.getNom());
             pstmt.setTimestamp(3, Timestamp.valueOf(evenement.getDateEvenement()));
@@ -169,7 +167,6 @@ Connection connection = DatabaseConnection.getInstance().getConnection();
                     }
                 }
             }
-            connection.close();
         } catch (SQLException e) {
             logger.error("Erreur création événement", e);
             throw new DatabaseException("Erreur création événement", e);
@@ -187,9 +184,9 @@ Connection connection = DatabaseConnection.getInstance().getConnection();
                 "place_standard_vendues = ?, place_p_vendu = ?, place_vip_vendu = ?, etat_event = ? " +
                 "WHERE id_evenement = ?";
 
-        try {
-            Connection conn = DatabaseConnection.getInstance().getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);
+        try ( Connection conn = DatabaseConnection.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);) {
+           
 
             stmt.setInt(1, evenement.getOrganisateurId());
             stmt.setString(2, evenement.getNom());
@@ -280,9 +277,8 @@ Connection connection = DatabaseConnection.getInstance().getConnection();
     public static Evenement getEventById(int id) throws DatabaseException {
         String sql = "SELECT * FROM evenements WHERE id_evenement = ?";
 
-        try {
-            Connection conn = DatabaseConnection.getInstance().getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);
+        try( Connection conn = DatabaseConnection.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
 
@@ -304,9 +300,8 @@ Connection connection = DatabaseConnection.getInstance().getConnection();
         List<Evenement> evenements = new ArrayList<>();
         String sql = "SELECT * FROM evenements WHERE organisateur_id = ? ORDER BY date_evenement ASC";
 
-        try {
-            Connection conn = DatabaseConnection.getInstance().getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);
+        try( Connection conn = DatabaseConnection.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);) {
             stmt.setInt(1, organizerId);
             ResultSet rs = stmt.executeQuery();
 
@@ -325,9 +320,9 @@ Connection connection = DatabaseConnection.getInstance().getConnection();
     public static boolean deleteEventById(int id) throws DatabaseException {
         String sql = "DELETE FROM evenements WHERE id_evenement = ?";
 
-        try {
-            Connection conn = DatabaseConnection.getInstance().getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);
+        try ( Connection conn = DatabaseConnection.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);) {
+            
             stmt.setInt(1, id);
 
             int rowsAffected = stmt.executeUpdate();
