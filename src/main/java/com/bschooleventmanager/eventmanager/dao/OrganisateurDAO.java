@@ -113,28 +113,40 @@ Connection connection = getConnection();
     }
 
     @Override
-    public void mettreAJour(Organisateur organisateur) throws DatabaseException {
+    public Organisateur mettreAJour(Organisateur organisateur) throws DatabaseException {
         String query = "UPDATE Utilisateurs SET nom = ?, email = ? WHERE id_utilisateur = ? AND type_utilisateur = ?";
-Connection connection = getConnection();
+        Connection connection = getConnection();
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, organisateur.getNom());
             pstmt.setString(2, organisateur.getEmail());
             pstmt.setInt(3, organisateur.getIdUtilisateur());
             pstmt.setString(4, TypeUtilisateur.ORGANISATEUR.name());
 
-            pstmt.executeUpdate();
-            logger.info("✓ Organisateur mis à jour: {}", organisateur.getIdUtilisateur());
+            //pstmt.executeUpdate();
+
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows > 0) {
+                try (ResultSet rs = pstmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        organisateur.setIdUtilisateur(rs.getInt(1));
+                        logger.info("✓ Organisateur mis à jour: {}", organisateur.getIdUtilisateur());
+                        connection.close();
+                        return organisateur;
+                    }
+                }
+            }
             connection.close();
         } catch (SQLException e) {
             logger.error("Erreur mise à jour organisateur", e);
             throw new DatabaseException("Erreur mise à jour organisateur", e);
         }
+        return null;
     }
 
     @Override
     public void supprimer(int id) throws DatabaseException {
         String query = "DELETE FROM Utilisateurs WHERE id_utilisateur = ? AND type_utilisateur = ?";
-Connection connection = getConnection();
+        Connection connection = getConnection();
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, id);
             pstmt.setString(2, TypeUtilisateur.ORGANISATEUR.name());

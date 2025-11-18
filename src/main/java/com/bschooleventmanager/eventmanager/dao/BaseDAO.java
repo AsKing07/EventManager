@@ -1,8 +1,9 @@
 package com.bschooleventmanager.eventmanager.dao;
 
 
-import java.sql.Connection;
 import com.bschooleventmanager.eventmanager.exception.DatabaseException;
+
+import java.sql.Connection;
 import java.util.List;
 
 public abstract class BaseDAO<T> {
@@ -37,7 +38,7 @@ public abstract class BaseDAO<T> {
     /**
      * Mettre à jour
      */
-    public abstract void mettreAJour(T entity) throws DatabaseException;
+    public abstract T mettreAJour(T entity) throws DatabaseException;
 
     /**
      * Supprimer

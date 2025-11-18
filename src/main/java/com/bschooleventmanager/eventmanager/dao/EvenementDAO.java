@@ -31,8 +31,9 @@ public class EvenementDAO extends BaseDAO<Evenement> {
     }
 
     @Override
-    public void mettreAJour(Evenement evenement) throws DatabaseException {
-updateEvent(evenement);
+    public Evenement mettreAJour(Evenement evenement) throws DatabaseException {
+        updateEvent(evenement);
+        return evenement;
     }
 
     @Override
@@ -84,14 +85,29 @@ Connection connection = getConnection();
      *  - on capture et re-propage l'exception SQL en RuntimeException
      */
     public void suppEvent(int id){
-        try {
+        String query = "UPDATE evenements SET etat_event=? WHERE id_evenement=?;";
+        /*try {
             Connection conn = DatabaseConnection.getInstance().getConnection();
             String query = "UPDATE evenements SET etat_event=? WHERE id_evenement=?;";
             PreparedStatement st = conn.prepareStatement(query);
-            st.setInt(1,id);
-            st.setInt(2, EtatEvent.SUPPRIME.getCode());
+            st.setInt(1, EtatEvent.SUPPRIME.getCode());
+            st.setInt(2,id);
             st.executeUpdate();
-            conn.close();
+            conn.close();*/
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement st = conn.prepareStatement(query)) {
+
+            // 1er paramètre : code de l'état SUPPRIME
+            st.setInt(1, EtatEvent.SUPPRIME.getCode());
+            // 2e paramètre : id de l'événement
+            st.setInt(2, id);
+
+            int rows = st.executeUpdate();
+            if (rows == 0) {
+                logger.warn("Aucun événement trouvé pour l'ID {} lors de la suppression logique.", id);
+            } else {
+                logger.info("Événement ID {} marqué comme supprimé.", id);
+            }
         }catch (SQLException e) {
             throw new RuntimeException(e);
         }
