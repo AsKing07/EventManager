@@ -850,3 +850,17 @@ Caused by: com.bschooleventmanager.eventmanager.exception.PaiementInvalideExcept
 2025-11-18 15:37:17.996 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage du formulaire de réservation pour l'événement: test
 2025-11-18 15:37:18.005 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - Initialisation du contrôleur de réservation
 2025-11-18 15:37:18.006 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Formulaire de réservation chargé avec succès
+2025-11-18 17:13:27.651 [main] INFO  c.b.eventmanager.util.AppConfig - ✓ Propriétés d'application chargées
+2025-11-18 17:13:27.658 [main] INFO  c.b.eventmanager.Main - Démarrage de EventManager v1.0.0
+2025-11-18 17:13:28.029 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
+2025-11-18 17:13:28.106 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 17:13:28.107 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 17:13:28.714 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Application démarrée - Dimensions: 1454x734
+2025-11-18 17:13:28.714 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Titre: EventManager - Rï¿½servez vos ï¿½vï¿½nements Facilement
+2025-11-18 17:20:16.685 [main] INFO  c.b.eventmanager.util.AppConfig - ✓ Propriétés d'application chargées
+2025-11-18 17:20:16.691 [main] INFO  c.b.eventmanager.Main - Démarrage de EventManager v1.0.0
+2025-11-18 17:20:17.005 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
+2025-11-18 17:20:17.055 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 17:20:17.056 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 17:20:17.578 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Application démarrée - Dimensions: 1454x734
+2025-11-18 17:20:17.579 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Titre: EventManager - RÃ©servez vos Ã©vÃ©nements Facilement

@@ -122,7 +122,7 @@ public class PaiementDAO extends BaseDAO<Paiement> {
      * Met à jour un paiement
      */
     @Override
-    public void mettreAJour(Paiement paiement) throws DatabaseException {
+    public Paiement mettreAJour(Paiement paiement) throws DatabaseException {
         String sql = """
             UPDATE paiements 
             SET id_reservation = ?, montant = ?, date_paiement = ?, statut = ?, methode_paiement = ?, numero_transaction = ?
@@ -146,6 +146,8 @@ public class PaiementDAO extends BaseDAO<Paiement> {
             }
             
             logger.info("✓ Paiement {} mis à jour", paiement.getIdPaiement());
+            
+            return paiement;
             
         } catch (SQLException e) {
             logger.error("Erreur lors de la mise à jour du paiement: {}", paiement.getIdPaiement(), e);

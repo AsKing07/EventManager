@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 /**
@@ -31,7 +33,9 @@ public class AppConfig {
         properties = new Properties();
         try (InputStream input = AppConfig.class.getResourceAsStream("/application.properties")) {
             if (input != null) {
-                properties.load(input);
+                // Charger avec l'encodage UTF-8 pour gérer les caractères spéciaux
+                InputStreamReader reader = new InputStreamReader(input, StandardCharsets.UTF_8);
+                properties.load(reader);
                 logger.info("✓ Propriétés d'application chargées");
             } else {
                 logger.warn("Fichier application.properties non trouvé, utilisation des valeurs par défaut");
@@ -48,7 +52,7 @@ public class AppConfig {
      */
     private static void loadDefaultProperties() {
         properties.setProperty("app.name", "EventManager");
-        properties.setProperty("app.title", "EventManager - Plateforme de Réservation");
+        properties.setProperty("app.title", "EventManager - Plateforme de Reservation");
         properties.setProperty("ui.window.width", "1280");
         properties.setProperty("ui.window.height", "720");
         properties.setProperty("ui.theme", "LIGHT");
@@ -103,7 +107,7 @@ public class AppConfig {
      * @return Titre de l'application
      */
     public static String getAppTitle() {
-        return getString("app.title", "EventManager - Plateforme de Réservation");
+        return getString("app.title", "EventManager - Plateforme de Reservation");
     }
     
     /**
