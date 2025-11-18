@@ -302,22 +302,17 @@ public class ClientDashboardController {
         contentArea.getChildren().clear();
         
         try {
-            // Pour l'instant, on affiche un message temporaire
-            // TODO: Créer l'interface des réservations plus tard
-            Text tempMessage = new Text("Historique des réservations");
-            tempMessage.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #2c3e50;");
+            // Charger l'interface des réservations
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/reservationsHistory.fxml"));
+            Parent reservationsRoot = loader.load();
             
-            Text tempSubMessage = new Text("Cette fonctionnalité sera disponible prochainement");
-            tempSubMessage.setStyle("-fx-font-size: 16px; -fx-fill: #7f8c8d;");
+            // Récupérer le contrôleur et lui passer une référence au dashboard
+            ClientHistoriqueReservationsController reservationsController = loader.getController();
+            reservationsController.setDashboardController(this);
             
-            javafx.scene.layout.VBox tempContent = new javafx.scene.layout.VBox();
-            tempContent.setAlignment(javafx.geometry.Pos.CENTER);
-            tempContent.setSpacing(20);
-            tempContent.getChildren().addAll(tempMessage, tempSubMessage);
+            contentArea.getChildren().add(reservationsRoot);
             
-            contentArea.getChildren().add(tempContent);
-            
-            logger.info("Contenu temporaire des réservations affiché");
+            logger.info("Interface des réservations chargée avec succès");
             
         } catch (Exception e) {
             logger.error("Erreur lors du chargement de l'historique des réservations", e);

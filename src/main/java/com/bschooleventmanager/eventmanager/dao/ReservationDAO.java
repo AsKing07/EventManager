@@ -57,7 +57,10 @@ public class ReservationDAO extends BaseDAO<Reservation> {
             pstmt.setInt(1, id);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    return mapRowToReservation(rs);
+                    Reservation reservation = mapRowToReservation(rs);
+                    // Charger les détails séparément
+                    loadReservationDetails(reservation);
+                    return reservation;
                 }
             }
             return null;
@@ -78,8 +81,15 @@ public class ReservationDAO extends BaseDAO<Reservation> {
              ResultSet rs = pstmt.executeQuery()) {
             
             while (rs.next()) {
-                reservations.add(mapRowToReservation(rs));
+                Reservation reservation = mapRowToReservation(rs);
+                reservations.add(reservation);
             }
+            
+            // Charger les détails séparément pour chaque réservation
+            for (Reservation reservation : reservations) {
+                loadReservationDetails(reservation);
+            }
+            
         } catch (SQLException e) {
             logger.error("Erreur listage réservations", e);
             throw new DatabaseException("Erreur listage réservations", e);
@@ -149,9 +159,16 @@ public class ReservationDAO extends BaseDAO<Reservation> {
             pstmt.setInt(1, clientId);
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
-                    reservations.add(mapRowToReservation(rs));
+                    Reservation reservation = mapRowToReservation(rs);
+                    reservations.add(reservation);
                 }
             }
+            
+            // Charger les détails séparément pour chaque réservation
+            for (Reservation reservation : reservations) {
+                loadReservationDetails(reservation);
+            }
+            
         } catch (SQLException e) {
             logger.error("Erreur récupération réservations client", e);
             throw new DatabaseException("Erreur récupération réservations client", e);
@@ -173,9 +190,16 @@ public class ReservationDAO extends BaseDAO<Reservation> {
             pstmt.setInt(1, eventId);
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
-                    reservations.add(mapRowToReservation(rs));
+                    Reservation reservation = mapRowToReservation(rs);
+                    reservations.add(reservation);
                 }
             }
+            
+            // Charger les détails séparément pour chaque réservation
+            for (Reservation reservation : reservations) {
+                loadReservationDetails(reservation);
+            }
+            
         } catch (SQLException e) {
             logger.error("Erreur récupération réservations événement", e);
             throw new DatabaseException("Erreur récupération réservations événement", e);
@@ -207,16 +231,25 @@ public class ReservationDAO extends BaseDAO<Reservation> {
             reservation.setDateAnnulation(dateAnnulation.toLocalDateTime());
         }
 
-
-        List<ReservationDetail> details = new ArrayList<>();
-        try {
-            details = new ReservationDetailsDAO().getDetailsParReservation(reservation.getIdReservation());
-            reservation.setDetails(details);
-        } catch (DatabaseException e) {
-            logger.error("Erreur récupération détails réservation", e);
-            throw new SQLException("Erreur récupération détails réservation", e);
-        }
+        // NE PAS charger les détails ici pour éviter les conflits de ResultSet
+        // Les détails seront chargés séparément si nécessaire
+        reservation.setDetails(new ArrayList<>());
         
         return reservation;
+    }
+
+    /**
+     * Charge les détails d'une réservation séparément
+     */
+    private void loadReservationDetails(Reservation reservation) {
+        try {
+            ReservationDetailsDAO detailsDAO = new ReservationDetailsDAO();
+            List<ReservationDetail> details = detailsDAO.getDetailsParReservation(reservation.getIdReservation());
+            reservation.setDetails(details);
+        } catch (DatabaseException e) {
+            logger.error("Erreur lors du chargement des détails de la réservation {}", reservation.getIdReservation(), e);
+            // En cas d'erreur, on laisse la liste vide plutôt que de planter
+            reservation.setDetails(new ArrayList<>());
+        }
     }
 }

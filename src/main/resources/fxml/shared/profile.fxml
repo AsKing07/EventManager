@@ -19,7 +19,7 @@
             <Label fx:id="messageLabel" style="-fx-font-weight: bold;" visible="false" managed="false"/>
 
             <!-- Formulaire de profil -->
-            <VBox spacing="20.0" style="-fx-background-color: white; -fx-padding: 30;  -fy-padding: 30; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 10, 0, 0, 2);" prefWidth="700.0" maxWidth="800.0">
+            <VBox spacing="20.0" styleClass="card-light-shadow" style="-fx-padding: 30;" prefWidth="700.0" maxWidth="800.0">
     
 
                 <!-- Informations utilisateur -->

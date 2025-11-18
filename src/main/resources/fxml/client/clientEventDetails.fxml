@@ -34,10 +34,7 @@
         <VBox spacing="20">
             
             <!-- Informations principales -->
-            <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);">
-                <padding>
-                    <Insets top="25" right="25" bottom="25" left="25"/>
-                </padding>
+            <VBox spacing="15" styleClass="card-light-shadow" style="-fx-padding: 25px;">
                 
                 <Label fx:id="eventNameLabel" 
                        style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
@@ -75,10 +72,7 @@
             </VBox>
 
             <!-- Description -->
-            <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);">
-                <padding>
-                    <Insets top="25" right="25" bottom="25" left="25"/>
-                </padding>
+            <VBox spacing="15" styleClass="card-light-shadow" style="-fx-padding: 25px;">
                 
                 <Label text="📝 Description" 
                        style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #34495e;"/>
@@ -91,10 +85,7 @@
             </VBox>
 
             <!-- Tarification -->
-            <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);">
-                <padding>
-                    <Insets top="25" right="25" bottom="25" left="25"/>
-                </padding>
+            <VBox spacing="15" styleClass="card-light-shadow" style="-fx-padding: 25px;">
                 
                 <Label text="💰 Tarification" 
                        style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #34495e;"/>
