@@ -94,7 +94,7 @@ public class ClientDashboardController {
      * Affiche l'historique des réservations
      */
     @FXML
-    private void showReservations() {
+    public void showReservations() {
         logger.info("Affichage de l'historique des réservations client");
         setActiveTab("reservations");
         loadReservationsContent();
@@ -258,6 +258,40 @@ public class ClientDashboardController {
         } catch (IOException e) {
             logger.error("Erreur lors du chargement du profil", e);
             NotificationUtils.showError("Impossible de charger l'interface de profil");
+        }
+    }
+
+    /**
+     * Affiche le formulaire de réservation pour un événement
+     */
+    public void showReservationForm(Evenement event) {
+        logger.info("Affichage du formulaire de réservation pour l'événement: {}", event.getNom());
+        setActiveTab("events"); // Garder l'onglet événements actif
+        loadReservationFormContent(event);
+    }
+
+    /**
+     * Charge le formulaire de réservation
+     */
+    private void loadReservationFormContent(Evenement event) {
+        contentArea.getChildren().clear();
+        
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/reservationForm.fxml"));
+            Parent reservationFormRoot = loader.load();
+            
+            // Récupérer le contrôleur et configurer les données
+            ReservationController reservationController = loader.getController();
+            reservationController.setDashboardController(this);
+            reservationController.setEventData(event);
+            
+            contentArea.getChildren().add(reservationFormRoot);
+            
+            logger.info("Formulaire de réservation chargé avec succès");
+            
+        } catch (IOException e) {
+            logger.error("Erreur lors du chargement du formulaire de réservation", e);
+            NotificationUtils.showError("Impossible de charger le formulaire de réservation");
         }
     }
 

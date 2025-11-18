@@ -827,3 +827,457 @@ javafx.fxml.LoadException: Error resolving onAction='#returnToDashboard', either
 2025-11-17 14:51:32.894 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Retour vers la liste des événements demandé
 2025-11-17 14:51:34.998 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Retour vers la liste des événements demandé
 2025-11-17 14:51:36.553 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Retour vers la liste des événements demandé
+2025-11-18 10:21:28.912 [main] INFO  c.b.eventmanager.util.AppConfig - ✓ Propriétés d'application chargées
+2025-11-18 10:21:28.917 [main] INFO  c.b.eventmanager.Main - Démarrage de EventManager v1.0.0
+2025-11-18 10:21:29.413 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
+2025-11-18 10:21:29.513 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 10:21:29.514 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 10:21:30.216 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Application démarrée - Dimensions: 1454x734
+2025-11-18 10:21:30.216 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Titre: EventManager - Rï¿½servez vos ï¿½vï¿½nements Facilement
+2025-11-18 10:22:08.847 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 10:22:09.253 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 10:22:09.616 [JavaFX Application Thread] INFO  c.b.e.service.UtilisateurService - ✓ Authentification réussie: luc01864@gmail.com
+2025-11-18 10:22:09.620 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Connexion réussie: luc01864@gmail.com
+2025-11-18 10:22:11.162 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Navigation vers le dashboard pour l'utilisateur: luc01864@gmail.com
+2025-11-18 10:22:11.228 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Initialisation de l'interface client
+2025-11-18 10:22:11.229 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des événements client
+2025-11-18 10:22:11.407 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Initializing ClientEventsController
+2025-11-18 10:22:11.417 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loading all events from DB...
+2025-11-18 10:22:11.496 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loaded 27 events
+2025-11-18 10:22:11.558 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Events content loaded successfully
+2025-11-18 10:22:11.572 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 10:22:11.575 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 10:22:11.583 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Redirection vers le dashboard Client réussie
+2025-11-18 10:22:20.202 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des détails de l'événement: Concert The Weeknd
+2025-11-18 10:22:20.283 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Initialisation du contrôleur des détails d'événement
+2025-11-18 10:22:20.292 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Interface des détails peuplée pour l'événement: Concert The Weeknd
+2025-11-18 10:22:20.303 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Contenu des détails de l'événement chargé avec succès
+2025-11-18 10:22:27.488 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Fonction de réservation appelée pour l'événement: Concert The Weeknd
+2025-11-18 10:22:27.489 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage du formulaire de réservation pour l'événement: Concert The Weeknd
+2025-11-18 10:22:27.638 [JavaFX Application Thread] ERROR c.b.e.c.c.ClientDashboardController - Erreur lors du chargement du formulaire de réservation
+javafx.fxml.LoadException: 
+/R:/Bschool/Coding%20Factory/M1/Java/Projet/EventManager/target/classes/fxml/client/reservationForm.fxml:79
+
+	at javafx.fxml/javafx.fxml.FXMLLoader.constructLoadException(FXMLLoader.java:2714)
+	at javafx.fxml/javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2692)
+	at javafx.fxml/javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2555)
+	at javafx.fxml/javafx.fxml.FXMLLoader.load(FXMLLoader.java:2523)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.ClientDashboardController.loadReservationFormContent(ClientDashboardController.java:281)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.ClientDashboardController.showReservationForm(ClientDashboardController.java:270)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.ClientEventDetailsController.handleReservation(ClientEventDetailsController.java:168)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.ClientEventDetailsController.lambda$0(ClientEventDetailsController.java:143)
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:234)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191)
+	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49)
+	at javafx.base/javafx.event.Event.fireEvent(Event.java:198)
+	at javafx.graphics/javafx.scene.Node.fireEvent(Node.java:8792)
+	at javafx.controls/javafx.scene.control.Button.fire(Button.java:203)
+	at javafx.controls/com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:208)
+	at javafx.controls/com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274)
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:247)
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:234)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191)
+	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54)
+	at javafx.base/javafx.event.Event.fireEvent(Event.java:198)
+	at javafx.graphics/javafx.scene.Scene$MouseHandler.process(Scene.java:3897)
+	at javafx.graphics/javafx.scene.Scene.processMouseEvent(Scene.java:1878)
+	at javafx.graphics/javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2623)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.run(GlassViewEventHandler.java:411)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.run(GlassViewEventHandler.java:301)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:138)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.lambda$handleMouseEvent$2(GlassViewEventHandler.java:450)
+	at javafx.graphics/com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:424)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:449)
+	at javafx.graphics/com.sun.glass.ui.View.handleMouseEvent(View.java:557)
+	at javafx.graphics/com.sun.glass.ui.View.notifyMouse(View.java:943)
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:184)
+	at java.base/java.lang.Thread.run(Thread.java:1447)
+Caused by: java.lang.UnsupportedOperationException: Cannot determine type for property.
+	at javafx.fxml/com.sun.javafx.fxml.BeanAdapter.getSetterMethod(BeanAdapter.java:178)
+	at javafx.fxml/com.sun.javafx.fxml.BeanAdapter.put(BeanAdapter.java:251)
+	at javafx.fxml/javafx.fxml.FXMLLoader$Element.processEventHandlerAttributes(FXMLLoader.java:629)
+	at javafx.fxml/javafx.fxml.FXMLLoader$ValueElement.processEndElement(FXMLLoader.java:781)
+	at javafx.fxml/javafx.fxml.FXMLLoader.processEndElement(FXMLLoader.java:2961)
+	at javafx.fxml/javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2646)
+	... 59 common frames omitted
+2025-11-18 10:22:36.088 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage de l'historique des réservations client
+2025-11-18 10:22:36.092 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Contenu temporaire des réservations affiché
+2025-11-18 10:25:35.644 [main] INFO  c.b.eventmanager.util.AppConfig - ✓ Propriétés d'application chargées
+2025-11-18 10:25:35.648 [main] INFO  c.b.eventmanager.Main - Démarrage de EventManager v1.0.0
+2025-11-18 10:25:35.936 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
+2025-11-18 10:25:35.993 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 10:25:35.993 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 10:25:36.494 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Application démarrée - Dimensions: 1454x734
+2025-11-18 10:25:36.494 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Titre: EventManager - Rï¿½servez vos ï¿½vï¿½nements Facilement
+2025-11-18 10:25:56.482 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 10:25:56.759 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 10:25:57.146 [JavaFX Application Thread] INFO  c.b.e.service.UtilisateurService - ✓ Authentification réussie: luc01864@gmail.com
+2025-11-18 10:25:57.147 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Connexion réussie: luc01864@gmail.com
+2025-11-18 10:25:58.829 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Navigation vers le dashboard pour l'utilisateur: luc01864@gmail.com
+2025-11-18 10:25:58.862 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Initialisation de l'interface client
+2025-11-18 10:25:58.863 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des événements client
+2025-11-18 10:25:58.967 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Initializing ClientEventsController
+2025-11-18 10:25:58.976 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loading all events from DB...
+2025-11-18 10:25:59.018 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loaded 27 events
+2025-11-18 10:25:59.142 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Events content loaded successfully
+2025-11-18 10:25:59.156 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 10:25:59.158 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 10:25:59.161 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Redirection vers le dashboard Client réussie
+2025-11-18 10:26:13.363 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des détails de l'événement: Concert The Weeknd
+2025-11-18 10:26:13.399 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Initialisation du contrôleur des détails d'événement
+2025-11-18 10:26:13.402 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Interface des détails peuplée pour l'événement: Concert The Weeknd
+2025-11-18 10:26:13.404 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Contenu des détails de l'événement chargé avec succès
+2025-11-18 10:26:16.968 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Fonction de réservation appelée pour l'événement: Concert The Weeknd
+2025-11-18 10:26:16.969 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage du formulaire de réservation pour l'événement: Concert The Weeknd
+2025-11-18 10:26:17.069 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - Initialisation du contrôleur de réservation
+2025-11-18 10:26:17.077 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Formulaire de réservation chargé avec succès
+2025-11-18 10:27:42.332 [main] INFO  c.b.eventmanager.util.AppConfig - ✓ Propriétés d'application chargées
+2025-11-18 10:27:42.337 [main] INFO  c.b.eventmanager.Main - Démarrage de EventManager v1.0.0
+2025-11-18 10:27:42.657 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
+2025-11-18 10:27:42.713 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 10:27:42.713 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 10:27:43.164 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Application démarrée - Dimensions: 1454x734
+2025-11-18 10:27:43.164 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Titre: EventManager - Rï¿½servez vos ï¿½vï¿½nements Facilement
+2025-11-18 10:27:58.263 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 10:27:58.514 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 10:27:59.034 [JavaFX Application Thread] INFO  c.b.e.service.UtilisateurService - ✓ Authentification réussie: luc01864@gmail.com
+2025-11-18 10:27:59.036 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Connexion réussie: luc01864@gmail.com
+2025-11-18 10:28:02.745 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Navigation vers le dashboard pour l'utilisateur: luc01864@gmail.com
+2025-11-18 10:28:02.776 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Initialisation de l'interface client
+2025-11-18 10:28:02.780 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des événements client
+2025-11-18 10:28:02.879 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Initializing ClientEventsController
+2025-11-18 10:28:02.885 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loading all events from DB...
+2025-11-18 10:28:02.923 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loaded 27 events
+2025-11-18 10:28:02.963 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Events content loaded successfully
+2025-11-18 10:28:02.983 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 10:28:02.986 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 10:28:02.988 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Redirection vers le dashboard Client réussie
+2025-11-18 10:28:08.310 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des détails de l'événement: Concert The Weeknd
+2025-11-18 10:28:08.350 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Initialisation du contrôleur des détails d'événement
+2025-11-18 10:28:08.354 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Interface des détails peuplée pour l'événement: Concert The Weeknd
+2025-11-18 10:28:08.358 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Contenu des détails de l'événement chargé avec succès
+2025-11-18 10:28:13.852 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Fonction de partage appelée pour l'événement: Concert The Weeknd
+2025-11-18 10:28:15.326 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Informations partagées: Découvrez cet événement: Concert The Weeknd
+Date: 18/01/2025 à 21:00
+Lieu: Stade de France
+2025-11-18 10:28:16.350 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Fonction de réservation appelée pour l'événement: Concert The Weeknd
+2025-11-18 10:28:16.351 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage du formulaire de réservation pour l'événement: Concert The Weeknd
+2025-11-18 10:28:16.439 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - Initialisation du contrôleur de réservation
+2025-11-18 10:28:16.448 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Formulaire de réservation chargé avec succès
+2025-11-18 10:28:49.903 [JavaFX Application Thread] INFO  c.b.e.service.ReservationService - Création réservation pour utilisateur 15 sur événement 6
+2025-11-18 10:28:49.905 [JavaFX Application Thread] ERROR c.b.e.service.ReservationService - Erreur inattendue lors de la création de réservation
+com.bschooleventmanager.eventmanager.exception.BusinessException: Impossible de réserver pour un événement passé
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.ReservationService.validateReservationRequest(ReservationService.java:227)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.ReservationService.creerReservation(ReservationService.java:60)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.ReservationController.createReservation(ReservationController.java:233)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.ReservationController.handleConfirmReservation(ReservationController.java:197)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at com.sun.javafx.reflect.Trampoline.invoke(MethodUtil.java:77)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at javafx.base/com.sun.javafx.reflect.MethodUtil.invoke(MethodUtil.java:275)
+	at javafx.fxml/com.sun.javafx.fxml.MethodHelper.invoke(MethodHelper.java:84)
+	at javafx.fxml/javafx.fxml.FXMLLoader$MethodHandler.invoke(FXMLLoader.java:1854)
+	at javafx.fxml/javafx.fxml.FXMLLoader$ControllerMethodEventHandler.handle(FXMLLoader.java:1724)
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:234)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191)
+	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49)
+	at javafx.base/javafx.event.Event.fireEvent(Event.java:198)
+	at javafx.graphics/javafx.scene.Node.fireEvent(Node.java:8792)
+	at javafx.controls/javafx.scene.control.Button.fire(Button.java:203)
+	at javafx.controls/com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:208)
+	at javafx.controls/com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274)
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:247)
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:234)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191)
+	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54)
+	at javafx.base/javafx.event.Event.fireEvent(Event.java:198)
+	at javafx.graphics/javafx.scene.Scene$MouseHandler.process(Scene.java:3897)
+	at javafx.graphics/javafx.scene.Scene.processMouseEvent(Scene.java:1878)
+	at javafx.graphics/javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2623)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.run(GlassViewEventHandler.java:411)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.run(GlassViewEventHandler.java:301)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:138)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.lambda$handleMouseEvent$2(GlassViewEventHandler.java:450)
+	at javafx.graphics/com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:424)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:449)
+	at javafx.graphics/com.sun.glass.ui.View.handleMouseEvent(View.java:557)
+	at javafx.graphics/com.sun.glass.ui.View.notifyMouse(View.java:943)
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:184)
+	at java.base/java.lang.Thread.run(Thread.java:1447)
+2025-11-18 10:28:49.911 [JavaFX Application Thread] WARN  c.b.e.c.client.ReservationController - Erreur métier lors de la réservation: Une erreur inattendue s'est produite. Veuillez contacter le support.
+2025-11-18 10:34:06.453 [main] INFO  c.b.eventmanager.util.AppConfig - ✓ Propriétés d'application chargées
+2025-11-18 10:34:06.457 [main] INFO  c.b.eventmanager.Main - Démarrage de EventManager v1.0.0
+2025-11-18 10:34:06.803 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
+2025-11-18 10:34:06.855 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 10:34:06.855 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 10:34:07.359 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Application démarrée - Dimensions: 1454x734
+2025-11-18 10:34:07.360 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Titre: EventManager - Rï¿½servez vos ï¿½vï¿½nements Facilement
+2025-11-18 10:34:27.983 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 10:34:28.248 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 10:34:28.666 [JavaFX Application Thread] INFO  c.b.e.service.UtilisateurService - ✓ Authentification réussie: luc01864@gmail.com
+2025-11-18 10:34:28.668 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Connexion réussie: luc01864@gmail.com
+2025-11-18 10:34:30.008 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Navigation vers le dashboard pour l'utilisateur: luc01864@gmail.com
+2025-11-18 10:34:30.060 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Initialisation de l'interface client
+2025-11-18 10:34:30.062 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des événements client
+2025-11-18 10:34:30.202 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Initializing ClientEventsController
+2025-11-18 10:34:30.209 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loading all events from DB...
+2025-11-18 10:34:30.292 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loaded 27 events
+2025-11-18 10:34:30.323 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Events content loaded successfully
+2025-11-18 10:34:30.334 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 10:34:30.334 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 10:34:30.336 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Redirection vers le dashboard Client réussie
+2025-11-18 10:37:49.876 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Déconnexion du client
+2025-11-18 10:37:49.897 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
+2025-11-18 10:37:49.910 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - ✓ Redirection vers la connexion réussie
+2025-11-18 10:38:02.714 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 10:38:02.771 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 10:38:03.172 [JavaFX Application Thread] INFO  c.b.e.service.UtilisateurService - ✓ Authentification réussie: charbelsnn@gmail.com
+2025-11-18 10:38:03.173 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Connexion réussie: charbelsnn@gmail.com
+2025-11-18 10:38:04.756 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Navigation vers le dashboard pour l'utilisateur: charbelsnn@gmail.com
+2025-11-18 10:38:04.831 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Initialisation de l'interface organisateur
+2025-11-18 10:38:04.832 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage du dashboard organisateur
+2025-11-18 10:38:04.990 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 10:38:04.991 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 10:38:04.993 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Redirection vers le dashboard Organisateur réussie
+2025-11-18 10:38:09.913 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage de l'interface de création d'événement
+2025-11-18 10:38:09.915 [JavaFX Application Thread] WARN  c.b.e.c.o.OrganisateurDashboardController - Onglet inconnu: 
+2025-11-18 10:39:06.491 [JavaFX Application Thread] ERROR c.b.e.c.events.CreateEventController - Erreur lors de la création de l'évènement
+java.lang.ClassCastException: class java.lang.String cannot be cast to class java.lang.Integer (java.lang.String and java.lang.Integer are in module java.base of loader 'bootstrap')
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.events.CreateEventController.createEvent(CreateEventController.java:211)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at com.sun.javafx.reflect.Trampoline.invoke(MethodUtil.java:77)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at javafx.base/com.sun.javafx.reflect.MethodUtil.invoke(MethodUtil.java:275)
+	at javafx.fxml/com.sun.javafx.fxml.MethodHelper.invoke(MethodHelper.java:84)
+	at javafx.fxml/javafx.fxml.FXMLLoader$MethodHandler.invoke(FXMLLoader.java:1854)
+	at javafx.fxml/javafx.fxml.FXMLLoader$ControllerMethodEventHandler.handle(FXMLLoader.java:1724)
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:234)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191)
+	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49)
+	at javafx.base/javafx.event.Event.fireEvent(Event.java:198)
+	at javafx.graphics/javafx.scene.Node.fireEvent(Node.java:8792)
+	at javafx.controls/javafx.scene.control.Button.fire(Button.java:203)
+	at javafx.controls/com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:208)
+	at javafx.controls/com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274)
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:247)
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:234)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191)
+	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54)
+	at javafx.base/javafx.event.Event.fireEvent(Event.java:198)
+	at javafx.graphics/javafx.scene.Scene$MouseHandler.process(Scene.java:3897)
+	at javafx.graphics/javafx.scene.Scene.processMouseEvent(Scene.java:1878)
+	at javafx.graphics/javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2623)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.run(GlassViewEventHandler.java:411)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.run(GlassViewEventHandler.java:301)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:138)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.lambda$handleMouseEvent$2(GlassViewEventHandler.java:450)
+	at javafx.graphics/com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:424)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:449)
+	at javafx.graphics/com.sun.glass.ui.View.handleMouseEvent(View.java:557)
+	at javafx.graphics/com.sun.glass.ui.View.notifyMouse(View.java:943)
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:184)
+	at java.base/java.lang.Thread.run(Thread.java:1447)
+2025-11-18 10:39:29.068 [JavaFX Application Thread] ERROR c.b.e.c.events.CreateEventController - Erreur lors de la création de l'évènement
+java.lang.ClassCastException: class java.lang.String cannot be cast to class java.lang.Integer (java.lang.String and java.lang.Integer are in module java.base of loader 'bootstrap')
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.events.CreateEventController.createEvent(CreateEventController.java:239)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at com.sun.javafx.reflect.Trampoline.invoke(MethodUtil.java:77)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at javafx.base/com.sun.javafx.reflect.MethodUtil.invoke(MethodUtil.java:275)
+	at javafx.fxml/com.sun.javafx.fxml.MethodHelper.invoke(MethodHelper.java:84)
+	at javafx.fxml/javafx.fxml.FXMLLoader$MethodHandler.invoke(FXMLLoader.java:1854)
+	at javafx.fxml/javafx.fxml.FXMLLoader$ControllerMethodEventHandler.handle(FXMLLoader.java:1724)
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:234)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191)
+	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49)
+	at javafx.base/javafx.event.Event.fireEvent(Event.java:198)
+	at javafx.graphics/javafx.scene.Node.fireEvent(Node.java:8792)
+	at javafx.controls/javafx.scene.control.Button.fire(Button.java:203)
+	at javafx.controls/com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:208)
+	at javafx.controls/com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274)
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:247)
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:234)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191)
+	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54)
+	at javafx.base/javafx.event.Event.fireEvent(Event.java:198)
+	at javafx.graphics/javafx.scene.Scene$MouseHandler.process(Scene.java:3897)
+	at javafx.graphics/javafx.scene.Scene.processMouseEvent(Scene.java:1878)
+	at javafx.graphics/javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2623)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.run(GlassViewEventHandler.java:411)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.run(GlassViewEventHandler.java:301)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:138)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.lambda$handleMouseEvent$2(GlassViewEventHandler.java:450)
+	at javafx.graphics/com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:424)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:449)
+	at javafx.graphics/com.sun.glass.ui.View.handleMouseEvent(View.java:557)
+	at javafx.graphics/com.sun.glass.ui.View.notifyMouse(View.java:943)
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:184)
+	at java.base/java.lang.Thread.run(Thread.java:1447)
+2025-11-18 10:40:03.177 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Déconnexion de l'organisateur
+2025-11-18 10:40:03.185 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
+2025-11-18 10:40:03.194 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - ✓ Redirection vers la connexion réussie
+2025-11-18 10:40:15.572 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 10:40:15.621 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 10:40:15.938 [JavaFX Application Thread] INFO  c.b.e.service.UtilisateurService - ✓ Authentification réussie: luc01864@gmail.com
+2025-11-18 10:40:15.938 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Connexion réussie: luc01864@gmail.com
+2025-11-18 10:40:17.979 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Navigation vers le dashboard pour l'utilisateur: luc01864@gmail.com
+2025-11-18 10:40:17.988 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Initialisation de l'interface client
+2025-11-18 10:40:17.990 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des événements client
+2025-11-18 10:40:18.007 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Initializing ClientEventsController
+2025-11-18 10:40:18.009 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loading all events from DB...
+2025-11-18 10:40:18.036 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loaded 2 events
+2025-11-18 10:40:18.075 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Events content loaded successfully
+2025-11-18 10:40:18.118 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 10:40:18.130 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 10:40:18.140 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Redirection vers le dashboard Client réussie
+2025-11-18 10:40:22.970 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des détails de l'événement: Test
+2025-11-18 10:40:23.025 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Initialisation du contrôleur des détails d'événement
+2025-11-18 10:40:23.029 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Interface des détails peuplée pour l'événement: Test
+2025-11-18 10:40:23.033 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Contenu des détails de l'événement chargé avec succès
+2025-11-18 10:40:27.398 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Fonction de réservation appelée pour l'événement: Test
+2025-11-18 10:40:27.399 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage du formulaire de réservation pour l'événement: Test
+2025-11-18 10:40:27.512 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - Initialisation du contrôleur de réservation
+2025-11-18 10:40:27.517 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Formulaire de réservation chargé avec succès
+2025-11-18 10:40:41.546 [JavaFX Application Thread] INFO  c.b.e.service.ReservationService - Création réservation pour utilisateur 15 sur événement 38
+2025-11-18 10:40:41.547 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 10:40:41.594 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 10:40:41.621 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.ReservationDAO - ✓ Réservation créée: ID 10
+2025-11-18 10:40:41.628 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 10:40:41.671 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 10:40:41.678 [JavaFX Application Thread] INFO  c.b.e.dao.ReservationDetailsDAO - ✓ Détail de réservation créé: ID 17
+2025-11-18 10:40:41.679 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 10:40:41.717 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 10:40:41.723 [JavaFX Application Thread] INFO  c.b.e.dao.ReservationDetailsDAO - ✓ Détail de réservation créé: ID 18
+2025-11-18 10:40:41.724 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 10:40:41.761 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 10:40:41.767 [JavaFX Application Thread] INFO  c.b.e.dao.ReservationDetailsDAO - ✓ Détail de réservation créé: ID 19
+2025-11-18 10:40:41.768 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 10:40:41.807 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 10:40:41.813 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - Places vendues mises à jour pour l'événement ID: 38
+2025-11-18 10:40:41.814 [JavaFX Application Thread] INFO  c.b.e.service.ReservationService - ✓ Réservation créée avec succès: ID 10, Total: 60.0€
+2025-11-18 10:41:42.348 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - Redirection vers l'historique des réservations
+2025-11-18 10:41:42.348 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage de l'historique des réservations client
+2025-11-18 10:41:42.348 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Contenu temporaire des réservations affiché
+2025-11-18 10:41:44.245 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des événements client
+2025-11-18 10:41:44.257 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Initializing ClientEventsController
+2025-11-18 10:41:44.259 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loading all events from DB...
+2025-11-18 10:41:44.262 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 10:41:44.328 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 10:41:44.335 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loaded 2 events
+2025-11-18 10:41:44.336 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Events content loaded successfully
+2025-11-18 10:41:50.640 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage de l'historique des réservations client
+2025-11-18 10:41:50.641 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Contenu temporaire des réservations affiché
