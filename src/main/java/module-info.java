@@ -15,6 +15,7 @@ module com.bschooleventmanager.eventmanager {
     requires org.slf4j;
     requires jbcrypt;
     requires java.desktop;
+    requires stripe.java;
 
     // Exports pour permettre l'accès aux packages
     exports com.bschooleventmanager.eventmanager;
@@ -22,6 +23,10 @@ module com.bschooleventmanager.eventmanager {
     exports com.bschooleventmanager.eventmanager.controller.organisateur;
     exports com.bschooleventmanager.eventmanager.controller.client;
     exports com.bschooleventmanager.eventmanager.controller.shared;
+    exports com.bschooleventmanager.eventmanager.model;
+    exports com.bschooleventmanager.eventmanager.service;
+    exports com.bschooleventmanager.eventmanager.exception;
+    exports com.bschooleventmanager.eventmanager.config;
 
     // Opens pour permettre la réflexion JavaFX
     opens com.bschooleventmanager.eventmanager.model to javafx.base;

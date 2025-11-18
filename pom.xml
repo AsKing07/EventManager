@@ -104,7 +104,13 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.4.11</version>
+            <version>1.4.13</version>
+        </dependency>
+        <!-- Stripe API for payments -->
+        <dependency>
+            <groupId>com.stripe</groupId>
+            <artifactId>stripe-java</artifactId>
+            <version>24.16.0</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>

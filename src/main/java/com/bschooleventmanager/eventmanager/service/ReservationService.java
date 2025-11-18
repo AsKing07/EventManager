@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -71,7 +72,7 @@ public class ReservationService {
             double total = calculerTotal(evenementActuel, quantiteStandard, quantiteVip, quantitePremium);
             
             // 4. Créer la réservation
-            StatutReservation statut = payerMaintenant ? StatutReservation.CONFIRMEE : StatutReservation.EN_ATTENTE;
+            StatutReservation statut = total <= 0.0? StatutReservation.CONFIRMEE : StatutReservation.EN_ATTENTE;
             
             Reservation reservation = new Reservation(
                 utilisateur.getIdUtilisateur(),
@@ -82,17 +83,22 @@ public class ReservationService {
             );
             
             // 5. Transaction : créer réservation + détails + mettre à jour places
-            reservation = reservationDAO.creer(reservation);
+      reservation = reservationDAO.creer(reservation);
             
             // 6. Créer les détails
-            creerDetailsReservation(reservation.getIdReservation(), evenementActuel,
+       List<ReservationDetail> details =     creerDetailsReservation(reservation.getIdReservation(), evenementActuel,
                                   quantiteStandard, quantiteVip, quantitePremium);
+
             
             // 7. Mettre à jour les places vendues
             mettreAJourPlacesVendues(evenementActuel, quantiteStandard, quantiteVip, quantitePremium);
             
             logger.info("✓ Réservation créée avec succès: ID {}, Total: {}€", 
                        reservation.getIdReservation(), total);
+             
+            // 8. Ajouter les détails à la réservation avant de retourner
+            reservation.setDetails(details);
+
             
             return reservation;
             
@@ -276,10 +282,11 @@ public class ReservationService {
         return total;
     }
 
-    private void creerDetailsReservation(int reservationId, Evenement evenement,
+    private List<ReservationDetail> creerDetailsReservation(int reservationId, Evenement evenement,
                                        int quantiteStandard, int quantiteVip, int quantitePremium) 
             throws DatabaseException {
         
+        List<ReservationDetail> details = new ArrayList<>();
         if (quantiteStandard > 0 && evenement.getPrixStandard() != null) {
             ReservationDetail detail = new ReservationDetail(
                 reservationId,
@@ -287,7 +294,8 @@ public class ReservationService {
                 quantiteStandard,
                 evenement.getPrixStandard().doubleValue()
             );
-            detailsDAO.creer(detail);
+       ReservationDetail  standardDetail =  detailsDAO.creer(detail);
+            details.add(standardDetail);
         }
         
         if (quantiteVip > 0 && evenement.getPrixVip() != null) {
@@ -297,7 +305,10 @@ public class ReservationService {
                 quantiteVip,
                 evenement.getPrixVip().doubleValue()
             );
-            detailsDAO.creer(detail);
+         ReservationDetail vipDetail = detailsDAO.creer(detail);
+            details.add(vipDetail);
+
+           
         }
         
         if (quantitePremium > 0 && evenement.getPrixPremium() != null) {
@@ -307,8 +318,11 @@ public class ReservationService {
                 quantitePremium,
                 evenement.getPrixPremium().doubleValue()
             );
-            detailsDAO.creer(detail);
+            ReservationDetail premiumDetail = detailsDAO.creer(detail);
+            details.add(premiumDetail);
         }
+        
+        return details;
     }
 
     private void mettreAJourPlacesVendues(Evenement evenement, int quantiteStandard, 
