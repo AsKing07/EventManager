@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.bschooleventmanager.eventmanager.controller.client.ReservationController"
+            fitToWidth="true" 
+            style="-fx-background-color: #f8f9fa; -fx-background: #f8f9fa;">
+
+<VBox spacing="20" style="-fx-background-color: #f8f9fa;">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="20">
+        <Button fx:id="backButton" 
+                text="← Retour"
+                onAction="#handleBack"
+                style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-background-radius: 6; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 10 15 10 15;"/>
+        
+        <Region HBox.hgrow="ALWAYS"/>
+        
+        <Label text="Réservation de places" 
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+    </HBox>
+
+    <Separator style="-fx-background-color: #bdc3c7;"/>
+
+    <!-- Informations de l'événement -->
+    <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+        
+        <Label text="📅 Événement sélectionné" 
+               style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #34495e;"/>
+        
+        <HBox spacing="20">
+            <VBox spacing="5">
+                <Label text="Nom" style="-fx-font-weight: bold; -fx-text-fill: #7f8c8d;"/>
+                <Label fx:id="eventNameLabel" style="-fx-text-fill: #2c3e50; -fx-font-size: 14px;"/>
+            </VBox>
+            
+            <VBox spacing="5">
+                <Label text="Date" style="-fx-font-weight: bold; -fx-text-fill: #7f8c8d;"/>
+                <Label fx:id="eventDateLabel" style="-fx-text-fill: #2c3e50; -fx-font-size: 14px;"/>
+            </VBox>
+            
+            <VBox spacing="5">
+                <Label text="Lieu" style="-fx-font-weight: bold; -fx-text-fill: #7f8c8d;"/>
+                <Label fx:id="eventLocationLabel" style="-fx-text-fill: #2c3e50; -fx-font-size: 14px;"/>
+            </VBox>
+        </HBox>
+    </VBox>
+
+    <!-- Formulaire de réservation -->
+    <VBox spacing="20" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);">
+        <padding>
+            <Insets top="25" right="25" bottom="25" left="25"/>
+        </padding>
+        
+        <Label text="🎫 Choisir vos places" 
+               style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #34495e;"/>
+
+        <!-- Catégorie Standard -->
+        <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-background-color: #ecf0f1; -fx-background-radius: 8; -fx-padding: 15;">
+            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                <Label text="Standard" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #2c3e50;"/>
+                <Label fx:id="priceStandardLabel" style="-fx-font-size: 14px; -fx-text-fill: #27ae60; -fx-font-weight: bold;"/>
+                <Label fx:id="availableStandardLabel" style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d;"/>
+            </VBox>
+            
+            <VBox spacing="5" alignment="CENTER_RIGHT">
+                <Label text="Quantité" style="-fx-font-weight: bold; -fx-text-fill: #7f8c8d;"/>
+                <Spinner fx:id="standardSpinner" min="0" max="10" initialValue="0" prefWidth="80"/>
+            </VBox>
+        </HBox>
+
+        <!-- Catégorie VIP -->
+        <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-background-color: #fff3cd; -fx-background-radius: 8; -fx-padding: 15;">
+            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                <Label text="VIP" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #2c3e50;"/>
+                <Label fx:id="priceVipLabel" style="-fx-font-size: 14px; -fx-text-fill: #f39c12; -fx-font-weight: bold;"/>
+                <Label fx:id="availableVipLabel" style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d;"/>
+            </VBox>
+            
+            <VBox spacing="5" alignment="CENTER_RIGHT">
+                <Label text="Quantité" style="-fx-font-weight: bold; -fx-text-fill: #7f8c8d;"/>
+                <Spinner fx:id="vipSpinner" min="0" max="10" initialValue="0" prefWidth="80"/>
+            </VBox>
+        </HBox>
+
+        <!-- Catégorie Premium -->
+        <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-background-color: #d1ecf1; -fx-background-radius: 8; -fx-padding: 15;">
+            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                <Label text="Premium" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #2c3e50;"/>
+                <Label fx:id="pricePremiumLabel" style="-fx-font-size: 14px; -fx-text-fill: #3498db; -fx-font-weight: bold;"/>
+                <Label fx:id="availablePremiumLabel" style="-fx-font-size: 12px; -fx-text-fill: #7f8c8d;"/>
+            </VBox>
+            
+            <VBox spacing="5" alignment="CENTER_RIGHT">
+                <Label text="Quantité" style="-fx-font-weight: bold; -fx-text-fill: #7f8c8d;"/>
+                <Spinner fx:id="premiumSpinner" min="0" max="10" initialValue="0" prefWidth="80"/>
+            </VBox>
+        </HBox>
+    </VBox>
+
+    <!-- Résumé de la commande -->
+    <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+        
+        <Label text="💳 Résumé de votre réservation" 
+               style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #34495e;"/>
+        
+        <VBox fx:id="summaryContainer" spacing="8">
+            <!-- Le contenu sera généré dynamiquement -->
+        </VBox>
+        
+        <Separator style="-fx-background-color: #bdc3c7;"/>
+        
+        <HBox alignment="CENTER_LEFT" spacing="20">
+            <Label text="Total à payer :" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #2c3e50;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="totalLabel" text="0,00 €" 
+                   style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #27ae60;"/>
+        </HBox>
+    </VBox>
+
+    <!-- Options de paiement -->
+    <VBox spacing="15" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+        
+        <Label text="💰 Options de paiement" 
+               style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #34495e;"/>
+        
+        <RadioButton fx:id="payNowRadio" text="Payer maintenant" selected="true" 
+                    style="-fx-font-size: 14px;"/>
+        
+        <RadioButton fx:id="payLaterRadio" text="Payer plus tard (jusqu'à 24h avant l'événement)" 
+                    style="-fx-font-size: 14px;"/>
+        
+        <Label fx:id="payLaterWarning" 
+               text="⚠️ Si vous choisissez de payer plus tard, vous pourrez finaliser le paiement depuis votre historique de réservations jusqu'à 24h avant l'événement."
+               wrapText="true"
+               style="-fx-font-size: 12px; -fx-text-fill: #f39c12; -fx-padding: 10; -fx-background-color: #fff3cd; -fx-background-radius: 5;"
+               visible="false"/>
+    </VBox>
+
+    <!-- Boutons d'action -->
+    <HBox spacing="15" alignment="CENTER">
+        <Button fx:id="cancelButton" text="Annuler" onAction="#handleCancel"
+                style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 15 30 15 30; -fx-font-size: 14px;"/>
+                
+        <Button fx:id="confirmButton" text="Confirmer la réservation" onAction="#handleConfirmReservation"
+                style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-background-radius: 8; -fx-font-weight: bold; -fx-cursor: hand; -fx-padding: 15 30 15 30; -fx-font-size: 14px;"
+                disable="true"/>
+    </HBox>
+
+</VBox>
+
+</ScrollPane>

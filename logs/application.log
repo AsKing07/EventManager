@@ -199,3 +199,20 @@ javafx.fxml.LoadException: Integer is not a valid type.
 2025-11-18 10:55:40.206 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - ✓ Événement SPECTACLE créé: test
 2025-11-18 10:55:40.207 [JavaFX Application Thread] INFO  c.b.e.service.EvenementService - ✓ Spectacle créé: test
 2025-11-18 10:55:42.296 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage du dashboard organisateur
+2025-11-18 11:05:28.953 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Déconnexion de l'organisateur
+2025-11-18 11:05:28.968 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
+2025-11-18 11:05:28.974 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - ✓ Redirection vers la connexion réussie
+2025-11-18 11:05:50.036 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 11:05:50.083 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 11:05:50.443 [JavaFX Application Thread] INFO  c.b.e.service.UtilisateurService - ✓ Authentification réussie: luc01864@gmail.com
+2025-11-18 11:05:50.445 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Connexion réussie: luc01864@gmail.com
+2025-11-18 11:05:51.507 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Navigation vers le dashboard pour l'utilisateur: luc01864@gmail.com
+2025-11-18 11:05:51.539 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Initialisation de l'interface client
+2025-11-18 11:05:51.541 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des événements client
+2025-11-18 11:05:51.639 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Initializing ClientEventsController
+2025-11-18 11:05:51.646 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loading all events from DB...
+2025-11-18 11:05:51.660 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loaded 5 events
+2025-11-18 11:05:51.675 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Events content loaded successfully
+2025-11-18 11:05:51.683 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 11:05:51.685 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 11:05:51.691 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Redirection vers le dashboard Client réussie

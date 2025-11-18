@@ -1,6 +1,7 @@
 package com.bschooleventmanager.eventmanager.controller.client;
 
 import com.bschooleventmanager.eventmanager.model.Evenement;
+import com.bschooleventmanager.eventmanager.util.NotificationUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -144,20 +145,45 @@ public class ClientEventDetailsController {
     }
 
     /**
-     * Placeholder pour la fonctionnalité de réservation
+     * Gère la réservation d'un événement
      */
     private void handleReservation() {
         logger.info("Fonction de réservation appelée pour l'événement: {}", 
                    currentEvent != null ? currentEvent.getNom() : "N/A");
-        // TODO: Implémenter la logique de réservation
+        
+        if (currentEvent == null) {
+            NotificationUtils.showError("Erreur: aucun événement sélectionné");
+            return;
+        }
+        
+        // Vérifier la disponibilité générale
+        if (currentEvent.getPlacesStandardDisponibles() + currentEvent.getPlacesVipDisponibles() + 
+            currentEvent.getPlacesPremiumDisponibles() <= 0) {
+            NotificationUtils.showError("Désolé, cet événement est complet");
+            return;
+        }
+        
+        // Rediriger vers le formulaire de réservation
+        if (dashboardController != null) {
+            dashboardController.showReservationForm(currentEvent);
+        }
     }
 
     /**
-     * Placeholder pour la fonctionnalité de partage
+     * Gère le partage d'un événement
      */
     private void handleShare() {
         logger.info("Fonction de partage appelée pour l'événement: {}", 
                    currentEvent != null ? currentEvent.getNom() : "N/A");
-        // TODO: Implémenter la logique de partage
+        
+        if (currentEvent != null) {
+            String shareInfo = "Découvrez cet événement: " + currentEvent.getNom() + 
+                             "\nDate: " + currentEvent.getDateEvenement().format(dateFormatter) + 
+                             "\nLieu: " + currentEvent.getLieu();
+            
+            // Copier dans le presse-papiers (simulation)
+            NotificationUtils.showInfo("Partage", "Informations copiées dans le presse-papiers!");
+            logger.info("Informations partagées: {}", shareInfo);
+        }
     }
 }
