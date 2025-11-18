@@ -2,6 +2,7 @@ package com.bschooleventmanager.eventmanager.dao;
 
 import com.bschooleventmanager.eventmanager.exception.DatabaseException;
 import com.bschooleventmanager.eventmanager.model.Reservation;
+import com.bschooleventmanager.eventmanager.model.ReservationDetail;
 import com.bschooleventmanager.eventmanager.model.enums.StatutReservation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -203,6 +204,16 @@ public class ReservationDAO extends BaseDAO<Reservation> {
         Timestamp dateAnnulation = rs.getTimestamp("date_annulation");
         if (dateAnnulation != null) {
             reservation.setDateAnnulation(dateAnnulation.toLocalDateTime());
+        }
+
+
+        List<ReservationDetail> details = new ArrayList<>();
+        try {
+            details = new ReservationDetailsDAO().getDetailsParReservation(reservation.getIdReservation());
+            reservation.setDetails(details);
+        } catch (DatabaseException e) {
+            logger.error("Erreur récupération détails réservation", e);
+            throw new SQLException("Erreur récupération détails réservation", e);
         }
         
         return reservation;

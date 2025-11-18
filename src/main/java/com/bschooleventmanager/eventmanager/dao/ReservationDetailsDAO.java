@@ -48,7 +48,7 @@ public class ReservationDetailsDAO extends BaseDAO<ReservationDetail> {
     @Override
     public ReservationDetail chercher(int id) throws DatabaseException {
         String query = "SELECT id_detail, id_reservation, categorie_place, nombre_tickets, prix_unitaire, sous_total " +
-                       "FROM reservation_details WHERE id_detail = ?";
+                       "FROM reservationdetails WHERE id_detail = ?";
         
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -70,7 +70,7 @@ public class ReservationDetailsDAO extends BaseDAO<ReservationDetail> {
     public List<ReservationDetail> listerTous() throws DatabaseException {
         List<ReservationDetail> details = new ArrayList<>();
         String query = "SELECT id_detail, id_reservation, categorie_place, nombre_tickets, prix_unitaire, sous_total " +
-                       "FROM reservation_details ORDER BY id_detail";
+                       "FROM reservationdetails ORDER BY id_detail";
         
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query);
@@ -88,7 +88,7 @@ public class ReservationDetailsDAO extends BaseDAO<ReservationDetail> {
 
     @Override
     public void mettreAJour(ReservationDetail detail) throws DatabaseException {
-        String query = "UPDATE reservation_details SET id_reservation = ?, categorie_place = ?, nombre_tickets = ?, " +
+        String query = "UPDATE reservationdetails SET id_reservation = ?, categorie_place = ?, nombre_tickets = ?, " +
                        "prix_unitaire = ?, sous_total = ? WHERE id_detail = ?";
         
         try (Connection connection = getConnection();
@@ -114,7 +114,7 @@ public class ReservationDetailsDAO extends BaseDAO<ReservationDetail> {
 
     @Override
     public void supprimer(int id) throws DatabaseException {
-        String query = "DELETE FROM reservation_details WHERE id_detail = ?";
+        String query = "DELETE FROM reservationdetails WHERE id_detail = ?";
         
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -137,7 +137,7 @@ public class ReservationDetailsDAO extends BaseDAO<ReservationDetail> {
     public List<ReservationDetail> getDetailsParReservation(int reservationId) throws DatabaseException {
         List<ReservationDetail> details = new ArrayList<>();
         String query = "SELECT id_detail, id_reservation, categorie_place, nombre_tickets, prix_unitaire, sous_total " +
-                       "FROM reservation_details WHERE id_reservation = ? ORDER BY categorie_place";
+                       "FROM reservationdetails WHERE id_reservation = ? ORDER BY categorie_place";
         
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -159,7 +159,7 @@ public class ReservationDetailsDAO extends BaseDAO<ReservationDetail> {
      * Supprime tous les détails d'une réservation
      */
     public void supprimerParReservation(int reservationId) throws DatabaseException {
-        String query = "DELETE FROM reservation_details WHERE id_reservation = ?";
+        String query = "DELETE FROM reservationdetails WHERE id_reservation = ?";
         
         try (Connection connection = getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {

@@ -37,3 +37,5 @@ build/
 ### Mac OS ###
 .DS_Store
 logs/application.log
+lib/stripe-java-29.2.0.jar
+lib/gson-2.10.1.jar

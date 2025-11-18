@@ -324,4 +324,13 @@ public class ClientDashboardController {
             NotificationUtils.showError("Impossible de charger l'historique des réservations");
         }
     }
+
+    /**
+     * Affiche l'interface de paiement dans la zone de contenu
+     */
+    public void showPaymentInterface(Parent paymentContent) {
+        logger.info("Affichage de l'interface de paiement");
+        contentArea.getChildren().clear();
+        contentArea.getChildren().add(paymentContent);
+    }
 }

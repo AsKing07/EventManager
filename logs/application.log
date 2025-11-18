@@ -1,25 +1,26 @@
-2025-11-18 10:45:47.996 [main] INFO  c.b.eventmanager.util.AppConfig - ✓ Propriétés d'application chargées
-2025-11-18 10:45:48.000 [main] INFO  c.b.eventmanager.Main - Démarrage de EventManager v1.0.0
-2025-11-18 10:45:48.390 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
-2025-11-18 10:45:48.454 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
-2025-11-18 10:45:48.454 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
-2025-11-18 10:45:49.048 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Application démarrée - Dimensions: 1454x734
-2025-11-18 10:45:49.049 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Titre: EventManager - Rï¿½servez vos ï¿½vï¿½nements Facilement
-2025-11-18 10:46:19.723 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
-2025-11-18 10:46:20.067 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
-2025-11-18 10:46:20.463 [JavaFX Application Thread] INFO  c.b.e.service.UtilisateurService - ✓ Authentification réussie: charbelsnn@gmail.com
-2025-11-18 10:46:20.464 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Connexion réussie: charbelsnn@gmail.com
-2025-11-18 10:46:21.952 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Navigation vers le dashboard pour l'utilisateur: charbelsnn@gmail.com
-2025-11-18 10:46:22.000 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Initialisation de l'interface organisateur
-2025-11-18 10:46:22.002 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage du dashboard organisateur
-2025-11-18 10:46:22.214 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
-2025-11-18 10:46:22.215 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
-2025-11-18 10:46:22.216 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Redirection vers le dashboard Organisateur réussie
-2025-11-18 10:46:39.728 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage de l'interface de création d'événement
-2025-11-18 10:46:39.729 [JavaFX Application Thread] WARN  c.b.e.c.o.OrganisateurDashboardController - Onglet inconnu: 
-2025-11-18 10:47:31.252 [JavaFX Application Thread] ERROR c.b.e.c.events.CreateEventController - Erreur lors de la création de l'évènement
-java.lang.ClassCastException: class java.lang.String cannot be cast to class java.lang.Integer (java.lang.String and java.lang.Integer are in module java.base of loader 'bootstrap')
-	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.events.CreateEventController.createEvent(CreateEventController.java:211)
+2025-11-18 14:37:37.680 [JavaFX Application Thread] INFO  c.b.e.service.ReservationService - Création réservation pour utilisateur 15 sur événement 48
+2025-11-18 14:37:37.681 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 14:37:37.733 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 14:37:37.753 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.ReservationDAO - ✓ Réservation créée: ID 16
+2025-11-18 14:37:37.754 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 14:37:37.799 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 14:37:37.804 [JavaFX Application Thread] INFO  c.b.e.dao.ReservationDetailsDAO - ✓ Détail de réservation créé: ID 25
+2025-11-18 14:37:37.805 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 14:37:37.856 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 14:37:37.862 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - Places vendues mises à jour pour l'événement ID: 48
+2025-11-18 14:37:37.863 [JavaFX Application Thread] INFO  c.b.e.service.ReservationService - ✓ Réservation créée avec succès: ID 16, Total: 80.0€
+2025-11-18 14:37:39.531 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - Redirection vers l'interface de paiement
+2025-11-18 14:37:39.533 [JavaFX Application Thread] INFO  c.b.e.service.StripePaymentService - ✓ Stripe initialisé en mode TEST
+2025-11-18 14:37:39.534 [JavaFX Application Thread] INFO  c.b.e.service.StripePaymentService - ✓ Stripe initialisé en mode TEST
+2025-11-18 14:37:39.566 [JavaFX Application Thread] INFO  c.b.e.c.client.PaymentController - Initialisation du contrôleur de paiement
+2025-11-18 14:37:39.567 [JavaFX Application Thread] INFO  c.b.e.c.client.PaymentController - ✓ Stripe configuré - API réelle disponible
+2025-11-18 14:37:39.568 [JavaFX Application Thread] ERROR c.b.e.c.client.ReservationController - Erreur inattendue lors de la réservation
+java.lang.NullPointerException: Cannot invoke "java.util.List.forEach(java.util.function.Consumer)" because the return value of "com.bschooleventmanager.eventmanager.model.Reservation.getDetails()" is null
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.PaymentController.populateReservationSummary(PaymentController.java:224)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.PaymentController.setReservationData(PaymentController.java:193)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.ReservationController.redirectToPayment(ReservationController.java:491)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.ReservationController.createReservation(ReservationController.java:289)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.ReservationController.handleConfirmReservation(ReservationController.java:239)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
 	at com.sun.javafx.reflect.Trampoline.invoke(MethodUtil.java:77)
@@ -82,43 +83,495 @@ java.lang.ClassCastException: class java.lang.String cannot be cast to class jav
 	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
 	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:184)
 	at java.base/java.lang.Thread.run(Thread.java:1447)
-2025-11-18 10:50:39.928 [main] INFO  c.b.eventmanager.util.AppConfig - ✓ Propriétés d'application chargées
-2025-11-18 10:50:39.933 [main] INFO  c.b.eventmanager.Main - Démarrage de EventManager v1.0.0
-2025-11-18 10:50:40.226 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
-2025-11-18 10:50:40.285 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
-2025-11-18 10:50:40.285 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
-2025-11-18 10:50:40.850 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Application démarrée - Dimensions: 1454x734
-2025-11-18 10:50:40.851 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Titre: EventManager - Rï¿½servez vos ï¿½vï¿½nements Facilement
-2025-11-18 10:50:52.021 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
-2025-11-18 10:50:52.332 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
-2025-11-18 10:50:52.723 [JavaFX Application Thread] INFO  c.b.e.service.UtilisateurService - ✓ Authentification réussie: charbelsnn@gmail.com
-2025-11-18 10:50:52.724 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Connexion réussie: charbelsnn@gmail.com
-2025-11-18 10:50:54.130 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Navigation vers le dashboard pour l'utilisateur: charbelsnn@gmail.com
-2025-11-18 10:50:54.159 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Initialisation de l'interface organisateur
-2025-11-18 10:50:54.161 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage du dashboard organisateur
-2025-11-18 10:50:54.283 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
-2025-11-18 10:50:54.283 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
-2025-11-18 10:50:54.284 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Redirection vers le dashboard Organisateur réussie
-2025-11-18 10:50:56.565 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage de l'interface de création d'événement
-2025-11-18 10:50:56.567 [JavaFX Application Thread] WARN  c.b.e.c.o.OrganisateurDashboardController - Onglet inconnu: 
-2025-11-18 10:50:56.702 [JavaFX Application Thread] ERROR c.b.e.c.o.OrganisateurDashboardController - Erreur lors du chargement de l'interface de création d'événement
-javafx.fxml.LoadException: Integer is not a valid type.
-/R:/Bschool/Coding%20Factory/M1/Java/Projet/EventManager/target/classes/fxml/organisateur/Events/addEvent.fxml:142
+2025-11-18 14:48:41.711 [main] INFO  c.b.eventmanager.util.AppConfig - ✓ Propriétés d'application chargées
+2025-11-18 14:48:41.716 [main] INFO  c.b.eventmanager.Main - Démarrage de EventManager v1.0.0
+2025-11-18 14:48:42.091 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
+2025-11-18 14:48:42.153 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 14:48:42.154 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 14:48:42.845 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Application démarrée - Dimensions: 1454x734
+2025-11-18 14:48:42.846 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Titre: EventManager - Rï¿½servez vos ï¿½vï¿½nements Facilement
+2025-11-18 14:48:55.735 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 14:48:56.058 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 14:48:56.492 [JavaFX Application Thread] INFO  c.b.e.service.UtilisateurService - ✓ Authentification réussie: luc01864@gmail.com
+2025-11-18 14:48:56.492 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Connexion réussie: luc01864@gmail.com
+2025-11-18 14:48:58.146 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Navigation vers le dashboard pour l'utilisateur: luc01864@gmail.com
+2025-11-18 14:48:58.176 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Initialisation de l'interface client
+2025-11-18 14:48:58.177 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des événements client
+2025-11-18 14:48:58.273 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Initializing ClientEventsController
+2025-11-18 14:48:58.278 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loading all events from DB...
+2025-11-18 14:48:58.305 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loaded 11 events
+2025-11-18 14:48:58.323 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Events content loaded successfully
+2025-11-18 14:48:58.336 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 14:48:58.337 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 14:48:58.339 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Redirection vers le dashboard Client réussie
+2025-11-18 14:49:07.030 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des détails de l'événement: spectacle
+2025-11-18 14:49:07.088 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Initialisation du contrôleur des détails d'événement
+2025-11-18 14:49:07.092 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Interface des détails peuplée pour l'événement: spectacle
+2025-11-18 14:49:07.098 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Contenu des détails de l'événement chargé avec succès
+2025-11-18 14:49:09.916 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Fonction de réservation appelée pour l'événement: spectacle
+2025-11-18 14:49:09.919 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage du formulaire de réservation pour l'événement: spectacle
+2025-11-18 14:49:10.002 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - Initialisation du contrôleur de réservation
+2025-11-18 14:49:10.009 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Formulaire de réservation chargé avec succès
+2025-11-18 14:49:16.218 [JavaFX Application Thread] INFO  c.b.e.service.ReservationService - Création réservation pour utilisateur 15 sur événement 45
+2025-11-18 14:49:16.250 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.ReservationDAO - ✓ Réservation créée: ID 17
+2025-11-18 14:49:16.265 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 14:49:16.318 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 14:49:16.325 [JavaFX Application Thread] INFO  c.b.e.dao.ReservationDetailsDAO - ✓ Détail de réservation créé: ID 26
+2025-11-18 14:49:16.327 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 14:49:16.377 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 14:49:16.384 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - Places vendues mises à jour pour l'événement ID: 45
+2025-11-18 14:49:16.385 [JavaFX Application Thread] INFO  c.b.e.service.ReservationService - ✓ Réservation créée avec succès: ID 17, Total: 150.0€
+2025-11-18 14:49:17.636 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - Redirection vers l'interface de paiement
+2025-11-18 14:49:17.660 [JavaFX Application Thread] INFO  c.b.eventmanager.config.StripeConfig - ✓ Configuration Stripe chargée
+2025-11-18 14:49:17.662 [JavaFX Application Thread] INFO  c.b.e.service.StripePaymentService - ✓ Stripe initialisé en mode TEST
+2025-11-18 14:49:17.663 [JavaFX Application Thread] INFO  c.b.e.service.StripePaymentService - ✓ Stripe initialisé en mode TEST
+2025-11-18 14:49:17.701 [JavaFX Application Thread] INFO  c.b.e.c.client.PaymentController - Initialisation du contrôleur de paiement
+2025-11-18 14:49:17.708 [JavaFX Application Thread] INFO  c.b.e.c.client.PaymentController - ✓ Stripe configuré - API réelle disponible
+2025-11-18 14:49:17.712 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage de l'interface de paiement
+2025-11-18 14:49:17.716 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - ✓ Interface de paiement chargée
+2025-11-18 14:49:36.160 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.service.PaiementService - Début du traitement de paiement pour la réservation: 17
+2025-11-18 14:49:36.160 [ForkJoinPool.commonPool-worker-1] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 14:49:36.211 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 14:49:36.273 [ForkJoinPool.commonPool-worker-1] ERROR c.b.e.dao.ReservationDetailsDAO - Erreur récupération détails par réservation
+java.sql.SQLSyntaxErrorException: Table 'u611341706_eventManager.reservation_details' doesn't exist
+	at mysql.connector.j@8.0.33/com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at mysql.connector.j@8.0.33/com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at mysql.connector.j@8.0.33/com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:916)
+	at mysql.connector.j@8.0.33/com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:972)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.dao.ReservationDetailsDAO.getDetailsParReservation(ReservationDetailsDAO.java:146)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.dao.ReservationDAO.mapRowToReservation(ReservationDAO.java:212)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.dao.ReservationDAO.chercher(ReservationDAO.java:60)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.PaiementService.traiterPaiement(PaiementService.java:57)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.PaymentController.lambda$5(PaymentController.java:333)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1814)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1806)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:507)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1394)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1970)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+2025-11-18 14:49:36.277 [ForkJoinPool.commonPool-worker-1] ERROR c.b.eventmanager.dao.ReservationDAO - Erreur récupération détails réservation
+com.bschooleventmanager.eventmanager.exception.DatabaseException: Erreur récupération détails par réservation
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.dao.ReservationDetailsDAO.getDetailsParReservation(ReservationDetailsDAO.java:153)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.dao.ReservationDAO.mapRowToReservation(ReservationDAO.java:212)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.dao.ReservationDAO.chercher(ReservationDAO.java:60)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.PaiementService.traiterPaiement(PaiementService.java:57)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.PaymentController.lambda$5(PaymentController.java:333)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1814)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1806)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:507)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1394)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1970)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.sql.SQLSyntaxErrorException: Table 'u611341706_eventManager.reservation_details' doesn't exist
+	at mysql.connector.j@8.0.33/com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at mysql.connector.j@8.0.33/com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at mysql.connector.j@8.0.33/com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:916)
+	at mysql.connector.j@8.0.33/com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:972)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.dao.ReservationDetailsDAO.getDetailsParReservation(ReservationDetailsDAO.java:146)
+	... 10 common frames omitted
+2025-11-18 14:49:36.278 [ForkJoinPool.commonPool-worker-1] ERROR c.b.eventmanager.dao.ReservationDAO - Erreur recherche réservation
+java.sql.SQLException: Erreur récupération détails réservation
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.dao.ReservationDAO.mapRowToReservation(ReservationDAO.java:216)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.dao.ReservationDAO.chercher(ReservationDAO.java:60)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.PaiementService.traiterPaiement(PaiementService.java:57)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.PaymentController.lambda$5(PaymentController.java:333)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1814)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1806)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:507)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1394)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1970)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: com.bschooleventmanager.eventmanager.exception.DatabaseException: Erreur récupération détails par réservation
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.dao.ReservationDetailsDAO.getDetailsParReservation(ReservationDetailsDAO.java:153)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.dao.ReservationDAO.mapRowToReservation(ReservationDAO.java:212)
+	... 9 common frames omitted
+Caused by: java.sql.SQLSyntaxErrorException: Table 'u611341706_eventManager.reservation_details' doesn't exist
+	at mysql.connector.j@8.0.33/com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at mysql.connector.j@8.0.33/com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at mysql.connector.j@8.0.33/com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:916)
+	at mysql.connector.j@8.0.33/com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:972)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.dao.ReservationDetailsDAO.getDetailsParReservation(ReservationDetailsDAO.java:146)
+	... 10 common frames omitted
+2025-11-18 14:49:36.280 [ForkJoinPool.commonPool-worker-1] ERROR c.b.e.service.PaiementService - Erreur de base de données lors du traitement du paiement
+com.bschooleventmanager.eventmanager.exception.DatabaseException: Erreur recherche réservation
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.dao.ReservationDAO.chercher(ReservationDAO.java:66)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.PaiementService.traiterPaiement(PaiementService.java:57)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.PaymentController.lambda$5(PaymentController.java:333)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1814)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1806)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:507)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1394)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1970)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: java.sql.SQLException: Erreur récupération détails réservation
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.dao.ReservationDAO.mapRowToReservation(ReservationDAO.java:216)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.dao.ReservationDAO.chercher(ReservationDAO.java:60)
+	... 8 common frames omitted
+Caused by: com.bschooleventmanager.eventmanager.exception.DatabaseException: Erreur récupération détails par réservation
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.dao.ReservationDetailsDAO.getDetailsParReservation(ReservationDetailsDAO.java:153)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.dao.ReservationDAO.mapRowToReservation(ReservationDAO.java:212)
+	... 9 common frames omitted
+Caused by: java.sql.SQLSyntaxErrorException: Table 'u611341706_eventManager.reservation_details' doesn't exist
+	at mysql.connector.j@8.0.33/com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:121)
+	at mysql.connector.j@8.0.33/com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122)
+	at mysql.connector.j@8.0.33/com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:916)
+	at mysql.connector.j@8.0.33/com.mysql.cj.jdbc.ClientPreparedStatement.executeQuery(ClientPreparedStatement.java:972)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.dao.ReservationDetailsDAO.getDetailsParReservation(ReservationDetailsDAO.java:146)
+	... 10 common frames omitted
+2025-11-18 14:49:36.283 [JavaFX Application Thread] ERROR c.b.e.c.client.PaymentController - Erreur inattendue lors du paiement
+java.lang.RuntimeException: com.bschooleventmanager.eventmanager.exception.BusinessException: Erreur technique lors du paiement: Erreur recherche réservation
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.PaymentController.lambda$5(PaymentController.java:343)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1814)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1806)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:507)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1394)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1970)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: com.bschooleventmanager.eventmanager.exception.BusinessException: Erreur technique lors du paiement: Erreur recherche réservation
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.PaiementService.traiterPaiement(PaiementService.java:129)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.PaymentController.lambda$5(PaymentController.java:333)
+	... 6 common frames omitted
+2025-11-18 14:55:13.407 [main] INFO  c.b.eventmanager.util.AppConfig - ✓ Propriétés d'application chargées
+2025-11-18 14:55:13.411 [main] INFO  c.b.eventmanager.Main - Démarrage de EventManager v1.0.0
+2025-11-18 14:55:13.712 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
+2025-11-18 14:55:13.778 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 14:55:13.778 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 14:55:14.305 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Application démarrée - Dimensions: 1454x734
+2025-11-18 14:55:14.306 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Titre: EventManager - Rï¿½servez vos ï¿½vï¿½nements Facilement
+2025-11-18 14:55:33.769 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 14:55:34.003 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 14:55:34.354 [JavaFX Application Thread] INFO  c.b.e.service.UtilisateurService - ✓ Authentification réussie: luc01864@gmail.com
+2025-11-18 14:55:34.355 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Connexion réussie: luc01864@gmail.com
+2025-11-18 14:55:35.719 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Navigation vers le dashboard pour l'utilisateur: luc01864@gmail.com
+2025-11-18 14:55:35.743 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Initialisation de l'interface client
+2025-11-18 14:55:35.748 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des événements client
+2025-11-18 14:55:35.813 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Initializing ClientEventsController
+2025-11-18 14:55:35.820 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loading all events from DB...
+2025-11-18 14:55:35.849 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loaded 11 events
+2025-11-18 14:55:35.921 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Events content loaded successfully
+2025-11-18 14:55:35.943 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 14:55:35.947 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 14:55:35.953 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Redirection vers le dashboard Client réussie
+2025-11-18 14:55:39.447 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des détails de l'événement: test
+2025-11-18 14:55:39.509 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Initialisation du contrôleur des détails d'événement
+2025-11-18 14:55:39.512 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Interface des détails peuplée pour l'événement: test
+2025-11-18 14:55:39.516 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Contenu des détails de l'événement chargé avec succès
+2025-11-18 14:55:44.759 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Retour vers la liste des événements demandé
+2025-11-18 14:55:44.760 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des événements client
+2025-11-18 14:55:44.770 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Initializing ClientEventsController
+2025-11-18 14:55:44.770 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loading all events from DB...
+2025-11-18 14:55:44.792 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loaded 11 events
+2025-11-18 14:55:44.797 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Events content loaded successfully
+2025-11-18 14:55:48.196 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des détails de l'événement: Conférence du climat
+2025-11-18 14:55:48.215 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Initialisation du contrôleur des détails d'événement
+2025-11-18 14:55:48.216 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Interface des détails peuplée pour l'événement: Conférence du climat
+2025-11-18 14:55:48.217 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Contenu des détails de l'événement chargé avec succès
+2025-11-18 14:55:50.658 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Fonction de réservation appelée pour l'événement: Conférence du climat
+2025-11-18 14:55:50.659 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage du formulaire de réservation pour l'événement: Conférence du climat
+2025-11-18 14:55:50.759 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - Initialisation du contrôleur de réservation
+2025-11-18 14:55:50.763 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Formulaire de réservation chargé avec succès
+2025-11-18 14:55:58.457 [JavaFX Application Thread] INFO  c.b.e.service.ReservationService - Création réservation pour utilisateur 15 sur événement 42
+2025-11-18 14:55:58.489 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.ReservationDAO - ✓ Réservation créée: ID 18
+2025-11-18 14:55:58.497 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 14:55:58.540 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 14:55:58.548 [JavaFX Application Thread] INFO  c.b.e.dao.ReservationDetailsDAO - ✓ Détail de réservation créé: ID 27
+2025-11-18 14:55:58.551 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 14:55:58.602 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 14:55:58.609 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - Places vendues mises à jour pour l'événement ID: 42
+2025-11-18 14:55:58.614 [JavaFX Application Thread] INFO  c.b.e.service.ReservationService - ✓ Réservation créée avec succès: ID 18, Total: 40.0€
+2025-11-18 14:56:00.132 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - Redirection vers l'interface de paiement
+2025-11-18 14:56:00.140 [JavaFX Application Thread] INFO  c.b.eventmanager.config.StripeConfig - ✓ Configuration Stripe chargée
+2025-11-18 14:56:00.141 [JavaFX Application Thread] INFO  c.b.e.service.StripePaymentService - ✓ Stripe initialisé en mode TEST
+2025-11-18 14:56:00.143 [JavaFX Application Thread] INFO  c.b.e.service.StripePaymentService - ✓ Stripe initialisé en mode TEST
+2025-11-18 14:56:00.174 [JavaFX Application Thread] INFO  c.b.e.c.client.PaymentController - Initialisation du contrôleur de paiement
+2025-11-18 14:56:00.177 [JavaFX Application Thread] INFO  c.b.e.c.client.PaymentController - ✓ Stripe configuré - API réelle disponible
+2025-11-18 14:56:00.181 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage de l'interface de paiement
+2025-11-18 14:56:00.184 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - ✓ Interface de paiement chargée
+2025-11-18 14:56:16.896 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.service.PaiementService - Début du traitement de paiement pour la réservation: 18
+2025-11-18 14:56:16.897 [ForkJoinPool.commonPool-worker-1] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 14:56:16.954 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 14:56:16.997 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.service.PaiementService - Traitement paiement Stripe - Carte test: 4242****, Montant: 40.0
+2025-11-18 14:56:18.007 [ForkJoinPool.commonPool-worker-1] ERROR c.b.e.service.StripePaymentService - ❌ Erreur Stripe lors de la création du PaymentIntent
+com.stripe.exception.InvalidRequestException: You cannot confirm this PaymentIntent because it's missing a payment method. You can either update the PaymentIntent with a payment method and then confirm it again, or confirm it again directly with a payment method or ConfirmationToken.; code: payment_intent_unexpected_state; request-id: req_u3sJs1gDxjk4c2
+	at stripe.java@24.16.0/com.stripe.net.LiveStripeResponseGetter.handleApiError(LiveStripeResponseGetter.java:237)
+	at stripe.java@24.16.0/com.stripe.net.LiveStripeResponseGetter.handleError(LiveStripeResponseGetter.java:198)
+	at stripe.java@24.16.0/com.stripe.net.LiveStripeResponseGetter.request(LiveStripeResponseGetter.java:102)
+	at stripe.java@24.16.0/com.stripe.model.PaymentIntent.create(PaymentIntent.java:1019)
+	at stripe.java@24.16.0/com.stripe.model.PaymentIntent.create(PaymentIntent.java:991)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.StripePaymentService.creerPaymentIntent(StripePaymentService.java:76)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.StripePaymentService.traiterPaiementComplet(StripePaymentService.java:134)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.PaiementService.traiterPaiementStripe(PaiementService.java:195)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.PaiementService.traiterPaiement(PaiementService.java:89)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.PaymentController.lambda$5(PaymentController.java:333)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1814)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1806)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:507)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1394)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1970)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+2025-11-18 14:56:18.011 [ForkJoinPool.commonPool-worker-1] ERROR c.b.e.service.StripePaymentService - ❌ Erreur lors du traitement du paiement Stripe
+com.bschooleventmanager.eventmanager.exception.PaiementInvalideException: Erreur Stripe: You cannot confirm this PaymentIntent because it's missing a payment method. You can either update the PaymentIntent with a payment method and then confirm it again, or confirm it again directly with a payment method or ConfirmationToken.; code: payment_intent_unexpected_state; request-id: req_u3sJs1gDxjk4c2
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.StripePaymentService.creerPaymentIntent(StripePaymentService.java:83)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.StripePaymentService.traiterPaiementComplet(StripePaymentService.java:134)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.PaiementService.traiterPaiementStripe(PaiementService.java:195)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.PaiementService.traiterPaiement(PaiementService.java:89)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.PaymentController.lambda$5(PaymentController.java:333)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1814)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1806)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:507)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1394)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1970)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+2025-11-18 14:56:18.012 [ForkJoinPool.commonPool-worker-1] ERROR c.b.e.service.PaiementService - ❌ Erreur de validation Stripe: Erreur de traitement: Erreur Stripe: You cannot confirm this PaymentIntent because it's missing a payment method. You can either update the PaymentIntent with a payment method and then confirm it again, or confirm it again directly with a payment method or ConfirmationToken.; code: payment_intent_unexpected_state; request-id: req_u3sJs1gDxjk4c2
+2025-11-18 14:56:18.013 [ForkJoinPool.commonPool-worker-1] ERROR c.b.e.service.PaiementService - Échec du traitement de paiement pour la réservation: 18
+java.lang.Exception: Erreur de validation Stripe: Erreur de traitement: Erreur Stripe: You cannot confirm this PaymentIntent because it's missing a payment method. You can either update the PaymentIntent with a payment method and then confirm it again, or confirm it again directly with a payment method or ConfirmationToken.; code: payment_intent_unexpected_state; request-id: req_u3sJs1gDxjk4c2
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.PaiementService.traiterPaiementStripe(PaiementService.java:211)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.PaiementService.traiterPaiement(PaiementService.java:89)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.PaymentController.lambda$5(PaymentController.java:333)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1814)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1806)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:507)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1394)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1970)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+2025-11-18 14:56:18.015 [JavaFX Application Thread] ERROR c.b.e.c.client.PaymentController - Erreur inattendue lors du paiement
+java.lang.RuntimeException: com.bschooleventmanager.eventmanager.exception.PaiementInvalideException: Échec du traitement du paiement: Erreur de validation Stripe: Erreur de traitement: Erreur Stripe: You cannot confirm this PaymentIntent because it's missing a payment method. You can either update the PaymentIntent with a payment method and then confirm it again, or confirm it again directly with a payment method or ConfirmationToken.; code: payment_intent_unexpected_state; request-id: req_u3sJs1gDxjk4c2
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.PaymentController.lambda$5(PaymentController.java:343)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1814)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1806)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:507)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1394)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1970)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: com.bschooleventmanager.eventmanager.exception.PaiementInvalideException: Échec du traitement du paiement: Erreur de validation Stripe: Erreur de traitement: Erreur Stripe: You cannot confirm this PaymentIntent because it's missing a payment method. You can either update the PaymentIntent with a payment method and then confirm it again, or confirm it again directly with a payment method or ConfirmationToken.; code: payment_intent_unexpected_state; request-id: req_u3sJs1gDxjk4c2
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.PaiementService.traiterPaiement(PaiementService.java:109)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.PaymentController.lambda$5(PaymentController.java:333)
+	... 6 common frames omitted
+2025-11-18 15:07:00.640 [main] INFO  c.b.eventmanager.util.AppConfig - ✓ Propriétés d'application chargées
+2025-11-18 15:07:00.644 [main] INFO  c.b.eventmanager.Main - Démarrage de EventManager v1.0.0
+2025-11-18 15:07:00.911 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
+2025-11-18 15:07:00.963 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 15:07:00.963 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 15:07:01.456 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Application démarrée - Dimensions: 1454x734
+2025-11-18 15:07:01.456 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Titre: EventManager - Rï¿½servez vos ï¿½vï¿½nements Facilement
+2025-11-18 15:07:50.759 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:07:51.015 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:07:51.395 [JavaFX Application Thread] INFO  c.b.e.service.UtilisateurService - ✓ Authentification réussie: luc01864@gmail.com
+2025-11-18 15:07:51.396 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Connexion réussie: luc01864@gmail.com
+2025-11-18 15:07:53.002 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Navigation vers le dashboard pour l'utilisateur: luc01864@gmail.com
+2025-11-18 15:07:53.024 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Initialisation de l'interface client
+2025-11-18 15:07:53.025 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des événements client
+2025-11-18 15:07:53.106 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Initializing ClientEventsController
+2025-11-18 15:07:53.111 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loading all events from DB...
+2025-11-18 15:07:53.142 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loaded 11 events
+2025-11-18 15:07:53.151 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Events content loaded successfully
+2025-11-18 15:07:53.161 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 15:07:53.162 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 15:07:53.163 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Redirection vers le dashboard Client réussie
+2025-11-18 15:08:03.758 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des détails de l'événement: Conférence sur le climat
+2025-11-18 15:08:03.825 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Initialisation du contrôleur des détails d'événement
+2025-11-18 15:08:03.834 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Interface des détails peuplée pour l'événement: Conférence sur le climat
+2025-11-18 15:08:03.842 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Contenu des détails de l'événement chargé avec succès
+2025-11-18 15:08:07.361 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Fonction de réservation appelée pour l'événement: Conférence sur le climat
+2025-11-18 15:08:07.364 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage du formulaire de réservation pour l'événement: Conférence sur le climat
+2025-11-18 15:08:07.437 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - Initialisation du contrôleur de réservation
+2025-11-18 15:08:07.447 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Formulaire de réservation chargé avec succès
+2025-11-18 15:08:14.958 [JavaFX Application Thread] INFO  c.b.e.service.ReservationService - Création réservation pour utilisateur 15 sur événement 40
+2025-11-18 15:08:14.999 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:08:15.048 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:08:15.074 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.ReservationDAO - ✓ Réservation créée: ID 19
+2025-11-18 15:08:15.078 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:08:15.120 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:08:15.129 [JavaFX Application Thread] INFO  c.b.e.dao.ReservationDetailsDAO - ✓ Détail de réservation créé: ID 28
+2025-11-18 15:08:15.131 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:08:15.181 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:08:15.188 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - Places vendues mises à jour pour l'événement ID: 40
+2025-11-18 15:08:15.190 [JavaFX Application Thread] INFO  c.b.e.service.ReservationService - ✓ Réservation créée avec succès: ID 19, Total: 100.0€
+2025-11-18 15:08:19.683 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - Redirection vers l'interface de paiement
+2025-11-18 15:08:19.718 [JavaFX Application Thread] INFO  c.b.eventmanager.config.StripeConfig - ✓ Configuration Stripe chargée
+2025-11-18 15:08:19.728 [JavaFX Application Thread] INFO  c.b.e.service.StripePaymentService - ✓ Stripe initialisé en mode TEST
+2025-11-18 15:08:19.738 [JavaFX Application Thread] INFO  c.b.e.service.StripePaymentService - ✓ Stripe initialisé en mode TEST
+2025-11-18 15:08:19.784 [JavaFX Application Thread] INFO  c.b.e.c.client.PaymentController - Initialisation du contrôleur de paiement
+2025-11-18 15:08:19.790 [JavaFX Application Thread] INFO  c.b.e.c.client.PaymentController - ✓ Stripe configuré - API réelle disponible
+2025-11-18 15:08:19.796 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage de l'interface de paiement
+2025-11-18 15:08:19.806 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - ✓ Interface de paiement chargée
+2025-11-18 15:08:35.172 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.service.PaiementService - Début du traitement de paiement pour la réservation: 19
+2025-11-18 15:08:35.173 [ForkJoinPool.commonPool-worker-1] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:08:35.233 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:08:35.255 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.service.PaiementService - Traitement paiement Stripe - Carte test: 4242****, Montant: 100.0
+2025-11-18 15:08:38.951 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.service.StripePaymentService - ✓ Paiement Stripe testé: 100.0 € - Status: Payment succeeded (test)
+2025-11-18 15:08:38.955 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.service.PaiementService - ✓ Paiement Stripe réussi - Transaction: pi_3SUpaCF23KkRS3BR046b1rd3
+2025-11-18 15:08:38.957 [ForkJoinPool.commonPool-worker-1] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:08:39.007 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:08:39.027 [ForkJoinPool.commonPool-worker-1] INFO  c.b.eventmanager.dao.PaiementDAO - ✓ Paiement créé avec l'ID: 11
+2025-11-18 15:08:39.031 [ForkJoinPool.commonPool-worker-1] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:08:39.074 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:08:39.084 [ForkJoinPool.commonPool-worker-1] INFO  c.b.eventmanager.dao.ReservationDAO - ✓ Réservation mise à jour: ID 19
+2025-11-18 15:08:39.085 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.service.PaiementService - ✓ Réservation 19 confirmée après paiement complet
+2025-11-18 15:08:39.089 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.service.PaiementService - ✓ Paiement traité avec succès - Transaction: pi_3SUpaCF23KkRS3BR046b1rd3
+2025-11-18 15:08:39.093 [JavaFX Application Thread] INFO  c.b.e.c.client.PaymentController - ✓ Paiement réussi - Transaction: pi_3SUpaCF23KkRS3BR046b1rd3
+2025-11-18 15:08:46.930 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage de l'historique des réservations client
+2025-11-18 15:08:46.933 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Contenu temporaire des réservations affiché
+2025-11-18 15:16:34.560 [main] INFO  c.b.eventmanager.util.AppConfig - ✓ Propriétés d'application chargées
+2025-11-18 15:16:34.563 [main] INFO  c.b.eventmanager.Main - Démarrage de EventManager v1.0.0
+2025-11-18 15:16:34.838 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
+2025-11-18 15:16:34.886 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 15:16:34.886 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 15:16:35.335 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Application démarrée - Dimensions: 1454x734
+2025-11-18 15:16:35.336 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Titre: EventManager - Rï¿½servez vos ï¿½vï¿½nements Facilement
+2025-11-18 15:17:51.022 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:17:51.283 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:17:51.638 [JavaFX Application Thread] INFO  c.b.e.service.UtilisateurService - ✓ Authentification réussie: luc01864@gmail.com
+2025-11-18 15:17:51.640 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Connexion réussie: luc01864@gmail.com
+2025-11-18 15:17:52.470 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Navigation vers le dashboard pour l'utilisateur: luc01864@gmail.com
+2025-11-18 15:17:52.505 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Initialisation de l'interface client
+2025-11-18 15:17:52.507 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des événements client
+2025-11-18 15:17:52.573 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Initializing ClientEventsController
+2025-11-18 15:17:52.578 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loading all events from DB...
+2025-11-18 15:17:52.712 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loaded 11 events
+2025-11-18 15:17:52.725 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Events content loaded successfully
+2025-11-18 15:17:52.739 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 15:17:52.740 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 15:17:52.740 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Redirection vers le dashboard Client réussie
+2025-11-18 15:17:56.264 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des détails de l'événement: test
+2025-11-18 15:17:56.306 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Initialisation du contrôleur des détails d'événement
+2025-11-18 15:17:56.310 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Interface des détails peuplée pour l'événement: test
+2025-11-18 15:17:56.314 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Contenu des détails de l'événement chargé avec succès
+2025-11-18 15:18:00.769 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Retour vers la liste des événements demandé
+2025-11-18 15:18:00.770 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des événements client
+2025-11-18 15:18:00.787 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Initializing ClientEventsController
+2025-11-18 15:18:00.788 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loading all events from DB...
+2025-11-18 15:18:00.809 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loaded 11 events
+2025-11-18 15:18:00.813 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Events content loaded successfully
+2025-11-18 15:18:02.631 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des détails de l'événement: conference 
+2025-11-18 15:18:02.650 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Initialisation du contrôleur des détails d'événement
+2025-11-18 15:18:02.652 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Interface des détails peuplée pour l'événement: conference 
+2025-11-18 15:18:02.652 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Contenu des détails de l'événement chargé avec succès
+2025-11-18 15:18:04.916 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Fonction de réservation appelée pour l'événement: conference 
+2025-11-18 15:18:04.919 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage du formulaire de réservation pour l'événement: conference 
+2025-11-18 15:18:04.971 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - Initialisation du contrôleur de réservation
+2025-11-18 15:18:04.985 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Formulaire de réservation chargé avec succès
+2025-11-18 15:18:08.744 [JavaFX Application Thread] INFO  c.b.e.service.ReservationService - Création réservation pour utilisateur 15 sur événement 46
+2025-11-18 15:18:08.798 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.ReservationDAO - ✓ Réservation créée: ID 20
+2025-11-18 15:18:08.810 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:18:08.922 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:18:08.928 [JavaFX Application Thread] INFO  c.b.e.dao.ReservationDetailsDAO - ✓ Détail de réservation créé: ID 29
+2025-11-18 15:18:08.935 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:18:08.992 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:18:08.999 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - Places vendues mises à jour pour l'événement ID: 46
+2025-11-18 15:18:09.000 [JavaFX Application Thread] INFO  c.b.e.service.ReservationService - ✓ Réservation créée avec succès: ID 20, Total: 200.0€
+2025-11-18 15:18:11.113 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - Redirection vers l'interface de paiement
+2025-11-18 15:18:11.149 [JavaFX Application Thread] INFO  c.b.eventmanager.config.StripeConfig - ✓ Configuration Stripe chargée
+2025-11-18 15:18:11.150 [JavaFX Application Thread] INFO  c.b.e.service.StripePaymentService - ✓ Stripe initialisé en mode TEST
+2025-11-18 15:18:11.150 [JavaFX Application Thread] INFO  c.b.e.service.StripePaymentService - ✓ Stripe initialisé en mode TEST
+2025-11-18 15:18:11.185 [JavaFX Application Thread] INFO  c.b.e.c.client.PaymentController - Initialisation du contrôleur de paiement
+2025-11-18 15:18:11.189 [JavaFX Application Thread] INFO  c.b.e.c.client.PaymentController - ✓ Stripe configuré - API réelle disponible
+2025-11-18 15:18:11.192 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage de l'interface de paiement
+2025-11-18 15:18:11.197 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - ✓ Interface de paiement chargée
+2025-11-18 15:18:30.769 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.service.PaiementService - Début du traitement de paiement pour la réservation: 20
+2025-11-18 15:18:30.772 [ForkJoinPool.commonPool-worker-1] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:18:30.825 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:18:30.848 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.service.PaiementService - Traitement paiement Stripe - Carte test: 4242****, Montant: 200.0
+2025-11-18 15:18:32.106 [ForkJoinPool.commonPool-worker-1] ERROR c.b.e.service.StripePaymentService - ❌ Erreur lors du traitement du paiement Stripe: Sending credit card numbers directly to the Stripe API is generally unsafe. We suggest you use test tokens that map to the test card you are using, see https://stripe.com/docs/testing. To enable testing raw card data APIs, see https://support.stripe.com/questions/enabling-access-to-raw-card-data-apis.; request-id: req_hlO5HS22UXxokK
+2025-11-18 15:18:32.107 [ForkJoinPool.commonPool-worker-1] ERROR c.b.e.service.PaiementService - ❌ Erreur de validation Stripe: Erreur Stripe: Sending credit card numbers directly to the Stripe API is generally unsafe. We suggest you use test tokens that map to the test card you are using, see https://stripe.com/docs/testing. To enable testing raw card data APIs, see https://support.stripe.com/questions/enabling-access-to-raw-card-data-apis.; request-id: req_hlO5HS22UXxokK
+2025-11-18 15:18:32.109 [ForkJoinPool.commonPool-worker-1] ERROR c.b.e.service.PaiementService - Échec du traitement de paiement pour la réservation: 20
+java.lang.Exception: Erreur de validation Stripe: Erreur Stripe: Sending credit card numbers directly to the Stripe API is generally unsafe. We suggest you use test tokens that map to the test card you are using, see https://stripe.com/docs/testing. To enable testing raw card data APIs, see https://support.stripe.com/questions/enabling-access-to-raw-card-data-apis.; request-id: req_hlO5HS22UXxokK
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.PaiementService.traiterPaiementStripe(PaiementService.java:211)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.PaiementService.traiterPaiement(PaiementService.java:89)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.PaymentController.lambda$5(PaymentController.java:333)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1814)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1806)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:507)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1394)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1970)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+2025-11-18 15:18:32.116 [JavaFX Application Thread] ERROR c.b.e.c.client.PaymentController - Erreur inattendue lors du paiement
+java.lang.RuntimeException: com.bschooleventmanager.eventmanager.exception.PaiementInvalideException: Échec du traitement du paiement: Erreur de validation Stripe: Erreur Stripe: Sending credit card numbers directly to the Stripe API is generally unsafe. We suggest you use test tokens that map to the test card you are using, see https://stripe.com/docs/testing. To enable testing raw card data APIs, see https://support.stripe.com/questions/enabling-access-to-raw-card-data-apis.; request-id: req_hlO5HS22UXxokK
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.PaymentController.lambda$5(PaymentController.java:343)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1814)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1806)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:507)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1394)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1970)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: com.bschooleventmanager.eventmanager.exception.PaiementInvalideException: Échec du traitement du paiement: Erreur de validation Stripe: Erreur Stripe: Sending credit card numbers directly to the Stripe API is generally unsafe. We suggest you use test tokens that map to the test card you are using, see https://stripe.com/docs/testing. To enable testing raw card data APIs, see https://support.stripe.com/questions/enabling-access-to-raw-card-data-apis.; request-id: req_hlO5HS22UXxokK
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.PaiementService.traiterPaiement(PaiementService.java:109)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.PaymentController.lambda$5(PaymentController.java:333)
+	... 6 common frames omitted
+2025-11-18 15:22:15.568 [main] INFO  c.b.eventmanager.util.AppConfig - ✓ Propriétés d'application chargées
+2025-11-18 15:22:15.571 [main] INFO  c.b.eventmanager.Main - Démarrage de EventManager v1.0.0
+2025-11-18 15:22:15.837 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
+2025-11-18 15:22:15.909 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 15:22:15.910 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 15:22:16.395 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Application démarrée - Dimensions: 1454x734
+2025-11-18 15:22:16.395 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Titre: EventManager - Rï¿½servez vos ï¿½vï¿½nements Facilement
+2025-11-18 15:22:35.609 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:22:35.856 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:22:36.263 [JavaFX Application Thread] INFO  c.b.e.service.UtilisateurService - ✓ Authentification réussie: luc01864@gmail.com
+2025-11-18 15:22:36.265 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Connexion réussie: luc01864@gmail.com
+2025-11-18 15:22:38.258 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Navigation vers le dashboard pour l'utilisateur: luc01864@gmail.com
+2025-11-18 15:22:38.280 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Initialisation de l'interface client
+2025-11-18 15:22:38.280 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des événements client
+2025-11-18 15:22:38.358 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Initializing ClientEventsController
+2025-11-18 15:22:38.366 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loading all events from DB...
+2025-11-18 15:22:38.396 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loaded 11 events
+2025-11-18 15:22:38.431 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Events content loaded successfully
+2025-11-18 15:22:38.445 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 15:22:38.446 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 15:22:38.448 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Redirection vers le dashboard Client réussie
+2025-11-18 15:22:53.717 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des détails de l'événement: concert 1
+2025-11-18 15:22:53.770 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Initialisation du contrôleur des détails d'événement
+2025-11-18 15:22:53.773 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Interface des détails peuplée pour l'événement: concert 1
+2025-11-18 15:22:53.779 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Contenu des détails de l'événement chargé avec succès
+2025-11-18 15:22:56.686 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Fonction de réservation appelée pour l'événement: concert 1
+2025-11-18 15:22:56.686 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage du formulaire de réservation pour l'événement: concert 1
+2025-11-18 15:22:56.850 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - Initialisation du contrôleur de réservation
+2025-11-18 15:22:56.856 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Formulaire de réservation chargé avec succès
+2025-11-18 15:23:04.755 [JavaFX Application Thread] INFO  c.b.e.service.ReservationService - Création réservation pour utilisateur 15 sur événement 44
+2025-11-18 15:23:04.770 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:23:04.827 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:23:04.849 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.ReservationDAO - ✓ Réservation créée: ID 21
+2025-11-18 15:23:04.854 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:23:04.898 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:23:04.904 [JavaFX Application Thread] INFO  c.b.e.dao.ReservationDetailsDAO - ✓ Détail de réservation créé: ID 30
+2025-11-18 15:23:04.905 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:23:04.954 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:23:04.960 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - Places vendues mises à jour pour l'événement ID: 44
+2025-11-18 15:23:04.961 [JavaFX Application Thread] INFO  c.b.e.service.ReservationService - ✓ Réservation créée avec succès: ID 21, Total: 50.0€
+2025-11-18 15:23:06.245 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - Redirection vers l'interface de paiement
+2025-11-18 15:23:06.356 [JavaFX Application Thread] INFO  c.b.eventmanager.config.StripeConfig - ✓ Configuration Stripe chargée
+2025-11-18 15:23:06.357 [JavaFX Application Thread] INFO  c.b.e.service.StripePaymentService - ✓ Stripe initialisé en mode TEST
+2025-11-18 15:23:06.358 [JavaFX Application Thread] INFO  c.b.e.service.StripePaymentService - ✓ Stripe initialisé en mode TEST
+2025-11-18 15:23:06.392 [JavaFX Application Thread] INFO  c.b.e.c.client.PaymentController - Initialisation du contrôleur de paiement
+2025-11-18 15:23:06.395 [JavaFX Application Thread] ERROR c.b.e.c.client.ReservationController - Erreur lors du chargement de l'interface de paiement
+javafx.fxml.LoadException: 
+/R:/Bschool/Coding%20Factory/M1/Java/Projet/EventManager/target/classes/fxml/client/payment.fxml
 
-	at javafx.fxml/javafx.fxml.FXMLLoader.constructLoadException(FXMLLoader.java:2710)
-	at javafx.fxml/javafx.fxml.FXMLLoader.createElement(FXMLLoader.java:2912)
-	at javafx.fxml/javafx.fxml.FXMLLoader.processStartElement(FXMLLoader.java:2842)
-	at javafx.fxml/javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2641)
+	at javafx.fxml/javafx.fxml.FXMLLoader.constructLoadException(FXMLLoader.java:2714)
+	at javafx.fxml/javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2684)
 	at javafx.fxml/javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2555)
 	at javafx.fxml/javafx.fxml.FXMLLoader.load(FXMLLoader.java:2523)
-	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.organisateur.OrganisateurDashboardController.loadCreateEventContent(OrganisateurDashboardController.java:289)
-	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.organisateur.OrganisateurDashboardController.showCreateEvent(OrganisateurDashboardController.java:109)
-	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.organisateur.OrganisateurDashboardContentController.lambda$2(OrganisateurDashboardContentController.java:71)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.ReservationController.redirectToPayment(ReservationController.java:481)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.ReservationController.createReservation(ReservationController.java:289)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.ReservationController.handleConfirmReservation(ReservationController.java:239)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at com.sun.javafx.reflect.Trampoline.invoke(MethodUtil.java:77)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at javafx.base/com.sun.javafx.reflect.MethodUtil.invoke(MethodUtil.java:275)
+	at javafx.fxml/com.sun.javafx.fxml.MethodHelper.invoke(MethodHelper.java:84)
+	at javafx.fxml/javafx.fxml.FXMLLoader$MethodHandler.invoke(FXMLLoader.java:1854)
+	at javafx.fxml/javafx.fxml.FXMLLoader$ControllerMethodEventHandler.handle(FXMLLoader.java:1724)
 	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86)
 	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:234)
 	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191)
 	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59)
 	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
 	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
 	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
 	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
@@ -142,6 +595,10 @@ javafx.fxml.LoadException: Integer is not a valid type.
 	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
 	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
 	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
 	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74)
 	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54)
 	at javafx.base/javafx.event.Event.fireEvent(Event.java:198)
@@ -159,60 +616,237 @@ javafx.fxml.LoadException: Integer is not a valid type.
 	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
 	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:184)
 	at java.base/java.lang.Thread.run(Thread.java:1447)
-2025-11-18 10:52:06.720 [main] INFO  c.b.eventmanager.util.AppConfig - ✓ Propriétés d'application chargées
-2025-11-18 10:52:06.724 [main] INFO  c.b.eventmanager.Main - Démarrage de EventManager v1.0.0
-2025-11-18 10:52:07.067 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
-2025-11-18 10:52:07.119 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
-2025-11-18 10:52:07.120 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
-2025-11-18 10:52:07.606 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Application démarrée - Dimensions: 1454x734
-2025-11-18 10:52:07.606 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Titre: EventManager - Rï¿½servez vos ï¿½vï¿½nements Facilement
-2025-11-18 10:52:19.002 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
-2025-11-18 10:52:19.306 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
-2025-11-18 10:52:19.673 [JavaFX Application Thread] INFO  c.b.e.service.UtilisateurService - ✓ Authentification réussie: charbelsnn@gmail.com
-2025-11-18 10:52:19.675 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Connexion réussie: charbelsnn@gmail.com
-2025-11-18 10:52:21.076 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Navigation vers le dashboard pour l'utilisateur: charbelsnn@gmail.com
-2025-11-18 10:52:21.103 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Initialisation de l'interface organisateur
-2025-11-18 10:52:21.106 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage du dashboard organisateur
-2025-11-18 10:52:21.238 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
-2025-11-18 10:52:21.239 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
-2025-11-18 10:52:21.240 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Redirection vers le dashboard Organisateur réussie
-2025-11-18 10:52:23.264 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage de l'interface de création d'événement
-2025-11-18 10:52:23.267 [JavaFX Application Thread] WARN  c.b.e.c.o.OrganisateurDashboardController - Onglet inconnu: 
-2025-11-18 10:53:24.873 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
-2025-11-18 10:53:24.970 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
-2025-11-18 10:53:24.995 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - ✓ Événement créé: Concert Test
-2025-11-18 10:53:24.998 [JavaFX Application Thread] INFO  c.b.e.service.EvenementService - ✓ Concert créé: Concert Test
-2025-11-18 10:53:26.408 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage du dashboard organisateur
-2025-11-18 10:53:26.456 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
-2025-11-18 10:53:26.546 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
-2025-11-18 10:53:31.278 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage de l'interface de création d'événement
-2025-11-18 10:53:31.279 [JavaFX Application Thread] WARN  c.b.e.c.o.OrganisateurDashboardController - Onglet inconnu: 
-2025-11-18 10:54:34.057 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
-2025-11-18 10:54:34.131 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
-2025-11-18 10:54:34.143 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - ✓ Événement SPECTACLE créé: Conférence du climat
-2025-11-18 10:54:34.144 [JavaFX Application Thread] INFO  c.b.e.service.EvenementService - ✓ Conférence créée: Conférence du climat
-2025-11-18 10:54:36.347 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage du dashboard organisateur
-2025-11-18 10:54:42.758 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage de l'interface de création d'événement
-2025-11-18 10:54:42.842 [JavaFX Application Thread] WARN  c.b.e.c.o.OrganisateurDashboardController - Onglet inconnu: 
-2025-11-18 10:55:40.144 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
-2025-11-18 10:55:40.197 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
-2025-11-18 10:55:40.206 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - ✓ Événement SPECTACLE créé: test
-2025-11-18 10:55:40.207 [JavaFX Application Thread] INFO  c.b.e.service.EvenementService - ✓ Spectacle créé: test
-2025-11-18 10:55:42.296 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage du dashboard organisateur
-2025-11-18 11:05:28.953 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Déconnexion de l'organisateur
-2025-11-18 11:05:28.968 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
-2025-11-18 11:05:28.974 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - ✓ Redirection vers la connexion réussie
-2025-11-18 11:05:50.036 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
-2025-11-18 11:05:50.083 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
-2025-11-18 11:05:50.443 [JavaFX Application Thread] INFO  c.b.e.service.UtilisateurService - ✓ Authentification réussie: luc01864@gmail.com
-2025-11-18 11:05:50.445 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Connexion réussie: luc01864@gmail.com
-2025-11-18 11:05:51.507 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Navigation vers le dashboard pour l'utilisateur: luc01864@gmail.com
-2025-11-18 11:05:51.539 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Initialisation de l'interface client
-2025-11-18 11:05:51.541 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des événements client
-2025-11-18 11:05:51.639 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Initializing ClientEventsController
-2025-11-18 11:05:51.646 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loading all events from DB...
-2025-11-18 11:05:51.660 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loaded 5 events
-2025-11-18 11:05:51.675 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Events content loaded successfully
-2025-11-18 11:05:51.683 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
-2025-11-18 11:05:51.685 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
-2025-11-18 11:05:51.691 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Redirection vers le dashboard Client réussie
+Caused by: java.lang.reflect.InvocationTargetException: null
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:110)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at com.sun.javafx.reflect.Trampoline.invoke(MethodUtil.java:77)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at javafx.base/com.sun.javafx.reflect.MethodUtil.invoke(MethodUtil.java:275)
+	at javafx.fxml/com.sun.javafx.fxml.MethodHelper.invoke(MethodHelper.java:84)
+	at javafx.fxml/javafx.fxml.FXMLLoader.loadImpl(FXMLLoader.java:2680)
+	... 67 common frames omitted
+Caused by: java.lang.ClassCastException: class javafx.scene.layout.GridPane cannot be cast to class javafx.scene.layout.VBox (javafx.scene.layout.GridPane and javafx.scene.layout.VBox are in module javafx.graphics of loader 'app')
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.PaymentController.setupTestCardButton(PaymentController.java:185)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.PaymentController.initializeExpirationComboBoxes(PaymentController.java:170)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.PaymentController.initialize(PaymentController.java:99)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	... 74 common frames omitted
+2025-11-18 15:23:09.252 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des événements client
+2025-11-18 15:23:09.266 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Initializing ClientEventsController
+2025-11-18 15:23:09.267 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loading all events from DB...
+2025-11-18 15:23:09.267 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:23:09.319 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:23:09.327 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loaded 11 events
+2025-11-18 15:23:09.330 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Events content loaded successfully
+2025-11-18 15:28:35.306 [main] INFO  c.b.eventmanager.util.AppConfig - ✓ Propriétés d'application chargées
+2025-11-18 15:28:35.310 [main] INFO  c.b.eventmanager.Main - Démarrage de EventManager v1.0.0
+2025-11-18 15:28:35.714 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
+2025-11-18 15:28:35.789 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 15:28:35.790 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 15:28:36.498 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Application démarrée - Dimensions: 1454x734
+2025-11-18 15:28:36.498 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Titre: EventManager - Rï¿½servez vos ï¿½vï¿½nements Facilement
+2025-11-18 15:31:32.309 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:31:33.740 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:31:34.132 [JavaFX Application Thread] INFO  c.b.e.service.UtilisateurService - ✓ Authentification réussie: luc01864@gmail.com
+2025-11-18 15:31:34.135 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Connexion réussie: luc01864@gmail.com
+2025-11-18 15:31:38.186 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Navigation vers le dashboard pour l'utilisateur: luc01864@gmail.com
+2025-11-18 15:31:38.239 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Initialisation de l'interface client
+2025-11-18 15:31:38.242 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des événements client
+2025-11-18 15:31:38.373 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Initializing ClientEventsController
+2025-11-18 15:31:38.385 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loading all events from DB...
+2025-11-18 15:31:38.495 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loaded 11 events
+2025-11-18 15:31:38.517 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Events content loaded successfully
+2025-11-18 15:31:38.531 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 15:31:38.531 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 15:31:38.532 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Redirection vers le dashboard Client réussie
+2025-11-18 15:31:41.997 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des détails de l'événement: concert 1
+2025-11-18 15:31:42.045 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Initialisation du contrôleur des détails d'événement
+2025-11-18 15:31:42.050 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Interface des détails peuplée pour l'événement: concert 1
+2025-11-18 15:31:42.056 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Contenu des détails de l'événement chargé avec succès
+2025-11-18 15:31:45.722 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Fonction de réservation appelée pour l'événement: concert 1
+2025-11-18 15:31:45.723 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage du formulaire de réservation pour l'événement: concert 1
+2025-11-18 15:31:45.792 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - Initialisation du contrôleur de réservation
+2025-11-18 15:31:45.799 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Formulaire de réservation chargé avec succès
+2025-11-18 15:31:51.593 [JavaFX Application Thread] INFO  c.b.e.service.ReservationService - Création réservation pour utilisateur 15 sur événement 44
+2025-11-18 15:31:51.628 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.ReservationDAO - ✓ Réservation créée: ID 22
+2025-11-18 15:31:51.638 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:31:51.684 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:31:51.691 [JavaFX Application Thread] INFO  c.b.e.dao.ReservationDetailsDAO - ✓ Détail de réservation créé: ID 31
+2025-11-18 15:31:51.693 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:31:51.742 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:31:51.749 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - Places vendues mises à jour pour l'événement ID: 44
+2025-11-18 15:31:51.749 [JavaFX Application Thread] INFO  c.b.e.service.ReservationService - ✓ Réservation créée avec succès: ID 22, Total: 100.0€
+2025-11-18 15:31:53.334 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - Redirection vers l'interface de paiement
+2025-11-18 15:31:53.365 [JavaFX Application Thread] INFO  c.b.eventmanager.config.StripeConfig - ✓ Configuration Stripe chargée
+2025-11-18 15:31:53.367 [JavaFX Application Thread] INFO  c.b.e.service.StripePaymentService - ✓ Stripe initialisé en mode TEST
+2025-11-18 15:31:53.367 [JavaFX Application Thread] INFO  c.b.e.service.StripePaymentService - ✓ Stripe initialisé en mode TEST
+2025-11-18 15:31:53.396 [JavaFX Application Thread] INFO  c.b.e.c.client.PaymentController - Initialisation du contrôleur de paiement
+2025-11-18 15:31:53.399 [JavaFX Application Thread] INFO  c.b.e.c.client.PaymentController - ✓ Stripe configuré - API réelle disponible
+2025-11-18 15:31:53.401 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage de l'interface de paiement
+2025-11-18 15:31:53.402 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - ✓ Interface de paiement chargée
+2025-11-18 15:32:22.563 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.service.PaiementService - Début du traitement de paiement pour la réservation: 22
+2025-11-18 15:32:22.564 [ForkJoinPool.commonPool-worker-1] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:32:22.651 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:32:22.702 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.service.PaiementService - Traitement paiement Stripe - Carte test: 4242****, Montant: 100.0
+2025-11-18 15:32:23.949 [ForkJoinPool.commonPool-worker-1] ERROR c.b.e.service.StripePaymentService - ❌ Erreur lors du traitement du paiement Stripe: This PaymentIntent is configured to accept payment methods enabled in your Dashboard. Because some of these payment methods might redirect your customer off of your page, you must provide a `return_url`. If you don't want to accept redirect-based payment methods, set `automatic_payment_methods[enabled]` to `true` and `automatic_payment_methods[allow_redirects]` to `never` when creating Setup Intents and Payment Intents.; request-id: req_ZEXIN2HkG6OKZw
+2025-11-18 15:32:23.951 [ForkJoinPool.commonPool-worker-1] ERROR c.b.e.service.PaiementService - ❌ Erreur de validation Stripe: Erreur Stripe: This PaymentIntent is configured to accept payment methods enabled in your Dashboard. Because some of these payment methods might redirect your customer off of your page, you must provide a `return_url`. If you don't want to accept redirect-based payment methods, set `automatic_payment_methods[enabled]` to `true` and `automatic_payment_methods[allow_redirects]` to `never` when creating Setup Intents and Payment Intents.; request-id: req_ZEXIN2HkG6OKZw
+2025-11-18 15:32:23.953 [ForkJoinPool.commonPool-worker-1] ERROR c.b.e.service.PaiementService - Échec du traitement de paiement pour la réservation: 22
+java.lang.Exception: Erreur de validation Stripe: Erreur Stripe: This PaymentIntent is configured to accept payment methods enabled in your Dashboard. Because some of these payment methods might redirect your customer off of your page, you must provide a `return_url`. If you don't want to accept redirect-based payment methods, set `automatic_payment_methods[enabled]` to `true` and `automatic_payment_methods[allow_redirects]` to `never` when creating Setup Intents and Payment Intents.; request-id: req_ZEXIN2HkG6OKZw
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.PaiementService.traiterPaiementStripe(PaiementService.java:211)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.PaiementService.traiterPaiement(PaiementService.java:89)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.PaymentController.lambda$6(PaymentController.java:372)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1814)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1806)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:507)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1394)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1970)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+2025-11-18 15:32:23.962 [JavaFX Application Thread] ERROR c.b.e.c.client.PaymentController - Erreur inattendue lors du paiement
+java.lang.RuntimeException: com.bschooleventmanager.eventmanager.exception.PaiementInvalideException: Échec du traitement du paiement: Erreur de validation Stripe: Erreur Stripe: This PaymentIntent is configured to accept payment methods enabled in your Dashboard. Because some of these payment methods might redirect your customer off of your page, you must provide a `return_url`. If you don't want to accept redirect-based payment methods, set `automatic_payment_methods[enabled]` to `true` and `automatic_payment_methods[allow_redirects]` to `never` when creating Setup Intents and Payment Intents.; request-id: req_ZEXIN2HkG6OKZw
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.PaymentController.lambda$6(PaymentController.java:382)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1814)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1806)
+	at java.base/java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:507)
+	at java.base/java.util.concurrent.ForkJoinPool$WorkQueue.topLevelExec(ForkJoinPool.java:1394)
+	at java.base/java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1970)
+	at java.base/java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:187)
+Caused by: com.bschooleventmanager.eventmanager.exception.PaiementInvalideException: Échec du traitement du paiement: Erreur de validation Stripe: Erreur Stripe: This PaymentIntent is configured to accept payment methods enabled in your Dashboard. Because some of these payment methods might redirect your customer off of your page, you must provide a `return_url`. If you don't want to accept redirect-based payment methods, set `automatic_payment_methods[enabled]` to `true` and `automatic_payment_methods[allow_redirects]` to `never` when creating Setup Intents and Payment Intents.; request-id: req_ZEXIN2HkG6OKZw
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.PaiementService.traiterPaiement(PaiementService.java:109)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.client.PaymentController.lambda$6(PaymentController.java:372)
+	... 6 common frames omitted
+2025-11-18 15:34:33.158 [main] INFO  c.b.eventmanager.util.AppConfig - ✓ Propriétés d'application chargées
+2025-11-18 15:34:33.162 [main] INFO  c.b.eventmanager.Main - Démarrage de EventManager v1.0.0
+2025-11-18 15:34:33.427 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
+2025-11-18 15:34:33.478 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 15:34:33.478 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 15:34:33.975 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Application démarrée - Dimensions: 1454x734
+2025-11-18 15:34:33.976 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Titre: EventManager - Rï¿½servez vos ï¿½vï¿½nements Facilement
+2025-11-18 15:34:47.941 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:34:48.213 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:34:48.579 [JavaFX Application Thread] INFO  c.b.e.service.UtilisateurService - ✓ Authentification réussie: luc01864@gmail.com
+2025-11-18 15:34:48.581 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Connexion réussie: luc01864@gmail.com
+2025-11-18 15:34:49.503 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Navigation vers le dashboard pour l'utilisateur: luc01864@gmail.com
+2025-11-18 15:34:49.528 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Initialisation de l'interface client
+2025-11-18 15:34:49.530 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des événements client
+2025-11-18 15:34:49.593 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Initializing ClientEventsController
+2025-11-18 15:34:49.598 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loading all events from DB...
+2025-11-18 15:34:49.626 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loaded 11 events
+2025-11-18 15:34:49.660 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Events content loaded successfully
+2025-11-18 15:34:49.679 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-18 15:34:49.683 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-18 15:34:49.685 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Redirection vers le dashboard Client réussie
+2025-11-18 15:34:51.450 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des détails de l'événement: test
+2025-11-18 15:34:51.500 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Initialisation du contrôleur des détails d'événement
+2025-11-18 15:34:51.504 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Interface des détails peuplée pour l'événement: test
+2025-11-18 15:34:51.508 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Contenu des détails de l'événement chargé avec succès
+2025-11-18 15:34:54.174 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Retour vers la liste des événements demandé
+2025-11-18 15:34:54.176 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des événements client
+2025-11-18 15:34:54.191 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Initializing ClientEventsController
+2025-11-18 15:34:54.193 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loading all events from DB...
+2025-11-18 15:34:54.214 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loaded 11 events
+2025-11-18 15:34:54.234 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Events content loaded successfully
+2025-11-18 15:34:56.218 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des détails de l'événement: conference 
+2025-11-18 15:34:56.234 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Initialisation du contrôleur des détails d'événement
+2025-11-18 15:34:56.234 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Interface des détails peuplée pour l'événement: conference 
+2025-11-18 15:34:56.235 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Contenu des détails de l'événement chargé avec succès
+2025-11-18 15:35:00.270 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Fonction de réservation appelée pour l'événement: conference 
+2025-11-18 15:35:00.270 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage du formulaire de réservation pour l'événement: conference 
+2025-11-18 15:35:00.318 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - Initialisation du contrôleur de réservation
+2025-11-18 15:35:00.322 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Formulaire de réservation chargé avec succès
+2025-11-18 15:35:05.052 [JavaFX Application Thread] INFO  c.b.e.service.ReservationService - Création réservation pour utilisateur 15 sur événement 46
+2025-11-18 15:35:05.083 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.ReservationDAO - ✓ Réservation créée: ID 23
+2025-11-18 15:35:05.091 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:35:05.134 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:35:05.140 [JavaFX Application Thread] INFO  c.b.e.dao.ReservationDetailsDAO - ✓ Détail de réservation créé: ID 32
+2025-11-18 15:35:05.141 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:35:05.182 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:35:05.189 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - Places vendues mises à jour pour l'événement ID: 46
+2025-11-18 15:35:05.190 [JavaFX Application Thread] INFO  c.b.e.service.ReservationService - ✓ Réservation créée avec succès: ID 23, Total: 200.0€
+2025-11-18 15:35:07.161 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - Redirection vers l'interface de paiement
+2025-11-18 15:35:07.187 [JavaFX Application Thread] INFO  c.b.eventmanager.config.StripeConfig - ✓ Configuration Stripe chargée
+2025-11-18 15:35:07.189 [JavaFX Application Thread] INFO  c.b.e.service.StripePaymentService - ✓ Stripe initialisé en mode TEST
+2025-11-18 15:35:07.189 [JavaFX Application Thread] INFO  c.b.e.service.StripePaymentService - ✓ Stripe initialisé en mode TEST
+2025-11-18 15:35:07.221 [JavaFX Application Thread] INFO  c.b.e.c.client.PaymentController - Initialisation du contrôleur de paiement
+2025-11-18 15:35:07.224 [JavaFX Application Thread] INFO  c.b.e.c.client.PaymentController - ✓ Stripe configuré - API réelle disponible
+2025-11-18 15:35:07.227 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage de l'interface de paiement
+2025-11-18 15:35:07.228 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - ✓ Interface de paiement chargée
+2025-11-18 15:35:17.807 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.service.PaiementService - Début du traitement de paiement pour la réservation: 23
+2025-11-18 15:35:17.808 [ForkJoinPool.commonPool-worker-1] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:35:17.864 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:35:17.883 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.service.PaiementService - Traitement paiement Stripe - Carte test: 4242****, Montant: 200.0
+2025-11-18 15:35:19.565 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.service.StripePaymentService - ✓ Paiement Stripe avec token: 200.0 € - Status: succeeded - Transaction: pi_3SUq02F23KkRS3BR1h0LigLq
+2025-11-18 15:35:19.568 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.service.PaiementService - ✓ Paiement Stripe réussi - Transaction: pi_3SUq02F23KkRS3BR1h0LigLq
+2025-11-18 15:35:19.569 [ForkJoinPool.commonPool-worker-1] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:35:19.614 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:35:19.630 [ForkJoinPool.commonPool-worker-1] INFO  c.b.eventmanager.dao.PaiementDAO - ✓ Paiement créé avec l'ID: 12
+2025-11-18 15:35:19.631 [ForkJoinPool.commonPool-worker-1] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:35:19.679 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:35:19.686 [ForkJoinPool.commonPool-worker-1] INFO  c.b.eventmanager.dao.ReservationDAO - ✓ Réservation mise à jour: ID 23
+2025-11-18 15:35:19.687 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.service.PaiementService - ✓ Réservation 23 confirmée après paiement complet
+2025-11-18 15:35:19.687 [ForkJoinPool.commonPool-worker-1] INFO  c.b.e.service.PaiementService - ✓ Paiement traité avec succès - Transaction: pi_3SUq02F23KkRS3BR1h0LigLq
+2025-11-18 15:35:19.689 [JavaFX Application Thread] INFO  c.b.e.c.client.PaymentController - ✓ Paiement réussi - Transaction: pi_3SUq02F23KkRS3BR1h0LigLq
+2025-11-18 15:35:22.522 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage de l'historique des réservations client
+2025-11-18 15:35:22.525 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Contenu temporaire des réservations affiché
+2025-11-18 15:36:16.807 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des événements client
+2025-11-18 15:36:16.826 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Initializing ClientEventsController
+2025-11-18 15:36:16.829 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loading all events from DB...
+2025-11-18 15:36:16.832 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:36:16.890 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:36:16.912 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loaded 11 events
+2025-11-18 15:36:16.924 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Events content loaded successfully
+2025-11-18 15:36:19.112 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des détails de l'événement: concert revisit
+2025-11-18 15:36:19.127 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Initialisation du contrôleur des détails d'événement
+2025-11-18 15:36:19.128 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Interface des détails peuplée pour l'événement: concert revisit
+2025-11-18 15:36:19.129 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Contenu des détails de l'événement chargé avec succès
+2025-11-18 15:36:21.502 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Fonction de réservation appelée pour l'événement: concert revisit
+2025-11-18 15:36:21.503 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage du formulaire de réservation pour l'événement: concert revisit
+2025-11-18 15:36:21.535 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - Initialisation du contrôleur de réservation
+2025-11-18 15:36:21.542 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Formulaire de réservation chargé avec succès
+2025-11-18 15:36:27.318 [JavaFX Application Thread] INFO  c.b.e.service.ReservationService - Création réservation pour utilisateur 15 sur événement 47
+2025-11-18 15:36:27.349 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.ReservationDAO - ✓ Réservation créée: ID 24
+2025-11-18 15:36:27.350 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:36:27.396 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:36:27.404 [JavaFX Application Thread] INFO  c.b.e.dao.ReservationDetailsDAO - ✓ Détail de réservation créé: ID 33
+2025-11-18 15:36:27.406 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:36:27.453 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:36:27.458 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - Places vendues mises à jour pour l'événement ID: 47
+2025-11-18 15:36:27.459 [JavaFX Application Thread] INFO  c.b.e.service.ReservationService - ✓ Réservation créée avec succès: ID 24, Total: 100.0€
+2025-11-18 15:36:29.000 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - Redirection vers l'interface de paiement
+2025-11-18 15:36:29.003 [JavaFX Application Thread] INFO  c.b.e.service.StripePaymentService - ✓ Stripe initialisé en mode TEST
+2025-11-18 15:36:29.005 [JavaFX Application Thread] INFO  c.b.e.service.StripePaymentService - ✓ Stripe initialisé en mode TEST
+2025-11-18 15:36:29.031 [JavaFX Application Thread] INFO  c.b.e.c.client.PaymentController - Initialisation du contrôleur de paiement
+2025-11-18 15:36:29.035 [JavaFX Application Thread] INFO  c.b.e.c.client.PaymentController - ✓ Stripe configuré - API réelle disponible
+2025-11-18 15:36:29.039 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage de l'interface de paiement
+2025-11-18 15:36:29.040 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - ✓ Interface de paiement chargée
+2025-11-18 15:36:42.387 [ForkJoinPool.commonPool-worker-2] INFO  c.b.e.service.PaiementService - Début du traitement de paiement pour la réservation: 24
+2025-11-18 15:36:42.388 [ForkJoinPool.commonPool-worker-2] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:36:42.455 [ForkJoinPool.commonPool-worker-2] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:36:42.475 [ForkJoinPool.commonPool-worker-2] INFO  c.b.e.service.PaiementService - Traitement paiement carte - Montant: 100.0
+2025-11-18 15:36:43.480 [ForkJoinPool.commonPool-worker-2] INFO  c.b.e.service.PaiementService - ✓ Paiement carte simulé avec succès - Transaction: card_e0bdb769-c55
+2025-11-18 15:36:43.480 [ForkJoinPool.commonPool-worker-2] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:36:43.534 [ForkJoinPool.commonPool-worker-2] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:36:43.542 [ForkJoinPool.commonPool-worker-2] INFO  c.b.eventmanager.dao.PaiementDAO - ✓ Paiement créé avec l'ID: 13
+2025-11-18 15:36:43.544 [ForkJoinPool.commonPool-worker-2] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:36:43.600 [ForkJoinPool.commonPool-worker-2] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:36:43.607 [ForkJoinPool.commonPool-worker-2] INFO  c.b.eventmanager.dao.ReservationDAO - ✓ Réservation mise à jour: ID 24
+2025-11-18 15:36:43.609 [ForkJoinPool.commonPool-worker-2] INFO  c.b.e.service.PaiementService - ✓ Réservation 24 confirmée après paiement complet
+2025-11-18 15:36:43.611 [ForkJoinPool.commonPool-worker-2] INFO  c.b.e.service.PaiementService - ✓ Paiement traité avec succès - Transaction: card_e0bdb769-c55
+2025-11-18 15:36:43.613 [JavaFX Application Thread] INFO  c.b.e.c.client.PaymentController - ✓ Paiement réussi - Transaction: card_e0bdb769-c55
+2025-11-18 15:36:48.130 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage de l'historique des réservations client
+2025-11-18 15:36:48.131 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Contenu temporaire des réservations affiché
+2025-11-18 15:37:12.523 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des événements client
+2025-11-18 15:37:12.532 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Initializing ClientEventsController
+2025-11-18 15:37:12.532 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loading all events from DB...
+2025-11-18 15:37:12.533 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-18 15:37:12.590 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-18 15:37:12.600 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventsController - Loaded 11 events
+2025-11-18 15:37:12.617 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Events content loaded successfully
+2025-11-18 15:37:15.001 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage des détails de l'événement: test
+2025-11-18 15:37:15.013 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Initialisation du contrôleur des détails d'événement
+2025-11-18 15:37:15.014 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Interface des détails peuplée pour l'événement: test
+2025-11-18 15:37:15.014 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Contenu des détails de l'événement chargé avec succès
+2025-11-18 15:37:17.995 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientEventDetailsController - Fonction de réservation appelée pour l'événement: test
+2025-11-18 15:37:17.996 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Affichage du formulaire de réservation pour l'événement: test
+2025-11-18 15:37:18.005 [JavaFX Application Thread] INFO  c.b.e.c.client.ReservationController - Initialisation du contrôleur de réservation
+2025-11-18 15:37:18.006 [JavaFX Application Thread] INFO  c.b.e.c.c.ClientDashboardController - Formulaire de réservation chargé avec succès

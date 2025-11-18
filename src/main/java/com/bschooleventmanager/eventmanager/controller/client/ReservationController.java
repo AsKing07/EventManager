@@ -9,12 +9,14 @@ import com.bschooleventmanager.eventmanager.util.NotificationUtils;
 import com.bschooleventmanager.eventmanager.util.SessionManager;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -51,6 +53,7 @@ public class ReservationController {
 
     // Données
     private Evenement currentEvent;
+    private com.bschooleventmanager.eventmanager.model.Reservation lastCreatedReservation;
     private ClientDashboardController dashboardController;
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy à HH:mm");
 
@@ -198,8 +201,14 @@ public class ReservationController {
 
             totalLabel.setText(String.format("%.2f €", total));
 
-            // Activer/désactiver le bouton de confirmation
-            confirmButton.setDisable(total == 0.0);
+            // Calculer le nombre total de billets sélectionnés
+            int totalQuantite = stdQty + vipQty + premQty;
+
+            // Activer le bouton de confirmation si au moins une place est sélectionnée.
+            // Dans le cas de billets gratuits (total == 0.0), on veut permettre la confirmation
+            // tant que totalQuantite > 0.
+            boolean disableConfirm = (total == 0.0 && totalQuantite == 0);
+            confirmButton.setDisable(disableConfirm);
 
         } catch (Exception e) {
             logger.error("Erreur lors du calcul du total", e);
@@ -269,7 +278,7 @@ public class ReservationController {
         int premQty = premiumSpinner.getValue();
         
         // Utiliser le service pour créer la réservation
-        reservationService.creerReservation(
+        lastCreatedReservation = reservationService.creerReservation(
             user, 
             currentEvent,
             stdQty,
@@ -278,6 +287,7 @@ public class ReservationController {
             payNowRadio.isSelected()
         );
 
+        
         // Afficher la confirmation et rediriger selon le choix de paiement
         if (payNowRadio.isSelected()) {
             // Paiement immédiat - rediriger vers l'interface de paiement
@@ -471,15 +481,39 @@ public class ReservationController {
         logger.info("Redirection vers l'interface de paiement");
         
         if (dashboardController != null) {
-            // Interface de paiement à implémenter - pour l'instant simulation
-            Alert paymentAlert = new Alert(Alert.AlertType.INFORMATION);
-            paymentAlert.setTitle("Interface de paiement");
-            paymentAlert.setHeaderText("Redirection vers le paiement");
-            paymentAlert.setContentText("L'interface de paiement sera implémentée prochainement.\nVotre réservation est en attente de paiement.");
-            
-            paymentAlert.showAndWait().ifPresent(response -> 
-                dashboardController.showEvents()
-            );
+            try {
+                // Charger l'interface de paiement
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/client/payment.fxml"));
+                ScrollPane paymentRoot = loader.load();
+                
+                // Récupérer le contrôleur
+                PaymentController paymentController = loader.getController();
+                paymentController.setDashboardController(dashboardController);
+                
+                // Calculer le montant total
+                BigDecimal totalAmount = calculateTotalAmount();
+                
+                // Passer les données de la réservation créée et l'événement
+                paymentController.setReservationData(lastCreatedReservation, currentEvent, totalAmount);
+                
+                // Remplacer le contenu du dashboard
+                dashboardController.showPaymentInterface(paymentRoot);
+                
+                logger.info("✓ Interface de paiement chargée");
+                
+            } catch (IOException e) {
+                logger.error("Erreur lors du chargement de l'interface de paiement", e);
+                
+                // Fallback vers une simulation
+                Alert paymentAlert = new Alert(Alert.AlertType.INFORMATION);
+                paymentAlert.setTitle("Interface de paiement");
+                paymentAlert.setHeaderText("Redirection vers le paiement");
+                paymentAlert.setContentText("L'interface de paiement temporaire.\nVotre réservation est en attente de paiement.");
+                
+                paymentAlert.showAndWait().ifPresent(response -> 
+                    dashboardController.showEvents()
+                );
+            }
         }
     }
 
@@ -493,5 +527,26 @@ public class ReservationController {
             // Rediriger vers l'onglet réservations du dashboard
             dashboardController.showReservations();
         }
+    }
+
+    /**
+     * Calcule le montant total de la réservation actuelle
+     */
+    private BigDecimal calculateTotalAmount() {
+        double total = 0.0;
+
+        if (standardSpinner != null && standardSpinner.getValue() > 0) {
+            total += standardSpinner.getValue() * currentEvent.getPrixStandard().doubleValue();
+        }
+        
+        if (vipSpinner != null && vipSpinner.getValue() > 0) {
+            total += vipSpinner.getValue() * currentEvent.getPrixVip().doubleValue();
+        }
+        
+        if (premiumSpinner != null && premiumSpinner.getValue() > 0) {
+            total += premiumSpinner.getValue() * currentEvent.getPrixPremium().doubleValue();
+        }
+
+        return BigDecimal.valueOf(total);
     }
 }
