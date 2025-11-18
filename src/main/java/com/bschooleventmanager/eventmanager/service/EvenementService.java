@@ -4,19 +4,23 @@ import com.bschooleventmanager.eventmanager.dao.ConcertDAO;
 import com.bschooleventmanager.eventmanager.dao.ConferenceDAO;
 import com.bschooleventmanager.eventmanager.dao.EvenementDAO;
 import com.bschooleventmanager.eventmanager.dao.SpectacleDAO;
-import com.bschooleventmanager.eventmanager.exception.BusinessException;
-import com.bschooleventmanager.eventmanager.exception.DatabaseException;
-import com.bschooleventmanager.eventmanager.model.Concert;
-import com.bschooleventmanager.eventmanager.model.Conference;
-import com.bschooleventmanager.eventmanager.model.Evenement;
-import com.bschooleventmanager.eventmanager.model.Spectacle;
-import com.bschooleventmanager.eventmanager.model.enums.StatutEvenement;
+import com.bschooleventmanager.eventmanager.model.*;
 import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
 import com.bschooleventmanager.eventmanager.util.NotificationUtils;
+import com.bschooleventmanager.eventmanager.model.enums.StatutEvenement;
+import com.bschooleventmanager.eventmanager.exception.BusinessException;
+import com.bschooleventmanager.eventmanager.exception.DatabaseException;
+import com.bschooleventmanager.eventmanager.model.*;
+import com.bschooleventmanager.eventmanager.model.enums.StatutEvenement;
+import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 public class EvenementService {
@@ -33,7 +37,7 @@ public class EvenementService {
         return list;
     }
 
-    /**
+       /**
      * Supprime un événement identifié par son identifiant.
      *
      * <p>Cette méthode loggue l'appel puis délègue la suppression au DAO
@@ -49,10 +53,11 @@ public class EvenementService {
 
     }
 
+
     /**
      * Créer un nouveau concert 
      */
-    public Concert creerConcert(Concert concert) throws BusinessException {
+    public static Concert creerConcert(Concert concert) throws BusinessException {
         try {
             // Validation des données
             validerDonneesEvenement(concert.getNom(), concert.getDateEvenement(), concert.getLieu(), concert.getPlacesStandardDisponibles(), concert.getPlacesVipDisponibles(), concert.getPlacesPremiumDisponibles());
@@ -74,7 +79,7 @@ public class EvenementService {
     /**
      * Créer une nouvelle conférence
      */
-    public Conference creerConference(Conference conference) throws BusinessException {
+    public static Conference creerConference(Conference conference) throws BusinessException {
         try {
             // Validation des données
             validerDonneesEvenement(conference.getNom(), conference.getDateEvenement(), conference.getLieu(), conference.getPlacesStandardDisponibles(), conference.getPlacesVipDisponibles(), conference.getPlacesPremiumDisponibles());
@@ -96,7 +101,7 @@ public class EvenementService {
     /**
      * Créer un nouveau spectacle
      */
-    public Spectacle creerSpectacle(Spectacle spectacle) throws BusinessException {
+    public static Spectacle creerSpectacle(Spectacle spectacle) throws BusinessException {
         try {
             // Validation des données
             validerDonneesEvenement(spectacle.getNom(), spectacle.getDateEvenement(), spectacle.getLieu(), spectacle.getPlacesStandardDisponibles(), spectacle.getPlacesVipDisponibles(), spectacle.getPlacesPremiumDisponibles());
@@ -237,5 +242,4 @@ public class EvenementService {
         }
     }
 }
-
 
