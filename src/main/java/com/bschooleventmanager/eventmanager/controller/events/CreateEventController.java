@@ -1,10 +1,7 @@
 package com.bschooleventmanager.eventmanager.controller.events;
 
 import com.bschooleventmanager.eventmanager.exception.BusinessException;
-import com.bschooleventmanager.eventmanager.model.Concert;
-import com.bschooleventmanager.eventmanager.model.Conference;
-import com.bschooleventmanager.eventmanager.model.EventBaseData;
-import com.bschooleventmanager.eventmanager.model.Spectacle;
+import com.bschooleventmanager.eventmanager.model.*;
 import com.bschooleventmanager.eventmanager.model.enums.NiveauExpertise;
 import com.bschooleventmanager.eventmanager.model.enums.TypeConcert;
 import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
@@ -23,9 +20,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class CreateEventController {
-    @FXML private Label lbtfAge, lbtfArtits, lbtyConcert, lbTySpectacle, lbNvExpert, lbDomaine, lbIntervenant;
+    @FXML private Label tfIdEvent,lbtfAge, lbtfArtits, lbtyConcert, lbTySpectacle, lbNvExpert, lbDomaine, lbIntervenant;
     @FXML private Label lblErrDate, lblErrTitre, lbErrLieu, lblErrTyEvent, lblErrTypeConcert, lblErrTypeSpectacle, lblErrNvExpert, lblErrDomaine, lblErrAge, lblErrArtiste;
-    @FXML private TextField tfNom, tfLieu, prixPlaceStandard, nbPlacesVip, prixPlaceVip, nbPlacesPremium, prixPlacePremium, nbPlacesStandard, tfArtits, Domaine, Intervenant,tfIdEvent;
+    @FXML private TextField tfNom, tfLieu, prixPlaceStandard, nbPlacesVip, prixPlaceVip, nbPlacesPremium, prixPlacePremium, nbPlacesStandard, tfArtits, Domaine, Intervenant;
     @FXML private TextArea Description;
     @FXML private DatePicker dpDate;
     @FXML private Spinner<Integer> spHour, spMinute;
@@ -70,6 +67,12 @@ public class CreateEventController {
      */
     @FXML
     private void returnToDashboard() {
+        if (dashboardController != null) {
+            dashboardController.showDashboard();
+        }
+    }
+    @FXML
+    private void returnToDashboard2() {
         if (dashboardController != null) {
             dashboardController.showDashboard();
         }
@@ -154,6 +157,18 @@ public class CreateEventController {
         }
 
     }
+
+    public Evenement findEvent(int idEvent) throws BusinessException {
+        try {
+            logger.info("Fonction findEvent dans le controller CreateEventController");
+            Evenement event = evenementService.getEvenement(idEvent);
+            return event;
+        } catch (Exception e) {
+            logger.error("Erreur dans la fonction findEvent du controller CreateEventController", e);
+            throw new BusinessException("Erreur récupération événement", e);
+        }
+    }
+
     /**
      * Création de l'évènement en fonction du type sélectionné
      * @Author Loic Vanel & Charbel SONON
@@ -169,7 +184,7 @@ public class CreateEventController {
         //Chargement des valeurs communes a tous les types d'évènements
         EventBaseData baseData = loadCommonValues();
         if (baseData == null) {
-            logger.info("loadCommonValues a déjà positionné lblError");
+            logger.info("loadCommonValues(creation event) a déjà positionné lblError");
             return;
         }
         // Création de l'évènement en fonction du type
@@ -195,6 +210,7 @@ public class CreateEventController {
         }
     }
 
+    @FXML
     /**
      * Modification de l'évènement en fonction du type sélectionné
      * @Author Loic Vanel
@@ -214,24 +230,24 @@ public class CreateEventController {
         }
         // Création de l'évènement en fonction du type
         try {
-            if (baseData.typeEvent.equals(TypeEvenement.CONCERT.getLabel())) {
+            if (baseData.getTypeEvent().equals(TypeEvenement.CONCERT.getLabel())) {
                 createConcert(2,baseData);
-                NotificationUtils.showSuccess("Modification du concert réussie !");
+                //NotificationUtils.showSuccess("Modification du concert réussie !");
                 if (dashboardController != null) dashboardController.showDashboard();
 
-            } else if (baseData.typeEvent.equals(TypeEvenement.SPECTACLE.getLabel())) {
+            } else if (baseData.getTypeEvent().equals(TypeEvenement.SPECTACLE.getLabel())) {
                 createSpectacle(2,baseData);
-                NotificationUtils.showSuccess("Création du spectacle réussie !");
+                //NotificationUtils.showSuccess("Création du spectacle réussie !");
                 if (dashboardController != null) dashboardController.showDashboard();
 
-            } else {
+            } else if( baseData.getTypeEvent().equals(TypeEvenement.CONFERENCE.getLabel())) {
                 createConference(2,baseData);
-                NotificationUtils.showSuccess("Création de la conférence réussie !");
+                //NotificationUtils.showSuccess("Création de la conférence réussie !");
                 if (dashboardController != null) dashboardController.showDashboard();
             }
         } catch (Exception e) {
-            logger.error("Erreur lors de la création de l'évènement", e);
-            NotificationUtils.showError("Une erreur est survenue lors de la création de l'évènement. Vérifiez les champs et réessayez.");
+            logger.error("Erreur lors de la MODIFICATION de l'évènement", e);
+            //NotificationUtils.showError("Une erreur est survenue lors de la MODIFICATION de l'évènement. Vérifiez les champs et réessayez.");
         }
     }
 
@@ -267,7 +283,7 @@ public class CreateEventController {
         if (create_or_modif == 2) {
             int idConcert = Integer.parseInt(tfIdEvent.getText());
             concert.setIdEvenement(idConcert);
-            Concert concert1 = evenementService.modifierConcert(concert);
+            evenementService.modifierConcert(concert);
         } else if (create_or_modif == 1) {
             evenementService.creerConcert(concert);
         }
@@ -308,11 +324,97 @@ public class CreateEventController {
         if (create_or_modif == 2) {
             int idEvent = Integer.parseInt(tfIdEvent.getText());
             spectacle.setIdEvenement(idEvent);
-            Spectacle spectacle1 = evenementService.modifierSpectacle(spectacle);
+            evenementService.modifierSpectacle(spectacle);
         } else if (create_or_modif == 1) {
             evenementService.creerSpectacle(spectacle);
         }
         //evenementService.creerSpectacle(spectacle);
+    }
+
+    public void initializeFormForEdit(EventTotal event) {
+        try {
+            tfIdEvent.setText(String.valueOf(event.getIdEvenement()));
+            tfNom.setText(event.getNom());
+            dpDate.setValue(event.getDateEvenement().toLocalDate());
+            spHour.getValueFactory().setValue(event.getDateEvenement().getHour());
+            spMinute.getValueFactory().setValue(event.getDateEvenement().getMinute());
+            tfLieu.setText(event.getLieu());
+            evType.setValue(event.getTypeEvenement().getLabel());
+            Description.setText(event.getDescription());
+            nbPlacesStandard.setText(String.valueOf(event.getPlacesStandardDisponibles()));
+            nbPlacesVip.setText(String.valueOf(event.getPlacesVipDisponibles()));
+            nbPlacesPremium.setText(String.valueOf(event.getPlacesPremiumDisponibles()));
+            prixPlaceStandard.setText(String.valueOf(event.getPrixStandard().intValue()));
+            prixPlaceVip.setText(String.valueOf(event.getPrixVip().intValue()));
+            prixPlacePremium.setText(String.valueOf(event.getPrixPremium().intValue()));
+
+            // Initialisation des champs spécifiques en fonction du type d'évènement
+            if (event.getTypeEvenement().equals(TypeEvenement.CONCERT)) {
+                tfAge.setValue(event.getAgeMin());
+                tfArtits.setText(event.getArtisteGroupe());
+                tyConcert.setValue(event.getTypeConcert().getLabel());
+            } else if (event.getTypeEvenement().equals(TypeEvenement.SPECTACLE)) {
+                tfAge.setValue(event.getAgeMin());
+                tfArtits.setText(event.getArtisteGroupe());
+                tySpectacle.setValue(event.getTypeSpectacle().getLabel());
+            } else if (event.getTypeEvenement().equals(TypeEvenement.CONFERENCE)) {
+                Domaine.setText(event.getDomaine());
+                Intervenant.setText(event.getIntervenant());
+                nvExpert.setValue(event.getNiveauExpertise().getLabel());
+            }
+
+            // Met à jour la visibilité des champs en fonction du type d'évènement
+            if (event.getTypeEvenement().equals(TypeEvenement.CONCERT)) {
+                //Remplir les champs spécifiques au concert et afficher les champs
+                tyConcert.setManaged(true);
+                tyConcert.setVisible(true);
+                lbtyConcert.setVisible(true);
+                lbtyConcert.setManaged(true);
+                tfAge.setManaged(true);
+                tfAge.setVisible(true);
+                lbtfAge.setManaged(true);
+                lbtfAge.setVisible(true);
+                tfArtits.setManaged(true);
+                tfArtits.setVisible(true);
+                lbtfArtits.setManaged(true);
+                lbtfArtits.setVisible(true);
+            }
+            else if (event.getTypeEvenement().equals(TypeEvenement.SPECTACLE)) {
+                //Remplir les champs spécifiques au spectacle et afficher les champs
+                tySpectacle.setManaged(true);
+                tySpectacle.setVisible(true);
+                lbTySpectacle.setVisible(true);
+                lbTySpectacle.setManaged(true);
+                tfAge.setManaged(true);
+                tfAge.setVisible(true);
+                lbtfAge.setManaged(true);
+                lbtfAge.setVisible(true);
+                tfAge.setValue(event.getAgeMin());
+                tfArtits.setManaged(true);
+                tfArtits.setVisible(true);
+                lbtfArtits.setManaged(true);
+                lbtfArtits.setVisible(true);
+                tfArtits.setText(event.getArtisteGroupe());
+            }
+            else if (event.getTypeEvenement().equals(TypeEvenement.CONFERENCE)) {
+                //Remplir les champs spécifiques à la conférence et afficher les champs
+                Domaine.setManaged(true);
+                Domaine.setVisible(true);
+                lbDomaine.setManaged(true);
+                lbDomaine.setVisible(true);
+                Intervenant.setManaged(true);
+                Intervenant.setVisible(true);
+                lbIntervenant.setManaged(true);
+                lbIntervenant.setVisible(true);
+                lbNvExpert.setManaged(true);
+                lbNvExpert.setVisible(true);
+                nvExpert.setManaged(true);
+                nvExpert.setVisible(true);
+            }
+
+        } catch (Exception e) {
+            logger.error("Erreur lors de l'initialisation du formulaire pour la modification de l'évènement", e);
+        }
     }
 
     /**
@@ -345,7 +447,7 @@ public class CreateEventController {
         if (create_or_modif == 2) {
             int idEvent = Integer.parseInt(tfIdEvent.getText());
             conference.setIdEvenement(idEvent);
-            Conference conference1 = evenementService.modifierConference(conference);
+            evenementService.modifierConference(conference);
         } else if (create_or_modif == 1) {
             evenementService.creerConference(conference);
         }

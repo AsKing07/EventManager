@@ -1,20 +1,23 @@
 package com.bschooleventmanager.eventmanager.controller.organisateur;
 
+import com.bschooleventmanager.eventmanager.controller.events.CreateEventController;
+import com.bschooleventmanager.eventmanager.controller.shared.ProfileController;
+import com.bschooleventmanager.eventmanager.exception.BusinessException;
+import com.bschooleventmanager.eventmanager.model.EventTotal;
+import com.bschooleventmanager.eventmanager.model.Utilisateur;
+import com.bschooleventmanager.eventmanager.service.EvenementService;
+import com.bschooleventmanager.eventmanager.util.AppConfig;
+import com.bschooleventmanager.eventmanager.util.NotificationUtils;
+import com.bschooleventmanager.eventmanager.util.SessionManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import com.bschooleventmanager.eventmanager.model.Utilisateur;
-import com.bschooleventmanager.eventmanager.util.SessionManager;
-import com.bschooleventmanager.eventmanager.util.NotificationUtils;
-import com.bschooleventmanager.eventmanager.util.AppConfig;
-import com.bschooleventmanager.eventmanager.controller.shared.ProfileController;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,10 +47,24 @@ public class OrganisateurDashboardController {
     private Button eventsTab;
     
     @FXML
-    private Button profileTab;
+    private Button profileTab,modifFor;
     
     @FXML
     private StackPane contentArea;
+    //Attribut pour la recharge du formulaire de modification d'event
+    @FXML private Label tfIdEvent,lbtfAge, lbtfArtits, lbtyConcert, lbTySpectacle, lbNvExpert, lbDomaine, lbIntervenant;
+    @FXML private Label lblErrDate, lblErrTitre, lbErrLieu, lblErrTyEvent, lblErrTypeConcert, lblErrTypeSpectacle, lblErrNvExpert, lblErrDomaine, lblErrAge, lblErrArtiste;
+    @FXML private TextField tfNom, tfLieu, prixPlaceStandard, nbPlacesVip, prixPlaceVip, nbPlacesPremium, prixPlacePremium, nbPlacesStandard, tfArtits, Domaine, Intervenant;
+    @FXML private TextArea Description;
+    @FXML private DatePicker dpDate;
+    @FXML private Spinner<Integer> spHour, spMinute;
+    @FXML private ComboBox<String> evType, nvExpert, tyConcert, tySpectacle;
+    @FXML private ComboBox<Integer> tfAge;
+    @FXML private Label lblError;
+    @FXML private ImageView imgPreview;
+
+    //Initialisation du service Evenement
+    private EvenementService evenementService = new EvenementService();
 
     /**
      * Initialisation du contrôleur
@@ -97,6 +114,14 @@ public class OrganisateurDashboardController {
         logger.info("Affichage du profil organisateur");
         setActiveTab("profile");
         loadProfileContent();
+    }
+
+    @FXML
+    private void showModifForm() {
+        logger.info("Affichage du form de modif d'events");
+        setActiveTab("modif");
+        int idEvent=48; //à remplacer par l'id de l'event à modifier 47-concert test / 48-spectacle test / 49-conférence test
+        loadModifFormContent(idEvent);
     }
 
     /**
@@ -190,6 +215,9 @@ public class OrganisateurDashboardController {
             case "profile":
                 profileTab.setStyle(activeStyle);
                 break;
+            case "modif":
+                 modifFor.setStyle(activeStyle);
+                 break;
             default:
                 logger.warn("Onglet inconnu: {}", tabName);
         }
@@ -276,6 +304,57 @@ public class OrganisateurDashboardController {
             NotificationUtils.showError("Impossible de charger l'interface de profil");
         }
     }
+
+    /**
+     * @param eventId qui correspond à l'identifiant de l'événement à modifier
+     * Charge le contenu du formulaire de modification d'événement
+     */
+    private void loadModifFormContent(int eventId) {
+        String pathEditFxml ="/fxml/organisateur/Events/editConcert.fxml";
+        contentArea.getChildren().clear();
+        try {
+            //Charger les elts communs
+            EventTotal event = evenementService.getEvenementT(eventId);
+            if(event==null){
+                throw new BusinessException("Événement introuvable pour l'ID: " + eventId);
+            } else {
+                // Charger l'interface de profil
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(pathEditFxml));
+                Parent editFileContent = loader.load();
+
+                //Récupérer le contrôleur juste après le chargement
+                CreateEventController createEventController = loader.getController();
+                createEventController.initializeFormForEdit( event);
+                contentArea.getChildren().add(editFileContent);
+            }
+
+        } catch (IOException | BusinessException e) {
+            logger.error("Erreur lors du chargement du profil", e);
+            NotificationUtils.showError("Impossible de charger l'interface de profil");
+        }
+    }
+
+    /**
+     * @param event
+     * Remplit les champs communs du formulaire de modification d'événement
+     */
+    /*private void setCommonValues(EventTotal event) {
+        //Remplir les champs communs
+        tfIdEvent.setText(String.valueOf(event.getIdEvenement()));
+        tfNom.setText(event.getNom());
+        Description.setText(event.getDescription());
+        dpDate.setValue(event.getDateEvenement().toLocalDate());
+        spHour.getValueFactory().setValue(event.getDateEvenement().getHour());
+        spMinute.getValueFactory().setValue(event.getDateEvenement().getMinute());
+        tfLieu.setText(event.getLieu());
+        evType.setValue(event.getTypeEvenement().toString());
+        nbPlacesStandard.setText(String.valueOf(event.getPlacesStandardDisponibles()));
+        nbPlacesVip.setText(String.valueOf(event.getPlacesVipDisponibles()));
+        nbPlacesPremium.setText(String.valueOf(event.getPlacesPremiumDisponibles()));
+        prixPlaceStandard.setText(String.valueOf(event.getPrixStandard()));
+        prixPlaceVip.setText(String.valueOf(event.getPrixVip()));
+        prixPlacePremium.setText(String.valueOf(event.getPrixPremium()));
+    }*/
 
     /**
      * Charge le contenu de création d'événement

@@ -72,14 +72,20 @@ public class ConcertDAO extends BaseDAO<Concert> {
         return List.of();
     }
 
+    @Override
+    public Concert mettreAJour(Concert entity) throws DatabaseException {
+        return null;
+    }
+
     /**
      * Met à jour un concert existant dans la base de données.
+     *
      * @param concert
      * @return
      * @throws DatabaseException
      */
     @Override
-    public Concert mettreAJour(Concert concert) throws DatabaseException {;
+    public void mettreAJourC(Concert concert) throws DatabaseException {;
         String query = "UPDATE evenements SET organisateur_id = ?, nom = ?, date_evenement = ?, lieu = ?, type_evenement = ?," +
                 "    description = ?, places_standard_disponibles = ?, places_vip_disponibles = ?, places_premium_disponibles = ?," +
                 "    prix_standard = ?, prix_vip = ?, prix_premium = ?, artiste_groupe = ?, age_min = ?, domaine = ?, " +
@@ -106,27 +112,23 @@ public class ConcertDAO extends BaseDAO<Concert> {
             pstmt.setNull(16,java.sql.Types.VARCHAR); // Intervenants n'est pas necessaire pour un concert
             pstmt.setString(17, concert.getType().getLabel());
             pstmt.setNull(18, Types.NULL);// Type spectacle n'est pas necessaire pour un concert
-            pstmt.setInt(19, java.sql.Types.NULL); // Niveau expertise n'est pas necessaire pour un concert
+            pstmt.setNull(19, Types.NULL); // Niveau expertise n'est pas necessaire pour un concert
             pstmt.setInt(20, concert.getIdEvenement());
 
             int affectedRows = pstmt.executeUpdate();
 
-
-            if (affectedRows > 0) {
-                try (ResultSet rs = pstmt.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        concert.setIdEvenement(rs.getInt(1));
-                        logger.info("✓ Concert modifié: {}", concert.getNom());
-                        connection.close();
-                        return concert;
-                    }
-                }
+            if (affectedRows == 0) {
+                logger.warn("Erreur lors de la mise a jour du concert");
+            } else {
+                logger.info("Conference mise a jour avec succes");
+                //NotificationUtils.showSuccess("Concert mis a jour avec succes.");
             }
             connection.close();
-            throw new DatabaseException("Erreur lors de la mise a jour du concert.");
+            //throw new DatabaseException("Erreur lors de la mise a jour du concert.");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        //return null;
     }
 
     @Override

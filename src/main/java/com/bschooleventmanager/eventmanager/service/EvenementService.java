@@ -6,10 +6,7 @@ import com.bschooleventmanager.eventmanager.dao.EvenementDAO;
 import com.bschooleventmanager.eventmanager.dao.SpectacleDAO;
 import com.bschooleventmanager.eventmanager.exception.BusinessException;
 import com.bschooleventmanager.eventmanager.exception.DatabaseException;
-import com.bschooleventmanager.eventmanager.model.Concert;
-import com.bschooleventmanager.eventmanager.model.Conference;
-import com.bschooleventmanager.eventmanager.model.Evenement;
-import com.bschooleventmanager.eventmanager.model.Spectacle;
+import com.bschooleventmanager.eventmanager.model.*;
 import com.bschooleventmanager.eventmanager.model.enums.StatutEvenement;
 import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
 import com.bschooleventmanager.eventmanager.util.NotificationUtils;
@@ -75,14 +72,15 @@ public class EvenementService {
      * Modifier un concert
      * @param concert
      */
-    public Concert modifierConcert(Concert concert) throws BusinessException {
+    public void modifierConcert(Concert concert) throws BusinessException {
         try {
             // Validation des données
             validerDonneesEvenement(concert.getNom(), concert.getDateEvenement(), concert.getLieu(), concert.getPlacesStandardDisponibles(), concert.getPlacesVipDisponibles(), concert.getPlacesPremiumDisponibles());
-            Concert result = concertDAO.mettreAJour(concert);
+            concertDAO.mettreAJourC(concert);
 
             logger.info("✓ Concert modifé: {}", concert.getNom());
-            return result;
+            NotificationUtils.showSuccess("Modification du concert réussie !");
+            //return result;
 
         } catch (DatabaseException e) {
             logger.error("Erreur modification concert", e);
@@ -94,14 +92,14 @@ public class EvenementService {
      * Modifier une conférence
      * @param conference
      */
-    public Conference modifierConference(Conference conference) throws BusinessException {
+    public void modifierConference(Conference conference) throws BusinessException {
         try {
             // Validation des données
             validerDonneesEvenement(conference.getNom(), conference.getDateEvenement(), conference.getLieu(), conference.getPlacesStandardDisponibles(), conference.getPlacesVipDisponibles(), conference.getPlacesPremiumDisponibles());
-            Conference result = conferenceDAO.mettreAJour(conference);
+            conferenceDAO.mettreAJourC(conference);
 
             logger.info("✓ Concert modifé: {}", conference.getNom());
-            return result;
+            NotificationUtils.showSuccess("Modification de la conférence réussie !");
 
         } catch (DatabaseException e) {
             logger.error("Erreur modification concert", e);
@@ -113,14 +111,15 @@ public class EvenementService {
      * Modifier un spectacle
      * @param spectacle
      */
-    public Spectacle modifierSpectacle(Spectacle spectacle) throws BusinessException {
+    public void modifierSpectacle(Spectacle spectacle) throws BusinessException {
         try {
             // Validation des données
             validerDonneesEvenement(spectacle.getNom(), spectacle.getDateEvenement(), spectacle.getLieu(), spectacle.getPlacesStandardDisponibles(), spectacle.getPlacesVipDisponibles(), spectacle.getPlacesPremiumDisponibles());
-            Spectacle result = spectacleDao.mettreAJour(spectacle);
+            spectacleDao.mettreAJourC(spectacle);
 
             logger.info("✓ Concert modifé: {}", spectacle.getNom());
-            return result;
+            NotificationUtils.showSuccess("Modification du spectacle réussie !");
+            //return result;
 
         } catch (DatabaseException e) {
             logger.error("Erreur modification concert", e);
@@ -181,6 +180,37 @@ public class EvenementService {
                 throw new BusinessException("Événement non trouvé");
             }
             return evenement;
+        } catch (DatabaseException e) {
+            logger.error("Erreur récupération événement", e);
+            throw new BusinessException("Erreur récupération événement", e);
+        }
+    }
+    /**
+     * Récupérer un événement par ID
+     */
+    public EventTotal getEvenementT(int id) throws BusinessException {
+        try {
+            EventTotal evenement = evenementDAO.chercherTotal(id);
+            if (evenement == null) {
+                throw new BusinessException("Événement non trouvé");
+            }
+            return evenement;
+        } catch (DatabaseException e) {
+            logger.error("Erreur récupération événement", e);
+            throw new BusinessException("Erreur récupération événement", e);
+        }
+    }
+
+    /**
+     * Récupérer un concert par ID
+     */
+    public Concert getConcertById(int id) throws BusinessException {
+        try {
+            Concert concert = concertDAO.chercher(id);
+            if (concert == null) {
+                throw new BusinessException("Concert non trouvé");
+            }
+            return concert;
         } catch (DatabaseException e) {
             logger.error("Erreur récupération événement", e);
             throw new BusinessException("Erreur récupération événement", e);

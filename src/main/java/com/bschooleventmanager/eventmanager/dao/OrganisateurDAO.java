@@ -6,11 +6,7 @@ import com.bschooleventmanager.eventmanager.model.enums.TypeUtilisateur;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -141,6 +137,40 @@ Connection connection = getConnection();
             throw new DatabaseException("Erreur mise à jour organisateur", e);
         }
         return null;
+    }
+    public void mettreAJourc(Organisateur organisateur) throws DatabaseException {
+        String query = "UPDATE Utilisateurs SET nom = ?, email = ? WHERE id_utilisateur = ? AND type_utilisateur = ?";
+        Connection connection = getConnection();
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setString(1, organisateur.getNom());
+            pstmt.setString(2, organisateur.getEmail());
+            pstmt.setInt(3, organisateur.getIdUtilisateur());
+            pstmt.setString(4, TypeUtilisateur.ORGANISATEUR.name());
+
+            //pstmt.executeUpdate();
+
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows > 0) {
+                try (ResultSet rs = pstmt.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        organisateur.setIdUtilisateur(rs.getInt(1));
+                        logger.info("✓ Organisateur mis à jour: {}", organisateur.getIdUtilisateur());
+                        connection.close();
+                        //return organisateur;
+                    }
+                }
+            }
+            connection.close();
+        } catch (SQLException e) {
+            logger.error("Erreur mise à jour organisateur", e);
+            throw new DatabaseException("Erreur mise à jour organisateur", e);
+        }
+        //return null;
+    }
+
+    @Override
+    public void mettreAJourC(Organisateur entity) throws DatabaseException {
+
     }
 
     @Override

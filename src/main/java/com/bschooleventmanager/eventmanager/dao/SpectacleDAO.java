@@ -2,7 +2,6 @@ package com.bschooleventmanager.eventmanager.dao;
 
 import com.bschooleventmanager.eventmanager.exception.DatabaseException;
 import com.bschooleventmanager.eventmanager.model.Spectacle;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,14 +71,19 @@ Connection connection = getConnection();
         return List.of();
     }
 
+    @Override
+    public Spectacle mettreAJour(Spectacle entity) throws DatabaseException {
+        return null;
+    }
+
     /**
      * Mettre à jour un spectacle existant
+     *
      * @param spectacle
-     * @return
      * @throws DatabaseException
      */
     @Override
-    public Spectacle mettreAJour(Spectacle spectacle) throws DatabaseException {
+    public void mettreAJourC(Spectacle spectacle) throws DatabaseException {
         String query = "UPDATE evenements SET organisateur_id = ?, nom = ?, date_evenement = ?, lieu = ?, type_evenement = ?," +
                 "    description = ?, places_standard_disponibles = ?, places_vip_disponibles = ?, places_premium_disponibles = ?," +
                 "    prix_standard = ?, prix_vip = ?, prix_premium = ?, artiste_groupe = ?, age_min = ?, domaine = ?, " +
@@ -106,24 +110,19 @@ Connection connection = getConnection();
             pstmt.setNull(16,java.sql.Types.VARCHAR); // Intervenants n'est pas necessaire pour un spectacle
             pstmt.setNull(17, java.sql.Types.VARCHAR); // Type concert n'est pas necessaire pour un spectacle
             pstmt.setString(18, spectacle.getTypeSpectacle().getLabel());
-            pstmt.setInt(19, java.sql.Types.NULL); // Niveau expertise n'est pas necessaire pour un concert
+            pstmt.setNull(19, Types.NULL); // Niveau expertise n'est pas necessaire pour un concert
             pstmt.setInt(20, spectacle.getIdEvenement());
 
             int affectedRows = pstmt.executeUpdate();
 
-
-            if (affectedRows > 0) {
-                try (ResultSet rs = pstmt.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        spectacle.setIdEvenement(rs.getInt(1));
-                        logger.info("✓ spectacle modifié: {}", spectacle.getNom());
-                        connection.close();
-                        return spectacle;
-                    }
-                }
+            if (affectedRows == 0) {
+                logger.warn("Erreur lors de la mise a jour du spectacle");
+            } else {
+                logger.info("Spectacle mise a jour avec succes");
+                //NotificationUtils.showSuccess("Spectacle mis a jour avec succes.");
             }
             connection.close();
-            throw new DatabaseException("Erreur lors de la mise a jour du du spectacle.");
+            //throw new DatabaseException("Erreur lors de la mise a jour du du spectacle.");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

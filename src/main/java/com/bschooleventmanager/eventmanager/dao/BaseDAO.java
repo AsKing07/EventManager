@@ -37,8 +37,11 @@ public abstract class BaseDAO<T> {
 
     /**
      * Mettre à jour
+     *
+     * @return
      */
     public abstract T mettreAJour(T entity) throws DatabaseException;
+    public abstract void mettreAJourC(T entity) throws DatabaseException;
 
     /**
      * Supprimer

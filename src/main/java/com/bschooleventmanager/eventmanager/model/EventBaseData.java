@@ -41,5 +41,93 @@ public class EventBaseData {
         this.prixVip = prixVip;
         this.prixPremium = prixPremium;
     }
+
+    public String getTitre() {
+        return titre;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDateTime getDateEvent() {
+        return dateEvent;
+    }
+
+    public void setDateEvent(LocalDateTime dateEvent) {
+        this.dateEvent = dateEvent;
+    }
+
+    public String getLieu() {
+        return lieu;
+    }
+
+    public void setLieu(String lieu) {
+        this.lieu = lieu;
+    }
+
+    public String getTypeEvent() {
+        return typeEvent;
+    }
+
+    public void setTypeEvent(String typeEvent) {
+        this.typeEvent = typeEvent;
+    }
+
+    public Integer getNbreStandard() {
+        return nbreStandard;
+    }
+
+    public void setNbreStandard(Integer nbreStandard) {
+        this.nbreStandard = nbreStandard;
+    }
+
+    public Integer getNbreVip() {
+        return nbreVip;
+    }
+
+    public void setNbreVip(Integer nbreVip) {
+        this.nbreVip = nbreVip;
+    }
+
+    public Integer getNbrePremium() {
+        return nbrePremium;
+    }
+
+    public void setNbrePremium(Integer nbrePremium) {
+        this.nbrePremium = nbrePremium;
+    }
+
+    public Integer getPrixStand() {
+        return prixStand;
+    }
+
+    public void setPrixStand(Integer prixStand) {
+        this.prixStand = prixStand;
+    }
+
+    public Integer getPrixVip() {
+        return prixVip;
+    }
+
+    public void setPrixVip(Integer prixVip) {
+        this.prixVip = prixVip;
+    }
+
+    public Integer getPrixPremium() {
+        return prixPremium;
+    }
+
+    public void setPrixPremium(Integer prixPremium) {
+        this.prixPremium = prixPremium;
+    }
 }
 

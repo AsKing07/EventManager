@@ -1,13 +1,8 @@
 package com.bschooleventmanager.eventmanager.dao;
 
 import com.bschooleventmanager.eventmanager.exception.DatabaseException;
-import com.bschooleventmanager.eventmanager.model.Concert;
-import com.bschooleventmanager.eventmanager.model.Conference;
-import com.bschooleventmanager.eventmanager.model.Evenement;
-import com.bschooleventmanager.eventmanager.model.Spectacle;
-import com.bschooleventmanager.eventmanager.model.enums.EtatEvent;
-import com.bschooleventmanager.eventmanager.model.enums.StatutEvenement;
-import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
+import com.bschooleventmanager.eventmanager.model.*;
+import com.bschooleventmanager.eventmanager.model.enums.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,9 +26,15 @@ public class EvenementDAO extends BaseDAO<Evenement> {
     }
 
     @Override
-    public Evenement mettreAJour(Evenement evenement) throws DatabaseException {
+    public Concert mettreAJour(Evenement evenement) throws DatabaseException {
         updateEvent(evenement);
-        return evenement;
+        //return evenement;
+        return null;
+    }
+
+    @Override
+    public void mettreAJourC(Evenement entity) throws DatabaseException {
+
     }
 
     @Override
@@ -45,6 +46,10 @@ deleteEventById(id);
     @Override
     public Evenement chercher(int id) throws DatabaseException {
         return getEventById(id);
+    }
+
+    public EventTotal chercherTotal(int id) throws DatabaseException {
+        return getEventByIdT(id);
     }
 
     
@@ -86,14 +91,7 @@ Connection connection = getConnection();
      */
     public void suppEvent(int id){
         String query = "UPDATE evenements SET etat_event=? WHERE id_evenement=?;";
-        /*try {
-            Connection conn = DatabaseConnection.getInstance().getConnection();
-            String query = "UPDATE evenements SET etat_event=? WHERE id_evenement=?;";
-            PreparedStatement st = conn.prepareStatement(query);
-            st.setInt(1, EtatEvent.SUPPRIME.getCode());
-            st.setInt(2,id);
-            st.executeUpdate();
-            conn.close();*/
+
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
              PreparedStatement st = conn.prepareStatement(query)) {
 
@@ -280,9 +278,8 @@ Connection connection = DatabaseConnection.getInstance().getConnection();
     public static Evenement getEventById(int id) throws DatabaseException {
         String sql = "SELECT * FROM evenements WHERE id_evenement = ?";
 
-        try {
-            Connection conn = DatabaseConnection.getInstance().getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);
+        try( Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
 
@@ -292,8 +289,89 @@ Connection connection = DatabaseConnection.getInstance().getConnection();
                 throw new DatabaseException("Aucun événement trouvé avec l'ID: " + id);
             }
 
-        
 
+
+        } catch (SQLException e) {
+            logger.error("Erreur lors de la récupération de l'événement", e);
+            throw new DatabaseException("Erreur lors de la récupération de l'événement", e);
+        }
+    }
+
+    public static EventTotal getEventByIdT(int id) throws DatabaseException {
+        String sql = "SELECT * FROM evenements WHERE id_evenement = ?";
+
+        try {
+            Connection conn = DatabaseConnection.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next()) {
+                EventTotal event = new EventTotal();
+
+                event.setIdEvenement(rs.getInt("id_evenement"));
+                event.setOrganisateurId(rs.getInt("organisateur_id"));
+                event.setNom(rs.getString("nom"));
+                event.setDateEvenement(rs.getTimestamp("date_evenement").toLocalDateTime());
+                event.setLieu(rs.getString("lieu"));
+                event.setTypeEvenement(TypeEvenement.valueOf(rs.getString("type_evenement")));
+                event.setDescription(rs.getString("description"));
+
+                event.setPlacesStandardDisponibles(rs.getInt("places_standard_disponibles"));
+                event.setPlacesVipDisponibles(rs.getInt("places_vip_disponibles"));
+                event.setPlacesPremiumDisponibles(rs.getInt("places_premium_disponibles"));
+
+                event.setPrixStandard(rs.getBigDecimal("prix_standard"));
+                event.setPrixVip(rs.getBigDecimal("prix_vip"));
+                event.setPrixPremium(rs.getBigDecimal("prix_premium"));
+
+                event.setDateCreation(rs.getTimestamp("date_creation").toLocalDateTime());
+                event.setStatut(rs.getString("statut"));
+
+                event.setArtisteGroupe(rs.getString("artiste_groupe"));
+                event.setAgeMin(rs.getInt("age_min"));
+                event.setDomaine(rs.getString("domaine"));
+                event.setIntervenant(rs.getString("intervenant"));
+
+                rs.getString("type_concert");
+                if(rs.wasNull()){
+                    event.setTypeConcert(null);
+                } else if( rs.getString("type_concert").equals(TypeConcert.LIVE.getLabel())){
+                    event.setTypeConcert(TypeConcert.LIVE);
+                } else if (rs.getString("type_concert").equals(TypeConcert.ACOUSTIQUE.getLabel())) {
+                    event.setTypeConcert(TypeConcert.ACOUSTIQUE);
+                }
+                rs.getString("type_spectacle");
+                if(rs.wasNull()){
+                    event.setTypeSpectacle(null);
+                } else if(rs.getString("type_spectacle").equals(TypeSpectacle.HUMOUR.getLabel())){
+                    event.setTypeSpectacle(TypeSpectacle.HUMOUR);
+                } else if (rs.getString("type_spectacle").equals(TypeSpectacle.THEATRE.getLabel())) {
+                    event.setTypeSpectacle(TypeSpectacle.THEATRE);
+                } else if (rs.getString("type_spectacle").equals(TypeSpectacle.CIRQUE.getLabel())) {
+                    event.setTypeSpectacle(TypeSpectacle.CIRQUE);
+                }
+
+                rs.getString("niveau_expertise");
+                if(rs.wasNull()){
+                    event.setNiveauExpertise(null);
+                } else if (rs.getString("niveau_expertise").equals(NiveauExpertise.DEBUTANT.getLabel())) {
+                    event.setNiveauExpertise(NiveauExpertise.DEBUTANT);
+                } else if (rs.getString("niveau_expertise").equals(NiveauExpertise.INTERMEDIAIRE.getLabel())) {
+                    event.setNiveauExpertise(NiveauExpertise.INTERMEDIAIRE);
+                } else if (rs.getString("niveau_expertise").equals(NiveauExpertise.PROFESSIONNEL.getLabel())) {
+                    event.setNiveauExpertise(NiveauExpertise.PROFESSIONNEL);
+                }
+
+                event.setPlaceStandardVendues(rs.getInt("place_standard_vendues"));
+                event.setPlaceVipVendues(rs.getInt("place_vip_vendu"));
+                event.setPlacePremiumVendues(rs.getInt("place_p_vendu"));
+                event.setEtatEvent(rs.getInt("etat_event"));
+
+                return event;
+            }else {
+                throw new DatabaseException("Aucun événement trouvé avec l'ID: " + id);
+            }
         } catch (SQLException e) {
             logger.error("Erreur lors de la récupération de l'événement", e);
             throw new DatabaseException("Erreur lors de la récupération de l'événement", e);

@@ -72,15 +72,21 @@ Connection connection = getConnection();
         return List.of();
     }
 
+    @Override
+    public Conference mettreAJour(Conference entity) throws DatabaseException {
+        return null;
+    }
+
 
     /**
      * Mettre à jour une conférence
+     *
      * @param conference
      * @return
      * @throws DatabaseException
      */
     @Override
-    public Conference mettreAJour(Conference conference) throws DatabaseException {
+    public void mettreAJourC(Conference conference) throws DatabaseException {
         String query = "UPDATE evenements SET organisateur_id = ?, nom = ?, date_evenement = ?, lieu = ?, type_evenement = ?," +
                 "    description = ?, places_standard_disponibles = ?, places_vip_disponibles = ?, places_premium_disponibles = ?," +
                 "    prix_standard = ?, prix_vip = ?, prix_premium = ?, artiste_groupe = ?, age_min = ?, domaine = ?, " +
@@ -111,24 +117,19 @@ Connection connection = getConnection();
             pstmt.setInt(20, conference.getIdEvenement());
 
             int affectedRows = pstmt.executeUpdate();
-
-
-            if (affectedRows > 0) {
-                try (ResultSet rs = pstmt.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        conference.setIdEvenement(rs.getInt(1));
-                        logger.info("✓ Conference modifié: {}", conference.getNom());
-                        connection.close();
-                        return conference;
-                    }
-                }
+            if (affectedRows == 0) {
+                logger.warn("Erreur lors de la mise a jour de la conference");
+            } else {
+                logger.info("Conference mise a jour avec succes");
+                //NotificationUtils.showSuccess("Conference mise a jour avec succes.");
             }
             connection.close();
-            throw new DatabaseException("Erreur lors de la mise a jour de la conference.");
+            //throw new DatabaseException("Erreur lors de la mise a jour de la conference.");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
+        //return null;
     }
 
     @Override

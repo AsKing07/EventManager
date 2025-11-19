@@ -2,9 +2,7 @@ package com.bschooleventmanager.eventmanager.dao;
 
 
 import com.bschooleventmanager.eventmanager.exception.DatabaseException;
-import com.bschooleventmanager.eventmanager.model.Utilisateur;
-import com.bschooleventmanager.eventmanager.model.Client;
-import com.bschooleventmanager.eventmanager.model.Organisateur;
+import com.bschooleventmanager.eventmanager.model.*;
 import com.bschooleventmanager.eventmanager.model.enums.TypeUtilisateur;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -128,14 +126,15 @@ Connection connection = getConnection();
     }
 
         /**
-     * Modifie les données d'un utilisateur
-     * @param user L'utilisateur à modifier
-     * @return true si la modification a réussi, false sinon
-     * @throws DatabaseException En cas d'erreur de base de données
-     */
+         * Modifie les données d'un utilisateur
+         *
+         * @param user L'utilisateur à modifier
+         * @return
+         * @throws DatabaseException En cas d'erreur de base de données
+         */
     @Override
     public Utilisateur mettreAJour(Utilisateur user) throws DatabaseException {
- String query = "UPDATE utilisateurs SET nom = ?, email = ? WHERE id_utilisateur = ?";
+    String query = "UPDATE utilisateurs SET nom = ?, email = ? WHERE id_utilisateur = ?";
         Connection connection = getConnection();
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, user.getNom());
@@ -150,6 +149,11 @@ Connection connection = getConnection();
             throw new DatabaseException("Erreur modification utilisateur", e);
         }
         return user;
+    }
+
+    @Override
+    public void mettreAJourC(Utilisateur entity) throws DatabaseException {
+
     }
 
     @Override

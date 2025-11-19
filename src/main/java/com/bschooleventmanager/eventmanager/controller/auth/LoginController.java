@@ -137,7 +137,8 @@ public class LoginController {
     }
 
     private void navigateToDashboard(Utilisateur user) {
-        logger.info("Navigation vers le dashboard pour l'utilisateur: {}", user.getEmail());
+        System.out.println("Navigation vers le dashboard pour l'utilisateur: " + user.getEmail());
+        logger.info("Navigation vers le dashboard pour l'utilisateur: {}", user.getMotDePasse());
         
         try {
             String fxmlPath;

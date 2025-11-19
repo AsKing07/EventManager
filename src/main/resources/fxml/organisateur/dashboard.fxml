@@ -35,6 +35,8 @@
                 
                 <Button fx:id="profileTab" text="Profil" onAction="#showProfile"
                         style="-fx-background-color: #2c3e50; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 15 25 15 25; -fx-background-radius: 0; -fx-border-width: 0;"/>
+                <Button fx:id="modifFor" text="Modif Form" onAction="#showModifForm"
+                        style="-fx-background-color: #2c3e50; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 15 25 15 25; -fx-background-radius: 0; -fx-border-width: 0;"/>
             </HBox>
         </VBox>
     </top>

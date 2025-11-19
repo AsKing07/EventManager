@@ -116,6 +116,11 @@ public class ReservationDAO extends BaseDAO<Reservation> {
     }
 
     @Override
+    public void mettreAJourC(Reservation entity) throws DatabaseException {
+
+    }
+
+    @Override
     public void supprimer(int id) throws DatabaseException {
         String query = "DELETE FROM reservations WHERE id_reservation = ?";
         
