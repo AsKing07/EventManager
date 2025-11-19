@@ -374,150 +374,481 @@ public class ModifyEventController {
     }
     
     /**
-     * Sauvegarde les modifications
+     * Sauvegarde les modifications avec validation complète
      */
     @FXML
     private void saveModifications() {
-        logger.info("Tentative de sauvegarde des modifications");
+        logger.info("Tentative de sauvegarde des modifications pour l'événement: {}", 
+            evenementAModifier != null ? evenementAModifier.getNom() : "Inconnu");
         
         try {
-            // Validation des champs
+            // Validation complète des champs
             if (!validerChamps()) {
+                logger.warn("Validation des champs échouée, modification annulée");
                 return;
             }
             
-            // Appliquer les modifications à l'objet existant au lieu de le recréer
-            appliquerModifications();
+            // Vérifier que l'événement à modifier existe toujours
+            if (evenementAModifier == null) {
+                afficherErreur("❌ Erreur : Aucun événement sélectionné pour modification");
+                logger.error("Tentative de modification sans événement sélectionné");
+                return;
+            }
+            
+            // Appliquer les modifications à l'objet existant
+            if (!appliquerModifications()) {
+                afficherErreur("❌ Erreur lors de la préparation des données");
+                return;
+            }
+            
+            // Validation finale avant sauvegarde
+            if (!validateBeforeSave()) {
+                return;
+            }
             
             // Sauvegarder via le service en fonction du type concret
-            if (evenementAModifier instanceof Concert) {
-                Concert updated = evenementService.modifierConcert((Concert) evenementAModifier);
-                if (updated == null) {
-                    throw new BusinessException("La mise à jour du concert a échoué");
-                }
-            } else if (evenementAModifier instanceof Spectacle) {
-                Spectacle updated = evenementService.modifierSpectacle((Spectacle) evenementAModifier);
-                if (updated == null) {
-                    throw new BusinessException("La mise à jour du spectacle a échoué");
-                }
-            } else if (evenementAModifier instanceof Conference) {
-                Conference updated = evenementService.modifierConference((Conference) evenementAModifier);
-                if (updated == null) {
-                    throw new BusinessException("La mise à jour de la conférence a échoué");
-                }
-            } else {
-                // Fallback: essayer la mise à jour générique si le service le propose
-                boolean result = evenementService.updateEvent(evenementAModifier);
-                if (!result) {
-                    throw new BusinessException("La mise à jour de l'événement a échoué");
-                }
+            boolean saveResult = performSave();
+            
+            if (!saveResult) {
+                afficherErreur("❌ Erreur lors de la sauvegarde en base de données");
+                return;
             }
-
-            NotificationUtils.showSuccess("Événement modifié avec succès !");
-            logger.info("Événement {} modifié avec succès", evenementAModifier.getNom());
-
+            
+            // Succès
+            NotificationUtils.showSuccess("✅ Événement modifié avec succès !");
+            logger.info("Événement '{}' modifié avec succès (ID: {})", 
+                evenementAModifier.getNom(), evenementAModifier.getIdEvenement());
+            
             // Retourner au dashboard
             returnToDashboard();
             
-   
-            
         } catch (BusinessException e) {
             logger.error("Erreur métier lors de la modification", e);
-            afficherErreur("Erreur lors de la modification : " + e.getMessage());
+            afficherErreur("❌ " + e.getMessage());
+            NotificationUtils.showError("Erreur lors de la modification : " + e.getMessage());
         } catch (Exception e) {
             logger.error("Erreur inattendue lors de la modification", e);
-            afficherErreur("Erreur technique lors de la modification de l'événement");
+            afficherErreur("❌ Erreur technique lors de la modification de l'événement");
+            NotificationUtils.showError("Une erreur technique est survenue. Veuillez réessayer.");
         }
     }
     
     /**
-     * Valide les champs du formulaire
+     * Effectue une validation finale avant sauvegarde
+     */
+    private boolean validateBeforeSave() {
+        // Vérifier que les utilisateurs connectés sont autorisés
+        if (SessionManager.getUtilisateurConnecte() == null) {
+            afficherErreur("❌ Session expirée. Veuillez vous reconnecter.");
+            return false;
+        }
+        
+        // Vérifier que l'événement appartient à l'organisateur connecté
+        int organisateurConnecteId = SessionManager.getUtilisateurConnecte().getIdUtilisateur();
+        if (evenementAModifier.getOrganisateurId() != organisateurConnecteId) {
+            afficherErreur("❌ Vous n'êtes pas autorisé à modifier cet événement");
+            logger.warn("Tentative de modification non autorisée - Événement ID: {}, Organisateur: {} vs {}", 
+                evenementAModifier.getIdEvenement(), evenementAModifier.getOrganisateurId(), organisateurConnecteId);
+            return false;
+        }
+        
+        return true;
+    }
+    
+    /**
+     * Effectue la sauvegarde selon le type d'événement
+     */
+    private boolean performSave() throws BusinessException {
+        logger.info("Sauvegarde de l'événement de type: {}", evenementAModifier.getClass().getSimpleName());
+        
+        if (evenementAModifier instanceof Concert) {
+            Concert updated = evenementService.modifierConcert((Concert) evenementAModifier);
+            if (updated == null) {
+                logger.error("Échec de la mise à jour du concert");
+                return false;
+            }
+            logger.info("Concert mis à jour avec succès");
+            
+        } else if (evenementAModifier instanceof Spectacle) {
+            Spectacle updated = evenementService.modifierSpectacle((Spectacle) evenementAModifier);
+            if (updated == null) {
+                logger.error("Échec de la mise à jour du spectacle");
+                return false;
+            }
+            logger.info("Spectacle mis à jour avec succès");
+            
+        } else if (evenementAModifier instanceof Conference) {
+            Conference updated = evenementService.modifierConference((Conference) evenementAModifier);
+            if (updated == null) {
+                logger.error("Échec de la mise à jour de la conférence");
+                return false;
+            }
+            logger.info("Conférence mise à jour avec succès");
+            
+        } else {
+            // Fallback: essayer la mise à jour générique si le service le propose
+            boolean result = evenementService.updateEvent(evenementAModifier);
+            if (!result) {
+                logger.error("Échec de la mise à jour générique de l'événement");
+                return false;
+            }
+            logger.info("Événement mis à jour avec succès (méthode générique)");
+        }
+        
+        return true;
+    }
+    
+    /**
+     * Valide les champs du formulaire avec validation complète
      */
     private boolean validerChamps() {
         clearErrorMessages();
         boolean isValid = true;
-        logger.info("Validation des champs du formulaire");
+        logger.info("Validation complète des champs du formulaire de modification");
         
-        // Validation nom
+        // Validation des champs de base
+        isValid &= validateBasicFields();
+        
+        // Validation de la date et heure
+        isValid &= validateDate();
+        
+        // Validation des champs numériques (prix et places)
+        isValid &= validateNumericFields();
+        
+        // Validation spécifique selon le type d'événement
+        isValid &= validateTypeSpecificFields();
+        
+        // Validation finale de cohérence
+        if (isValid) {
+            isValid &= performFinalValidation();
+        }
+        
+        logger.info("Validation du formulaire terminée. Résultat: {}", isValid ? "SUCCÈS" : "ÉCHEC");
+        return isValid;
+    }
+    
+    /**
+     * Valide les champs de base du formulaire
+     */
+    private boolean validateBasicFields() {
+        boolean isValid = true;
+        
+        // Validation nom/titre
         if (tfNom == null || tfNom.getText().trim().isEmpty()) {
-            afficherErreurChamp(lblErrTitre, "Le nom de l'événement est obligatoire");
+            afficherErreurChamp(lblErrTitre, "❌ Le nom de l'événement est obligatoire");
+            isValid = false;
+        } else if (tfNom.getText().trim().length() < 3) {
+            afficherErreurChamp(lblErrTitre, "❌ Le nom doit contenir au moins 3 caractères");
+            isValid = false;
+        } else if (tfNom.getText().trim().length() > 100) {
+            afficherErreurChamp(lblErrTitre, "❌ Le nom ne peut pas dépasser 100 caractères");
             isValid = false;
         }
         
-        // Validation lieu
-        if (tfLieu == null || tfLieu.getText().trim().isEmpty()) {
-            afficherErreurChamp(lbErrLieu, "Le lieu est obligatoire");
-            isValid = false;
-        }
-        
-        // Validation date
-        if (dpDate == null || dpDate.getValue() == null) {
-            afficherErreurChamp(lblErrDate, "La date est obligatoire");
-            isValid = false;
-        } else {
-            LocalDateTime dateEvenement = LocalDateTime.of(dpDate.getValue(), 
-                java.time.LocalTime.of(spHour.getValue(), spMinute.getValue()));
-            if (dateEvenement.isBefore(LocalDateTime.now())) {
-                afficherErreurChamp(lblErrDate, "La date doit être dans le futur");
+        // Validation description
+        if (Description != null && !Description.getText().trim().isEmpty()) {
+            if (Description.getText().trim().length() < 10) {
+                afficherErreur("❌ La description doit contenir au moins 10 caractères");
+                isValid = false;
+            } else if (Description.getText().trim().length() > 500) {
+                afficherErreur("❌ La description ne peut pas dépasser 500 caractères");
                 isValid = false;
             }
         }
         
-        // Validation type d'événement
-        if (evType == null || evType.getValue() == null) {
-            afficherErreurChamp(lblErrTyEvent, "Le type d'événement est obligatoire");
+        // Validation lieu
+        if (tfLieu == null || tfLieu.getText().trim().isEmpty()) {
+            afficherErreurChamp(lbErrLieu, "❌ Le lieu est obligatoire");
+            isValid = false;
+        } else if (tfLieu.getText().trim().length() < 3) {
+            afficherErreurChamp(lbErrLieu, "❌ Le lieu doit contenir au moins 3 caractères");
+            isValid = false;
+        } else if (tfLieu.getText().trim().length() > 100) {
+            afficherErreurChamp(lbErrLieu, "❌ Le lieu ne peut pas dépasser 100 caractères");
             isValid = false;
         }
         
-        // Validations spécifiques selon le type
-        if (evType != null && evType.getValue() != null) {
-            TypeEvenement type = evType.getValue();
-            switch (type) {
-                case CONCERT:
-                    if (tfArtits == null || tfArtits.getText().trim().isEmpty()) {
-                        afficherErreurChamp(lblErrArtiste, "L'artiste/groupe est obligatoire");
-                        isValid = false;
-                    }
-                    if (tyConcert == null || tyConcert.getValue() == null) {
-                        afficherErreurChamp(lblErrTypeConcert, "Le type de concert est obligatoire");
-                        isValid = false;
-                    }
-                    break;
-                    
-                case SPECTACLE:
-                    if (tfArtits == null || tfArtits.getText().trim().isEmpty()) {
-                        afficherErreurChamp(lblErrArtiste, "La troupe/artistes est obligatoire");
-                        isValid = false;
-                    }
-                    if (tySpectacle == null || tySpectacle.getValue() == null) {
-                        afficherErreurChamp(lblErrTypeSpectacle, "Le type de spectacle est obligatoire");
-                        isValid = false;
-                    }
-                    break;
-                    
-                case CONFERENCE:
-                    if (Domaine == null || Domaine.getText().trim().isEmpty()) {
-                        afficherErreurChamp(lblErrDomaine, "Le domaine est obligatoire");
-                        isValid = false;
-                    }
-                    if (nvExpert == null || nvExpert.getValue() == null) {
-                        afficherErreurChamp(lblErrNvExpert, "Le niveau d'expertise est obligatoire");
-                        isValid = false;
-                    }
-                    break;
-            }
+        // Validation type d'événement
+        if (evType == null || evType.getValue() == null) {
+            afficherErreurChamp(lblErrTyEvent, "❌ Le type d'événement est obligatoire");
+            isValid = false;
         }
         
         return isValid;
     }
     
     /**
-     * Applique les modifications aux champs de l'événement existant
+     * Valide la date et l'heure de l'événement
      */
-    private void appliquerModifications() {
-        logger.info("Application des modifications à l'événement");
+    private boolean validateDate() {
+        if (dpDate == null || dpDate.getValue() == null) {
+            afficherErreurChamp(lblErrDate, "❌ La date est obligatoire");
+            return false;
+        }
+        
+        if (spHour == null || spMinute == null) {
+            afficherErreurChamp(lblErrDate, "❌ L'heure est obligatoire");
+            return false;
+        }
         
         try {
+            LocalDateTime dateEvenement = LocalDateTime.of(dpDate.getValue(), 
+                java.time.LocalTime.of(spHour.getValue(), spMinute.getValue()));
+            
+            // Vérifier que la date n'est pas dans le passé
+            if (dateEvenement.isBefore(LocalDateTime.now())) {
+                afficherErreurChamp(lblErrDate, "❌ La date doit être dans le futur");
+                return false;
+            }
+            
+            // Si c'est aujourd'hui, vérifier qu'il reste au moins 1 heure
+            if (dateEvenement.toLocalDate().isEqual(LocalDate.now())) {
+                if (dateEvenement.isBefore(LocalDateTime.now().plusHours(1))) {
+                    afficherErreurChamp(lblErrDate, "❌ L'événement doit être prévu au minimum 1 heure à l'avance");
+                    return false;
+                }
+            }
+            
+            // Vérifier que la date n'est pas trop lointaine (ex: plus de 5 ans)
+            if (dateEvenement.isAfter(LocalDateTime.now().plusYears(5))) {
+                afficherErreurChamp(lblErrDate, "❌ La date ne peut pas être dans plus de 5 ans");
+                return false;
+            }
+            
+        } catch (Exception e) {
+            afficherErreurChamp(lblErrDate, "❌ Date ou heure invalide");
+            return false;
+        }
+        
+        return true;
+    }
+    
+    /**
+     * Valide les champs numériques (prix et places)
+     */
+    private boolean validateNumericFields() {
+        boolean isValid = true;
+        
+        try {
+            // Validation des places
+            int placesStandard = parseIntOrZero(nbPlacesStandard.getText());
+            int placesVip = parseIntOrZero(nbPlacesVip.getText());
+            int placesPremium = parseIntOrZero(nbPlacesPremium.getText());
+            
+            // Vérifier les limites des places
+            if (placesStandard < 0 || placesStandard > 10000) {
+                afficherErreur("❌ Le nombre de places Standard doit être entre 0 et 10 000");
+                isValid = false;
+            }
+            if (placesVip < 0 || placesVip > 10000) {
+                afficherErreur("❌ Le nombre de places VIP doit être entre 0 et 10 000");
+                isValid = false;
+            }
+            if (placesPremium < 0 || placesPremium > 10000) {
+                afficherErreur("❌ Le nombre de places Premium doit être entre 0 et 10 000");
+                isValid = false;
+            }
+            
+            // Vérifier qu'il y a au moins une place
+            if (placesStandard + placesVip + placesPremium == 0) {
+                afficherErreur("❌ L'événement doit avoir au moins une place disponible");
+                isValid = false;
+            }
+            
+            // Validation des prix
+            BigDecimal prixStandard = parseBigDecimalOrZero(prixPlaceStandard.getText());
+            BigDecimal prixVip = parseBigDecimalOrZero(prixPlaceVip.getText());
+            BigDecimal prixPremium = parseBigDecimalOrZero(prixPlacePremium.getText());
+            
+            // Vérifier les limites des prix
+            if (prixStandard.compareTo(BigDecimal.valueOf(5)) < 0 || 
+                prixStandard.compareTo(BigDecimal.valueOf(500)) > 0) {
+                afficherErreur("❌ Le prix Standard doit être entre 5€ et 500€");
+                isValid = false;
+            }
+            if (prixVip.compareTo(BigDecimal.valueOf(10)) < 0 || 
+                prixVip.compareTo(BigDecimal.valueOf(1000)) > 0) {
+                afficherErreur("❌ Le prix VIP doit être entre 10€ et 1000€");
+                isValid = false;
+            }
+            if (prixPremium.compareTo(BigDecimal.valueOf(20)) < 0 || 
+                prixPremium.compareTo(BigDecimal.valueOf(2000)) > 0) {
+                afficherErreur("❌ Le prix Premium doit être entre 20€ et 2000€");
+                isValid = false;
+            }
+            
+        } catch (NumberFormatException e) {
+            afficherErreur("❌ Veuillez saisir des valeurs numériques valides pour les prix et places");
+            isValid = false;
+        } catch (Exception e) {
+            afficherErreur("❌ Erreur dans la validation des champs numériques");
+            isValid = false;
+        }
+        
+        return isValid;
+    }
+    
+    /**
+     * Valide les champs spécifiques selon le type d'événement
+     */
+    private boolean validateTypeSpecificFields() {
+        if (evType == null || evType.getValue() == null) {
+            return true; // Déjà validé dans validateBasicFields
+        }
+        
+        TypeEvenement type = evType.getValue();
+        boolean isValid = true;
+        
+        switch (type) {
+            case CONCERT:
+                // Validation artiste/groupe
+                if (tfArtits == null || tfArtits.getText().trim().isEmpty()) {
+                    afficherErreurChamp(lblErrArtiste, "❌ L'artiste/groupe est obligatoire");
+                    isValid = false;
+                } else {
+                    if (tfArtits.getText().trim().length() < 2) {
+                        afficherErreurChamp(lblErrArtiste, "❌ Le nom de l'artiste doit contenir au moins 2 caractères");
+                        isValid = false;
+                    } else if (tfArtits.getText().trim().length() > 100) {
+                        afficherErreurChamp(lblErrArtiste, "❌ Le nom de l'artiste ne peut pas dépasser 100 caractères");
+                        isValid = false;
+                    }
+                }
+                
+                // Validation type de concert
+                if (tyConcert == null || tyConcert.getValue() == null) {
+                    afficherErreurChamp(lblErrTypeConcert, "❌ Le type de concert est obligatoire");
+                    isValid = false;
+                }
+                
+                // Validation âge minimum (pour concerts)
+                if (tfAge != null && tfAge.getValue() != null) {
+                    int ageMin = tfAge.getValue();
+                    if (ageMin < 0 || ageMin > 18) {
+                        afficherErreurChamp(lblErrAge, "❌ L'âge minimum doit être entre 0 et 18 ans");
+                        isValid = false;
+                    }
+                }
+                break;
+                
+            case SPECTACLE:
+                // Validation troupe/artistes
+                if (tfArtits == null || tfArtits.getText().trim().isEmpty()) {
+                    afficherErreurChamp(lblErrArtiste, "❌ La troupe/artistes est obligatoire");
+                    isValid = false;
+                } else {
+                    if (tfArtits.getText().trim().length() < 2) {
+                        afficherErreurChamp(lblErrArtiste, "❌ Le nom de la troupe doit contenir au moins 2 caractères");
+                        isValid = false;
+                    } else if (tfArtits.getText().trim().length() > 100) {
+                        afficherErreurChamp(lblErrArtiste, "❌ Le nom de la troupe ne peut pas dépasser 100 caractères");
+                        isValid = false;
+                    }
+                }
+                
+                // Validation type de spectacle
+                if (tySpectacle == null || tySpectacle.getValue() == null) {
+                    afficherErreurChamp(lblErrTypeSpectacle, "❌ Le type de spectacle est obligatoire");
+                    isValid = false;
+                }
+                
+                // Validation âge minimum (pour spectacles)
+                if (tfAge != null && tfAge.getValue() != null) {
+                    int ageMin = tfAge.getValue();
+                    if (ageMin < 0 || ageMin > 18) {
+                        afficherErreurChamp(lblErrAge, "❌ L'âge minimum doit être entre 0 et 18 ans");
+                        isValid = false;
+                    }
+                }
+                break;
+                
+            case CONFERENCE:
+                // Validation domaine
+                if (Domaine == null || Domaine.getText().trim().isEmpty()) {
+                    afficherErreurChamp(lblErrDomaine, "❌ Le domaine est obligatoire");
+                    isValid = false;
+                } else {
+                    if (Domaine.getText().trim().length() < 3) {
+                        afficherErreurChamp(lblErrDomaine, "❌ Le domaine doit contenir au moins 3 caractères");
+                        isValid = false;
+                    } else if (Domaine.getText().trim().length() > 100) {
+                        afficherErreurChamp(lblErrDomaine, "❌ Le domaine ne peut pas dépasser 100 caractères");
+                        isValid = false;
+                    }
+                }
+                
+                // Validation intervenant (optionnel mais si rempli, doit respecter les limites)
+                if (Intervenant != null && !Intervenant.getText().trim().isEmpty()) {
+                    if (Intervenant.getText().trim().length() > 200) {
+                        afficherErreur("❌ Le nom de l'intervenant ne peut pas dépasser 200 caractères");
+                        isValid = false;
+                    }
+                }
+                
+                // Validation niveau d'expertise
+                if (nvExpert == null || nvExpert.getValue() == null) {
+                    afficherErreurChamp(lblErrNvExpert, "❌ Le niveau d'expertise est obligatoire");
+                    isValid = false;
+                }
+                break;
+        }
+        
+        return isValid;
+    }
+    
+    /**
+     * Effectue une validation finale de cohérence
+     */
+    private boolean performFinalValidation() {
+        try {
+            // Vérification de cohérence des prix (VIP >= Standard, Premium >= VIP)
+            BigDecimal prixStandard = parseBigDecimalOrZero(prixPlaceStandard.getText());
+            BigDecimal prixVip = parseBigDecimalOrZero(prixPlaceVip.getText());
+            BigDecimal prixPremium = parseBigDecimalOrZero(prixPlacePremium.getText());
+            
+            if (prixVip.compareTo(prixStandard) < 0) {
+                afficherErreur("❌ Le prix VIP doit être supérieur ou égal au prix Standard");
+                return false;
+            }
+            
+            if (prixPremium.compareTo(prixVip) < 0) {
+                afficherErreur("❌ Le prix Premium doit être supérieur ou égal au prix VIP");
+                return false;
+            }
+            
+            // Vérification que l'événement a au moins une place
+            int placesStandard = parseIntOrZero(nbPlacesStandard.getText());
+            int placesVip = parseIntOrZero(nbPlacesVip.getText());
+            int placesPremium = parseIntOrZero(nbPlacesPremium.getText());
+            int totalPlaces = placesStandard + placesVip + placesPremium;
+            
+            if (totalPlaces == 0) {
+                afficherErreur("❌ L'événement doit avoir au moins une place disponible");
+                return false;
+            }
+            
+            return true;
+            
+        } catch (Exception e) {
+            logger.error("Erreur lors de la validation finale", e);
+            afficherErreur("❌ Erreur lors de la validation finale des données");
+            return false;
+        }
+    }
+    
+    /**
+     * Applique les modifications aux champs de l'événement existant
+     * @return true si les modifications ont été appliquées avec succès, false sinon
+     */
+    private boolean appliquerModifications() {
+        logger.info("Application des modifications à l'événement: {}", evenementAModifier.getNom());
+        
+        try {
+            // Validation des données avant application
+            if (!validateDataBeforeApply()) {
+                return false;
+            }
+            
             // Données de base
             LocalDateTime dateEvenement = LocalDateTime.of(dpDate.getValue(), 
                 java.time.LocalTime.of(spHour.getValue(), spMinute.getValue()));
@@ -543,30 +874,110 @@ public class ModifyEventController {
             evenementAModifier.setPrixPremium(prixPremium);
             
             // Appliquer les modifications spécifiques selon le type
-            if (evenementAModifier instanceof Concert) {
-                Concert concert = (Concert) evenementAModifier;
-                concert.setArtiste_groupe(tfArtits.getText().trim());
-                concert.setType(tyConcert.getValue());
-                concert.setAgeMin(tfAge.getValue());
-                
-            } else if (evenementAModifier instanceof Spectacle) {
-                Spectacle spectacle = (Spectacle) evenementAModifier;
-                spectacle.setTroupe_artistes(tfArtits.getText().trim());
-                spectacle.setTypeSpectacle(tySpectacle.getValue());
-                spectacle.setAgeMin(tfAge.getValue());
-                
-            } else if (evenementAModifier instanceof Conference) {
-                Conference conference = (Conference) evenementAModifier;
-                conference.setDomaine(Domaine.getText().trim());
-                conference.setIntervenants(Intervenant != null ? Intervenant.getText().trim() : "");
-                conference.setNiveauExpertise(nvExpert.getValue());
+            if (!appliquerModificationsSpecifiques()) {
+                return false;
             }
             
-            logger.info("Modifications appliquées avec succès: {}", evenementAModifier.getNom());
+            logger.info("Modifications appliquées avec succès pour l'événement: {}", evenementAModifier.getNom());
+            return true;
             
         } catch (Exception e) {
             logger.error("Erreur lors de l'application des modifications", e);
-            throw new RuntimeException("Erreur lors de la préparation des données", e);
+            afficherErreur("❌ Erreur lors de la préparation des données");
+            return false;
+        }
+    }
+    
+    /**
+     * Valide les données avant application des modifications
+     */
+    private boolean validateDataBeforeApply() {
+        // Vérifier que tous les champs nécessaires sont présents
+        if (dpDate == null || dpDate.getValue() == null) {
+            afficherErreur("❌ Date manquante");
+            return false;
+        }
+        
+        if (spHour == null || spMinute == null || 
+            spHour.getValue() == null || spMinute.getValue() == null) {
+            afficherErreur("❌ Heure manquante");
+            return false;
+        }
+        
+        if (tfNom == null || tfLieu == null || Description == null) {
+            afficherErreur("❌ Champs obligatoires manquants");
+            return false;
+        }
+        
+        return true;
+    }
+    
+    /**
+     * Applique les modifications spécifiques selon le type d'événement
+     */
+    private boolean appliquerModificationsSpecifiques() {
+        try {
+            if (evenementAModifier instanceof Concert) {
+                Concert concert = (Concert) evenementAModifier;
+                
+                if (tfArtits == null || tfArtits.getText().trim().isEmpty()) {
+                    afficherErreur("❌ Artiste/groupe manquant pour le concert");
+                    return false;
+                }
+                if (tyConcert == null || tyConcert.getValue() == null) {
+                    afficherErreur("❌ Type de concert manquant");
+                    return false;
+                }
+                
+                concert.setArtiste_groupe(tfArtits.getText().trim());
+                concert.setType(tyConcert.getValue());
+                concert.setAgeMin(tfAge != null && tfAge.getValue() != null ? tfAge.getValue() : 0);
+                
+                logger.info("Modifications spécifiques appliquées pour le concert");
+                
+            } else if (evenementAModifier instanceof Spectacle) {
+                Spectacle spectacle = (Spectacle) evenementAModifier;
+                
+                if (tfArtits == null || tfArtits.getText().trim().isEmpty()) {
+                    afficherErreur("❌ Troupe/artistes manquant pour le spectacle");
+                    return false;
+                }
+                if (tySpectacle == null || tySpectacle.getValue() == null) {
+                    afficherErreur("❌ Type de spectacle manquant");
+                    return false;
+                }
+                
+                spectacle.setTroupe_artistes(tfArtits.getText().trim());
+                spectacle.setTypeSpectacle(tySpectacle.getValue());
+                spectacle.setAgeMin(tfAge != null && tfAge.getValue() != null ? tfAge.getValue() : 0);
+                
+                logger.info("Modifications spécifiques appliquées pour le spectacle");
+                
+            } else if (evenementAModifier instanceof Conference) {
+                Conference conference = (Conference) evenementAModifier;
+                
+                if (Domaine == null || Domaine.getText().trim().isEmpty()) {
+                    afficherErreur("❌ Domaine manquant pour la conférence");
+                    return false;
+                }
+                if (nvExpert == null || nvExpert.getValue() == null) {
+                    afficherErreur("❌ Niveau d'expertise manquant pour la conférence");
+                    return false;
+                }
+                
+                conference.setDomaine(Domaine.getText().trim());
+                conference.setIntervenants(Intervenant != null ? Intervenant.getText().trim() : "");
+                conference.setNiveauExpertise(nvExpert.getValue());
+                
+                logger.info("Modifications spécifiques appliquées pour la conférence");
+            }
+            
+            return true;
+            
+        } catch (Exception e) {
+            logger.error("Erreur lors de l'application des modifications spécifiques", e);
+            afficherErreur("❌ Erreur lors de la mise à jour des données spécifiques");
+            return false;
         }
     }
     

@@ -1984,3 +1984,228 @@ javafx.fxml.LoadException: FXCollections is not a valid type.
 2025-11-19 19:27:27.980 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - 3 événements chargés dans la table
 2025-11-19 19:27:29.201 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage du profil organisateur
 2025-11-19 19:27:29.210 [JavaFX Application Thread] INFO  c.b.e.c.shared.ProfileController - Initialisation du profil utilisateur
+2025-11-19 19:29:41.913 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage des événements organisateur
+2025-11-19 19:29:41.921 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - Initialisation du contrôleur des événements organisateur
+2025-11-19 19:29:41.922 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - Colonnes configurées avec succès
+2025-11-19 19:29:41.922 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Configuration de l'organisateur ID: 14 pour le chargement des événements
+2025-11-19 19:29:41.922 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - Chargement des événements pour l'organisateur 14
+2025-11-19 19:29:41.923 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-19 19:29:41.990 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-19 19:29:42.007 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - 3 événements chargés dans la table
+2025-11-19 19:29:43.353 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - Création d'un nouvel événement demandé
+2025-11-19 19:29:43.354 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage de l'interface de création d'événement
+2025-11-19 19:29:43.355 [JavaFX Application Thread] WARN  c.b.e.c.o.OrganisateurDashboardController - Onglet inconnu: 
+2025-11-19 19:29:43.462 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Chargement dynamique des valeurs des ComboBox depuis les enums
+2025-11-19 19:29:43.462 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Valeurs des ComboBox chargées avec succès
+2025-11-19 19:29:43.462 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Configuration de la validation numérique des champs
+2025-11-19 19:29:43.463 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Validation numérique configurée avec succès
+2025-11-19 19:30:25.552 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage du dashboard organisateur
+2025-11-19 19:30:25.565 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Initialisation du contrôleur dashboard organisateur
+2025-11-19 19:30:25.584 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Rafraîchissement des données du dashboard
+2025-11-19 19:30:25.585 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-19 19:30:25.664 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-19 19:30:25.671 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Événements chargés : 5
+2025-11-19 19:30:25.672 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Événements après filtres : 5
+2025-11-19 19:30:25.677 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Dashboard mis à jour avec succès
+2025-11-19 19:30:27.433 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage des événements organisateur
+2025-11-19 19:30:27.441 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - Initialisation du contrôleur des événements organisateur
+2025-11-19 19:30:27.442 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - Colonnes configurées avec succès
+2025-11-19 19:30:27.442 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Configuration de l'organisateur ID: 14 pour le chargement des événements
+2025-11-19 19:30:27.442 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - Chargement des événements pour l'organisateur 14
+2025-11-19 19:30:27.443 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-19 19:30:27.497 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-19 19:30:27.506 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - 3 événements chargés dans la table
+2025-11-19 19:30:38.682 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - Rafraîchissement de la liste des événements demandé
+2025-11-19 19:30:38.683 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - Chargement des événements pour l'organisateur 14
+2025-11-19 19:30:38.684 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-19 19:30:38.769 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-19 19:30:38.781 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - 3 événements chargés dans la table
+2025-11-19 19:31:00.472 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - Création d'un nouvel événement demandé
+2025-11-19 19:31:00.473 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage de l'interface de création d'événement
+2025-11-19 19:31:00.473 [JavaFX Application Thread] WARN  c.b.e.c.o.OrganisateurDashboardController - Onglet inconnu: 
+2025-11-19 19:31:00.543 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Chargement dynamique des valeurs des ComboBox depuis les enums
+2025-11-19 19:31:00.543 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Valeurs des ComboBox chargées avec succès
+2025-11-19 19:31:00.544 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Configuration de la validation numérique des champs
+2025-11-19 19:31:00.545 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Validation numérique configurée avec succès
+2025-11-19 19:34:54.194 [JavaFX Application Thread] ERROR c.b.e.c.events.CreateEventController - Erreur lors de la création de l'évènement
+com.bschooleventmanager.eventmanager.exception.BusinessException: L'événement doit avoir au moins une place disponible
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.EvenementService.validerDonneesEvenement(EvenementService.java:316)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.service.EvenementService.creerSpectacle(EvenementService.java:166)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.events.CreateEventController.createSpectacle(CreateEventController.java:376)
+	at com.bschooleventmanager.eventmanager/com.bschooleventmanager.eventmanager.controller.events.CreateEventController.createEvent(CreateEventController.java:287)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at com.sun.javafx.reflect.Trampoline.invoke(MethodUtil.java:77)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at javafx.base/com.sun.javafx.reflect.MethodUtil.invoke(MethodUtil.java:275)
+	at javafx.fxml/com.sun.javafx.fxml.MethodHelper.invoke(MethodHelper.java:84)
+	at javafx.fxml/javafx.fxml.FXMLLoader$MethodHandler.invoke(FXMLLoader.java:1854)
+	at javafx.fxml/javafx.fxml.FXMLLoader$ControllerMethodEventHandler.handle(FXMLLoader.java:1724)
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:86)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:234)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191)
+	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:49)
+	at javafx.base/javafx.event.Event.fireEvent(Event.java:198)
+	at javafx.graphics/javafx.scene.Node.fireEvent(Node.java:8792)
+	at javafx.controls/javafx.scene.control.Button.fire(Button.java:203)
+	at javafx.controls/com.sun.javafx.scene.control.behavior.ButtonBehavior.mouseReleased(ButtonBehavior.java:208)
+	at javafx.controls/com.sun.javafx.scene.control.inputmap.InputMap.handle(InputMap.java:274)
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler$NormalEventHandlerRecord.handleBubblingEvent(CompositeEventHandler.java:247)
+	at javafx.base/com.sun.javafx.event.CompositeEventHandler.dispatchBubblingEvent(CompositeEventHandler.java:80)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:234)
+	at javafx.base/com.sun.javafx.event.EventHandlerManager.dispatchBubblingEvent(EventHandlerManager.java:191)
+	at javafx.base/com.sun.javafx.event.CompositeEventDispatcher.dispatchBubblingEvent(CompositeEventDispatcher.java:59)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:58)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.BasicEventDispatcher.dispatchEvent(BasicEventDispatcher.java:56)
+	at javafx.base/com.sun.javafx.event.EventDispatchChainImpl.dispatchEvent(EventDispatchChainImpl.java:114)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEventImpl(EventUtil.java:74)
+	at javafx.base/com.sun.javafx.event.EventUtil.fireEvent(EventUtil.java:54)
+	at javafx.base/javafx.event.Event.fireEvent(Event.java:198)
+	at javafx.graphics/javafx.scene.Scene$MouseHandler.process(Scene.java:3897)
+	at javafx.graphics/javafx.scene.Scene.processMouseEvent(Scene.java:1878)
+	at javafx.graphics/javafx.scene.Scene$ScenePeerListener.mouseEvent(Scene.java:2623)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.run(GlassViewEventHandler.java:411)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler$MouseEventNotification.run(GlassViewEventHandler.java:301)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:138)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.lambda$handleMouseEvent$2(GlassViewEventHandler.java:450)
+	at javafx.graphics/com.sun.javafx.tk.quantum.QuantumToolkit.runWithoutRenderLock(QuantumToolkit.java:424)
+	at javafx.graphics/com.sun.javafx.tk.quantum.GlassViewEventHandler.handleMouseEvent(GlassViewEventHandler.java:449)
+	at javafx.graphics/com.sun.glass.ui.View.handleMouseEvent(View.java:557)
+	at javafx.graphics/com.sun.glass.ui.View.notifyMouse(View.java:943)
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication._runLoop(Native Method)
+	at javafx.graphics/com.sun.glass.ui.win.WinApplication.lambda$runLoop$3(WinApplication.java:184)
+	at java.base/java.lang.Thread.run(Thread.java:1447)
+2025-11-19 19:35:01.314 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-19 19:35:01.401 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-19 19:35:01.435 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - ✓ Événement SPECTACLE créé: yuh
+2025-11-19 19:35:01.437 [JavaFX Application Thread] INFO  c.b.e.service.EvenementService - ✓ Spectacle créé: yuh
+2025-11-19 19:35:02.986 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage du dashboard organisateur
+2025-11-19 19:35:02.999 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Initialisation du contrôleur dashboard organisateur
+2025-11-19 19:35:03.027 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Rafraîchissement des données du dashboard
+2025-11-19 19:35:03.028 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-19 19:35:03.100 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-19 19:35:03.114 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Événements chargés : 6
+2025-11-19 19:35:03.114 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Événements après filtres : 6
+2025-11-19 19:35:03.116 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Dashboard mis à jour avec succès
+2025-11-19 19:35:05.257 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage des événements organisateur
+2025-11-19 19:35:05.269 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - Initialisation du contrôleur des événements organisateur
+2025-11-19 19:35:05.273 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - Colonnes configurées avec succès
+2025-11-19 19:35:05.276 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Configuration de l'organisateur ID: 14 pour le chargement des événements
+2025-11-19 19:35:05.285 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - Chargement des événements pour l'organisateur 14
+2025-11-19 19:35:05.285 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-19 19:35:05.352 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-19 19:35:05.373 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - 4 événements chargés dans la table
+2025-11-19 19:35:09.681 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage du dashboard organisateur
+2025-11-19 19:35:09.688 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Initialisation du contrôleur dashboard organisateur
+2025-11-19 19:35:09.691 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Rafraîchissement des données du dashboard
+2025-11-19 19:35:09.691 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-19 19:35:09.746 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-19 19:35:09.756 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Événements chargés : 6
+2025-11-19 19:35:09.757 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Événements après filtres : 6
+2025-11-19 19:35:09.764 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Dashboard mis à jour avec succès
+2025-11-19 19:41:48.430 [main] INFO  c.b.eventmanager.util.AppConfig - ✓ Propriétés d'application chargées
+2025-11-19 19:41:48.433 [main] INFO  c.b.eventmanager.Main - Démarrage de EventManager v1.0.0
+2025-11-19 19:41:48.747 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Initialisation de l'interface de connexion
+2025-11-19 19:41:48.802 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-19 19:41:48.803 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-19 19:41:49.280 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Application démarrée - Dimensions: 1454x734
+2025-11-19 19:41:49.281 [JavaFX Application Thread] INFO  c.b.eventmanager.Main - ✓ Titre: EventManager - Reservez vos evenements Facilement
+2025-11-19 19:42:02.658 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-19 19:42:02.931 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-19 19:42:03.308 [JavaFX Application Thread] INFO  c.b.e.service.UtilisateurService - ✓ Authentification réussie: charbelsnn@gmail.com
+2025-11-19 19:42:03.311 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Connexion réussie: charbelsnn@gmail.com
+2025-11-19 19:42:04.122 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - Navigation vers le dashboard pour l'utilisateur: charbelsnn@gmail.com
+2025-11-19 19:42:04.151 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Initialisation de l'interface organisateur
+2025-11-19 19:42:04.154 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage du dashboard organisateur
+2025-11-19 19:42:04.249 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Initialisation du contrôleur dashboard organisateur
+2025-11-19 19:42:04.273 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - Fenêtre adaptée à l'écran - Taille: 1454x734, Position: [40, 40]
+2025-11-19 19:42:04.278 [JavaFX Application Thread] INFO  c.b.eventmanager.util.WindowUtils - ✓ Fenêtre configurée - Adaptive: true, Maximized: true
+2025-11-19 19:42:04.284 [JavaFX Application Thread] INFO  c.b.e.c.auth.LoginController - ✓ Redirection vers le dashboard Organisateur réussie
+2025-11-19 19:42:04.573 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Rafraîchissement des données du dashboard
+2025-11-19 19:42:04.574 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-19 19:42:04.631 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-19 19:42:04.653 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Événements chargés : 6
+2025-11-19 19:42:04.655 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Événements après filtres : 6
+2025-11-19 19:42:04.685 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Dashboard mis à jour avec succès
+2025-11-19 19:42:07.508 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage de l'interface de création d'événement
+2025-11-19 19:42:07.508 [JavaFX Application Thread] WARN  c.b.e.c.o.OrganisateurDashboardController - Onglet inconnu: 
+2025-11-19 19:42:07.631 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Chargement dynamique des valeurs des ComboBox depuis les enums
+2025-11-19 19:42:07.632 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Valeurs des ComboBox chargées avec succès
+2025-11-19 19:42:07.632 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Configuration de la validation numérique des champs
+2025-11-19 19:42:07.634 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Validation numérique configurée avec succès
+2025-11-19 19:42:13.827 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Début de la création d'un événement
+2025-11-19 19:42:13.828 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Début de la validation du formulaire
+2025-11-19 19:42:13.829 [JavaFX Application Thread] WARN  c.b.e.c.events.CreateEventController - Validation du formulaire échouée
+2025-11-19 19:42:13.829 [JavaFX Application Thread] WARN  c.b.e.c.events.CreateEventController - Validation du formulaire échouée, création annulée
+2025-11-19 19:42:27.506 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Début de la création d'un événement
+2025-11-19 19:42:27.508 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Début de la validation du formulaire
+2025-11-19 19:42:27.508 [JavaFX Application Thread] WARN  c.b.e.c.events.CreateEventController - Validation du formulaire échouée
+2025-11-19 19:42:27.509 [JavaFX Application Thread] WARN  c.b.e.c.events.CreateEventController - Validation du formulaire échouée, création annulée
+2025-11-19 19:42:41.362 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Début de la création d'un événement
+2025-11-19 19:42:41.362 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Début de la validation du formulaire
+2025-11-19 19:42:41.364 [JavaFX Application Thread] WARN  c.b.e.c.events.CreateEventController - Validation du formulaire échouée
+2025-11-19 19:42:41.364 [JavaFX Application Thread] WARN  c.b.e.c.events.CreateEventController - Validation du formulaire échouée, création annulée
+2025-11-19 19:42:59.409 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Début de la création d'un événement
+2025-11-19 19:42:59.410 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Début de la validation du formulaire
+2025-11-19 19:42:59.411 [JavaFX Application Thread] WARN  c.b.e.c.events.CreateEventController - Validation du formulaire échouée
+2025-11-19 19:42:59.412 [JavaFX Application Thread] WARN  c.b.e.c.events.CreateEventController - Validation du formulaire échouée, création annulée
+2025-11-19 19:43:34.561 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Début de la création d'un événement
+2025-11-19 19:43:34.562 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Début de la validation du formulaire
+2025-11-19 19:43:34.563 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Validation du formulaire réussie
+2025-11-19 19:43:41.425 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Début de la création d'un événement
+2025-11-19 19:43:41.426 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Début de la validation du formulaire
+2025-11-19 19:43:41.426 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Validation du formulaire réussie
+2025-11-19 19:43:46.516 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Début de la création d'un événement
+2025-11-19 19:43:46.516 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Début de la validation du formulaire
+2025-11-19 19:43:46.516 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Validation du formulaire réussie
+2025-11-19 19:43:46.517 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Création de l'événement de type: Concert
+2025-11-19 19:43:46.517 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-19 19:43:46.578 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-19 19:43:46.600 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - ✓ Événement créé: Some concert
+2025-11-19 19:43:46.602 [JavaFX Application Thread] INFO  c.b.e.service.EvenementService - ✓ Concert créé: Some concert
+2025-11-19 19:43:49.501 [JavaFX Application Thread] INFO  c.b.e.c.events.CreateEventController - Concert créé avec succès: Some concert
+2025-11-19 19:43:49.502 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage du dashboard organisateur
+2025-11-19 19:43:49.517 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Initialisation du contrôleur dashboard organisateur
+2025-11-19 19:43:49.549 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Rafraîchissement des données du dashboard
+2025-11-19 19:43:49.550 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-19 19:43:49.610 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-19 19:43:49.621 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Événements chargés : 7
+2025-11-19 19:43:49.621 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Événements après filtres : 7
+2025-11-19 19:43:49.626 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardContentController - Dashboard mis à jour avec succès
+2025-11-19 19:44:41.697 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Affichage des événements organisateur
+2025-11-19 19:44:41.745 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - Initialisation du contrôleur des événements organisateur
+2025-11-19 19:44:41.749 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - Colonnes configurées avec succès
+2025-11-19 19:44:41.749 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurDashboardController - Configuration de l'organisateur ID: 14 pour le chargement des événements
+2025-11-19 19:44:41.750 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - Chargement des événements pour l'organisateur 14
+2025-11-19 19:44:41.751 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-19 19:44:41.814 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-19 19:44:41.825 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - 5 événements chargés dans la table
+2025-11-19 19:44:53.673 [JavaFX Application Thread] INFO  c.b.e.service.EvenementService - Fonction suppEven dans le service EvenementService
+2025-11-19 19:44:53.674 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-19 19:44:53.742 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-19 19:44:53.750 [JavaFX Application Thread] INFO  c.b.eventmanager.dao.EvenementDAO - Événement ID 54 marqué comme supprimé.
+2025-11-19 19:44:53.751 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - Événement supprimé avec succès: yuh
+2025-11-19 19:44:57.780 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - Chargement des événements pour l'organisateur 14
+2025-11-19 19:44:57.781 [JavaFX Application Thread] WARN  c.b.e.dao.DatabaseConnection - Connexion fermée ou invalide, reconnexion en cours...
+2025-11-19 19:44:57.837 [JavaFX Application Thread] INFO  c.b.e.dao.DatabaseConnection - ✓ Connexion à la base de données réussie
+2025-11-19 19:44:57.861 [JavaFX Application Thread] INFO  c.b.e.c.o.OrganisateurEventListController - 4 événements chargés dans la table
