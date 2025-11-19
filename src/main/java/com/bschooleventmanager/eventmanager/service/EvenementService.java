@@ -110,8 +110,8 @@ public class EvenementService {
             return result;
 
         } catch (DatabaseException e) {
-            logger.error("Erreur modification concert", e);
-            throw new BusinessException("Erreur lors de la modif du concert", e);
+            logger.error("Erreur modification de la conférence", e);
+            throw new BusinessException("Erreur lors de la modif de la conférence", e);
         }
     }
 
@@ -129,8 +129,8 @@ public class EvenementService {
             return result;
 
         } catch (DatabaseException e) {
-            logger.error("Erreur modification concert", e);
-            throw new BusinessException("Erreur lors de la modif du concert", e);
+            logger.error("Erreur modification spectacle", e);
+            throw new BusinessException("Erreur lors de la modif  du spectacle", e);
         }
     }
 
@@ -263,21 +263,24 @@ public class EvenementService {
     /**
      * Modifier un événement
      */
-    public void updateEvent(Evenement evenement) throws BusinessException {
+    public boolean updateEvent(Evenement evenement) throws BusinessException {
         try {
             if (evenement.getStatut() == StatutEvenement.TERMINE) {
                 throw new BusinessException("Impossible de modifier un événement terminé");
             }
 
-            evenementDAO.mettreAJour(evenement);
-            logger.info("✓ Événement modifié: {}", evenement.getNom());
+        Evenement evenementModifie =    evenementDAO.mettreAJour(evenement);
+          logger.info("✓ Événement modifié: {}", evenement.getNom());
+            return evenementModifie != null;
+           
 
         } catch (DatabaseException e) {
             logger.error("Erreur modification événement", e);
             throw new BusinessException("Erreur modification événement", e);
         }
         catch (BusinessException e) {
-            NotificationUtils.showError(e.getMessage());
+           
+            return false;
         }
     }
 

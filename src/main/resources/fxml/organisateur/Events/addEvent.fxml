@@ -16,8 +16,8 @@
         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0"/>
     </padding>
 
-    <GridPane alignment="CENTER" hgap="15" vgap="15" >
-    <ScrollPane>
+   
+    <ScrollPane fitToWidth="true" fitToHeight="true">
             <VBox alignment="TOP_CENTER" spacing="15" style="-fx-padding: 20; -fx-background-color: #f4f4f4;">
 
             <!-- Bouton retour en haut -->
@@ -218,7 +218,6 @@
       
       
       
-        </GridPane>
 
 </VBox>
 

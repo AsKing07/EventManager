@@ -13,4 +13,13 @@ public enum TypeConcert {
     public String getLabel() {
         return label;
     }
+
+    public static TypeConcert fromLabel(String label) {
+        for (TypeConcert type : TypeConcert.values()) {
+            if (type.getLabel().equalsIgnoreCase(label)) {
+                return type;
+            }
+        }
+        return null; // ou lever une exception si le label n'est pas valide
+    }
 }

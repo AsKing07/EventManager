@@ -196,47 +196,6 @@ public class CreateEventController {
     }
 
     /**
-     * Modification de l'évènement en fonction du type sélectionné
-     * @Author Loic Vanel
-     * @throws BusinessException
-     */
-    private void modificationEvent() throws BusinessException {
-        clearAllErrors();
-        // Validation du formulaire (Champs basiques)
-        Boolean valid = validateForm();
-        if (!valid) return;
-
-        //Chargement des valeurs communes a tous les types d'évènements
-        EventBaseData baseData = loadCommonValues();
-        if (baseData == null) {
-            logger.info("loadCommonValues a déjà positionné lblError");
-            return;
-        }
-        // Création de l'évènement en fonction du type
-        try {
-            if (baseData.typeEvent.equals(TypeEvenement.CONCERT.getLabel())) {
-                createConcert(2,baseData);
-                NotificationUtils.showSuccess("Modification du concert réussie !");
-                if (dashboardController != null) dashboardController.showDashboard();
-
-            } else if (baseData.typeEvent.equals(TypeEvenement.SPECTACLE.getLabel())) {
-                createSpectacle(2,baseData);
-                NotificationUtils.showSuccess("Création du spectacle réussie !");
-                if (dashboardController != null) dashboardController.showDashboard();
-
-            } else {
-                createConference(2,baseData);
-                NotificationUtils.showSuccess("Création de la conférence réussie !");
-                if (dashboardController != null) dashboardController.showDashboard();
-            }
-        } catch (Exception e) {
-            logger.error("Erreur lors de la création de l'évènement", e);
-            NotificationUtils.showError("Une erreur est survenue lors de la création de l'évènement. Vérifiez les champs et réessayez.");
-        }
-    }
-
-
-    /**
      * Création d'un concert
      * @param baseData
      * @param create_or_modif pour savoir si on est en création ou modification (1 = création, 2 = modification)

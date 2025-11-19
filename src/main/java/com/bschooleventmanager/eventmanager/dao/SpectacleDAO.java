@@ -87,8 +87,8 @@ public class SpectacleDAO extends BaseDAO<Spectacle> {
 
         
 
-        try ( Connection connection = DatabaseConnection.getInstance().getConnection();
-            PreparedStatement stmt = connection.prepareStatement(query);PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection connection = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, spectacle.getOrganisateurId());
             pstmt.setString(2, spectacle.getNom());
             pstmt.setTimestamp(3, Timestamp.valueOf(spectacle.getDateEvenement()));
@@ -102,31 +102,30 @@ public class SpectacleDAO extends BaseDAO<Spectacle> {
             pstmt.setBigDecimal(11, spectacle.getPrixVip());
             pstmt.setBigDecimal(12, spectacle.getPrixPremium());
             pstmt.setString(13, spectacle.getTroupe_artistes());
-            pstmt.setInt(14, spectacle.getAgeMin());
-            pstmt.setNull(15,java.sql.Types.VARCHAR); // Domaine n'est pas necessaire pour un spectacle
-            pstmt.setNull(16,java.sql.Types.VARCHAR); // Intervenants n'est pas necessaire pour un spectacle
-            pstmt.setNull(17, java.sql.Types.VARCHAR); // Type concert n'est pas necessaire pour un spectacle
-            pstmt.setString(18, spectacle.getTypeSpectacle().getLabel());
-            pstmt.setInt(19, java.sql.Types.NULL); // Niveau expertise n'est pas necessaire pour un concert
+            // age_min optionnel
+            if (spectacle.getAgeMin() != null) {
+                pstmt.setInt(14, spectacle.getAgeMin());
+            } else {
+                pstmt.setNull(14, Types.INTEGER);
+            }
+            pstmt.setNull(15, java.sql.Types.VARCHAR); // Domaine non applicable
+            pstmt.setNull(16, java.sql.Types.VARCHAR); // Intervenants non applicable
+            pstmt.setNull(17, java.sql.Types.VARCHAR); // Type concert non applicable
+            pstmt.setString(18, spectacle.getTypeSpectacle() != null ? spectacle.getTypeSpectacle().getLabel() : null);
+            pstmt.setNull(19, java.sql.Types.VARCHAR); // Niveau expertise non applicable
             pstmt.setInt(20, spectacle.getIdEvenement());
 
             int affectedRows = pstmt.executeUpdate();
 
-
             if (affectedRows > 0) {
-                try (ResultSet rs = pstmt.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        spectacle.setIdEvenement(rs.getInt(1));
-                        logger.info("✓ spectacle modifié: {}", spectacle.getNom());
-                       
-                        return spectacle;
-                    }
-                }
+                logger.info("✓ Spectacle modifié avec succès: {}", spectacle.getNom());
+                return spectacle;
             }
             
-            throw new DatabaseException("Erreur lors de la mise a jour du du spectacle.");
+            throw new DatabaseException("Aucune ligne mise à jour pour le spectacle ID: " + spectacle.getIdEvenement());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Erreur SQL lors de la mise à jour du spectacle: {}", e.getMessage());
+            throw new DatabaseException("Erreur lors de la mise à jour du spectacle: " + e.getMessage());
         }
     }
 

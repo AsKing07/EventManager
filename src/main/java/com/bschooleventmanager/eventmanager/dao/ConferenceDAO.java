@@ -87,7 +87,7 @@ public class ConferenceDAO extends BaseDAO<Conference> {
 
         
 
-        try (Connection connection = getConnection(); PreparedStatement pstmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection connection = getConnection(); PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, conference.getOrganisateurId());
             pstmt.setString(2, conference.getNom());
             pstmt.setTimestamp(3, Timestamp.valueOf(conference.getDateEvenement()));
@@ -100,31 +100,27 @@ public class ConferenceDAO extends BaseDAO<Conference> {
             pstmt.setBigDecimal(10, conference.getPrixStandard());
             pstmt.setBigDecimal(11, conference.getPrixVip());
             pstmt.setBigDecimal(12, conference.getPrixPremium());
-            pstmt.setNull(13, java.sql.Types.VARCHAR); // Artiste/Groupe n'est pas necessaire pour une conference
-            pstmt.setInt(14, java.sql.Types.NULL); // Age min n'est pas necessaire pour une conference
-            pstmt.setString(15,conference.getDomaine());
-            pstmt.setString(16,conference.getIntervenants());
-            pstmt.setNull(17, Types.NULL);// Type concert n'est pas necessaire pour une conference
-            pstmt.setNull(18, Types.NULL);// Type spectacle n'est pas necessaire pour une conference
-            pstmt.setString(19,conference.getNiveauExpertise().getLabel());
+            // Artiste/Groupe / age_min / type_concert / type_spectacle non applicables pour une conférence
+            pstmt.setNull(13, java.sql.Types.VARCHAR);
+            pstmt.setNull(14, java.sql.Types.INTEGER);
+            pstmt.setString(15, conference.getDomaine());
+            pstmt.setString(16, conference.getIntervenants());
+            pstmt.setNull(17, java.sql.Types.VARCHAR);
+            pstmt.setNull(18, java.sql.Types.VARCHAR);
+            pstmt.setString(19, conference.getNiveauExpertise() != null ? conference.getNiveauExpertise().getLabel() : null);
             pstmt.setInt(20, conference.getIdEvenement());
 
             int affectedRows = pstmt.executeUpdate();
 
-
             if (affectedRows > 0) {
-                try (ResultSet rs = pstmt.getGeneratedKeys()) {
-                    if (rs.next()) {
-                        conference.setIdEvenement(rs.getInt(1));
-                        logger.info("✓ Conference modifié: {}", conference.getNom());
-                        return conference;
-                    }
-                }
+                logger.info("✓ Conférence modifiée avec succès: {}", conference.getNom());
+                return conference;
             }
             
-            throw new DatabaseException("Erreur lors de la mise a jour de la conference.");
+            throw new DatabaseException("Aucune ligne mise à jour pour la conférence ID: " + conference.getIdEvenement());
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.error("Erreur SQL lors de la mise à jour de la conférence: {}", e.getMessage());
+            throw new DatabaseException("Erreur lors de la mise à jour de la conférence: " + e.getMessage());
         }
 
     }
