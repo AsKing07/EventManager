@@ -238,19 +238,30 @@ public class OrganisateurDashboardController {
         contentArea.getChildren().clear();
         
         try {
-            Text title = new Text("Liste de mes Événements");
-            title.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: #2c3e50;");
+            // Charger le contenu FXML dédié au dashboard
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/organisateur/Events/eventsList.fxml"));
+            Parent dashboardContent = loader.load();
+
+            // Transmettre la référence du contrôleur parent au contrôleur du contenu afin de pouvoir
+            // rediriger vers la création d'événement
+            com.bschooleventmanager.eventmanager.controller.organisateur.OrganisateurEventListController contentController = loader.getController();
+            contentController.setParentController(this);
             
-            Text subtitle = new Text("Ici sera affichée la liste de tous vos événements créés");
-            subtitle.setStyle("-fx-font-size: 16px; -fx-fill: #7f8c8d;");
-            
-            javafx.scene.layout.VBox content = new javafx.scene.layout.VBox(20.0, title, subtitle);
-            content.setAlignment(javafx.geometry.Pos.CENTER);
-            
-            contentArea.getChildren().add(content);
+            // CORRECTION: Transmettre l'ID de l'organisateur connecté
+            Utilisateur user = SessionManager.getUtilisateurConnecte();
+            if (user != null) {
+                logger.info("Configuration de l'organisateur ID: {} pour le chargement des événements", user.getIdUtilisateur());
+                contentController.setOrganisateurId(user.getIdUtilisateur());
+            } else {
+                logger.error("Aucun utilisateur connecté trouvé pour charger les événements");
+                NotificationUtils.showError("Erreur: Utilisateur non connecté");
+            }
+
+            contentArea.getChildren().add(dashboardContent);
             
         } catch (Exception e) {
             logger.error("Erreur lors du chargement des événements", e);
+            NotificationUtils.showError("Erreur lors du chargement des événements: ");
         }
     }
 
