@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import com.bschooleventmanager.eventmanager.model.Evenement;
+import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
 import com.bschooleventmanager.eventmanager.model.Utilisateur;
 import com.bschooleventmanager.eventmanager.util.SessionManager;
 import com.bschooleventmanager.eventmanager.util.NotificationUtils;
@@ -84,7 +85,7 @@ public class OrganisateurDashboardController {
      * Affiche la liste des événements
      */
     @FXML
-    private void showEvents() {
+    public void showEvents() {
         logger.info("Affichage des événements organisateur");
         setActiveTab("events");
         loadEventsContent();
@@ -111,13 +112,13 @@ public class OrganisateurDashboardController {
     }
 
     /**
-     * Affiche l'interface de modification d'événement
+     * Affiche l'interface de modification d'un événement
      */
     @FXML
     public void showModifyEvent(Evenement event) {
         logger.info("Affichage de l'interface de modification d'événement");
         setActiveTab(""); // Aucun onglet actif
-        loadModifyEventContent(event);
+        loadModifyEventContent(event.getIdEvenement(), event.getTypeEvenement());
     }
 
     
@@ -327,20 +328,20 @@ public class OrganisateurDashboardController {
     /**
      * Charge le contenu de modification d'événement
      */
-    private void loadModifyEventContent(Evenement event) {
+    private void loadModifyEventContent(int eventId, TypeEvenement eventType) {
         contentArea.getChildren().clear();
         try {
             // Charger l'interface de modification d'événement
-            // FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/organisateur/Events/modifyEvent.fxml"));
-            // Parent modifyEventContent = loader.load();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/organisateur/Events/editEvent.fxml"));
+            Parent modifyEventContent = loader.load();
             
-            // // Récupérer le contrôleur pour passer une référence au dashboard et l'événement à modifier
-            // com.bschooleventmanager.eventmanager.controller.events.ModifyEventController eventController = loader.getController();
-            // eventController.setDashboardController(this);
-            // eventController.setEventData(event);
+            // Récupérer le contrôleur pour passer une référence au dashboard et l'événement à modifier
+            com.bschooleventmanager.eventmanager.controller.events.ModifyEventController eventController = loader.getController();
+            eventController.setDashboardController(this);
+            eventController.setEvenementInfo(eventId, eventType);
             
-            // contentArea.getChildren().add(modifyEventContent);
-            throw new UnsupportedOperationException("Modification d'événement non encore implémentée");
+            contentArea.getChildren().add(modifyEventContent);
+           
             
         } catch (Exception e) {
             logger.error("Erreur lors du chargement de l'interface de modification d'événement", e);

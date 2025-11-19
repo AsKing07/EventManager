@@ -6,8 +6,12 @@ import com.bschooleventmanager.eventmanager.model.Conference;
 import com.bschooleventmanager.eventmanager.model.Evenement;
 import com.bschooleventmanager.eventmanager.model.Spectacle;
 import com.bschooleventmanager.eventmanager.model.enums.EtatEvent;
+import com.bschooleventmanager.eventmanager.model.enums.NiveauExpertise;
 import com.bschooleventmanager.eventmanager.model.enums.StatutEvenement;
+import com.bschooleventmanager.eventmanager.model.enums.TypeConcert;
 import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
+import com.bschooleventmanager.eventmanager.model.enums.TypeSpectacle;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,10 +52,7 @@ deleteEventById(id);
     }
     public List<Evenement> getEventByType(TypeEvenement type) throws DatabaseException {
         List<Evenement> evenements = new ArrayList<>();
-        String query = "SELECT id_evenement, organisateur_id, nom, date_evenement, lieu, type_evenement, " +
-                       "description, places_standard_disponibles, places_vip_disponibles, " +
-                       "places_premium_disponibles, prix_standard, prix_vip, prix_premium, " +
-                       "date_creation, statut FROM Evenements WHERE type_evenement = ?";
+        String query = "SELECT * FROM Evenements WHERE type_evenement = ?";
 
         try (Connection connection = getConnection();PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, type.name());
@@ -403,6 +404,37 @@ deleteEventById(id);
         evenement.setPlacePremiumVendues(rs.getInt("place_p_vendu"));
         evenement.setPlaceVipVendues(rs.getInt("place_vip_vendu"));
         evenement.setEtatEvent(rs.getBoolean("etat_event"));
+
+        if(evenement instanceof Concert)
+        {
+           
+
+            ((Concert)evenement).setArtiste_groupe(rs.getString("artiste_groupe"));
+            ((Concert)evenement).setAgeMin(rs.getInt("age_min"));
+            TypeConcert typeConcert = TypeConcert.fromLabel(rs.getString("type_concert")) ;
+            if (typeConcert != null) {
+                ((Concert)evenement).setType(typeConcert);
+            }
+
+        }
+        else if (evenement instanceof Conference)
+        {
+                ((Conference)evenement).setIntervenants(rs.getString("intervenant"));
+                ((Conference)evenement).setDomaine(rs.getString("domaine"));
+
+                NiveauExpertise niveau = NiveauExpertise.fromLabel(rs.getString("niveau_expertise"));
+                ((Conference)evenement).setNiveauExpertise(niveau  ); 
+        }
+        else if (evenement instanceof Spectacle)
+        {
+           
+
+            ((Spectacle)evenement).setTroupe_artistes(rs.getString("artiste_groupe"));;
+            TypeSpectacle typeSpectacle = TypeSpectacle.fromLabel(rs.getString("type_spectacle"));
+            ((Spectacle)evenement).setTypeSpectacle(typeSpectacle);
+            ((Spectacle)evenement).setAgeMin(rs.getInt("age_min"));
+
+        }
         
         // Gestion sécurisée du statut avec valeur par défaut
         String statutStr = rs.getString("statut");

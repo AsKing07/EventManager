@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.ImageView?>
+
+
+<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/24" xmlns:fx="http://javafx.com/fxml/1"  fx:controller="com.bschooleventmanager.eventmanager.controller.events.ModifyEventController">
+    <padding>
+        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0"/>
+    </padding>
+
+    <ScrollPane fitToWidth="true" fitToHeight="true">
+        <VBox alignment="TOP_CENTER" spacing="15" style="-fx-padding: 20; -fx-background-color: #f4f4f4;" prefWidth="1000"  maxWidth="Infinity">
+
+                <!-- Bouton retour en haut -->
+                <HBox alignment="TOP_LEFT" spacing="10">
+                    <Button fx:id="btnReturn" text="← Retour au Dashboard" onAction="#returnToDashboard"
+                            style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-font-size: 12px; -fx-padding: 8 15 8 15; -fx-background-radius: 3;"/>
+
+                    <!-- Spacer pour pousser le titre au centre -->
+                    <Region HBox.hgrow="ALWAYS"/>
+                </HBox>
+
+                <!-- Titre -->
+                <Text text="Modification d'un Événement" style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
+
+                <Separator/>
+                <!-- Nom de l'événement à modifier -->
+                <Label fx:id="tfIdEvent" text="Modification de l'événement" 
+                       style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+                <Separator/>
+                <!-- Champs de formulaire -->
+                <GridPane hgap="15" vgap="10" prefWidth="800">
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="220" halignment="RIGHT"/>
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="400"/>
+                    </columnConstraints>
+
+                    <!-- Nom -->
+                    <Label text="Nom de l'événement (Titre) *:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="tfNom" promptText="Ex : Concert Summer Fest" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="400"/>
+                    <!-- Message d'erreur Titre -->
+                    <Label managed="false" fx:id="lblErrTitre" textFill="red" style="-fx-font-weight: bold" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <!-- Description -->
+                    <Label text="Description :" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextArea fx:id="Description" promptText="Ex : Paris, Dakar, Casablanca..." GridPane.rowIndex="2" GridPane.columnIndex="1" prefRowCount="3" prefWidth="400"/>
+
+                    <!-- Date -->
+                    <Label text="Date *:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <HBox spacing="10" GridPane.rowIndex="3" GridPane.columnIndex="1">
+                        <DatePicker fx:id="dpDate"/>
+                        <Label text="Heure:"/>
+                        <Spinner fx:id="spHour" prefWidth="80"/>
+                        <Label text="h"/>
+                        <Spinner fx:id="spMinute" prefWidth="80"/>
+                        <Label text="min"/>
+                    </HBox>
+                    <!-- Message d'erreur Titre -->
+                    <Label managed="false" fx:id="lblErrDate" textFill="red" style="-fx-font-weight: bold" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                    <!-- Lieu -->
+                    <Label text="Lieu *:" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <TextField fx:id="tfLieu" promptText="Ex : Paris, Dakar, Casablanca..." GridPane.rowIndex="5" GridPane.columnIndex="1" prefWidth="400"/>
+                    <!-- Message d'erreur Lieu -->
+                    <Label managed="false" fx:id="lbErrLieu" textFill="red" style="-fx-font-weight: bold" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+                    <!-- Type d'évènement -->
+                    <Label text="Type d'évènement *:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                    <VBox GridPane.rowIndex="7" GridPane.columnIndex="1" spacing="5" prefWidth="400">
+                        <ComboBox onAction="#typeEventChange" fx:id="evType" promptText="Choisir un type" disable="true" prefWidth="400"/>
+                        <Label text="⚠️Le type d'événement ne peut pas être modifié" 
+                               style="-fx-text-fill: #e74c3c; -fx-font-size: 11px; -fx-font-style: italic;"/>
+                        <Label text="Si vous souhaitez changer le type, veuillez supprimer cet événement et en créer un nouveau." 
+                               style="-fx-text-fill: #e74c3c; -fx-font-size: 11px; -fx-font-style: italic;"/>
+                            
+                    </VBox>
+                    <!-- Message d'erreur Type Event -->
+                    <Label managed="false" fx:id="lblErrTyEvent" textFill="red" style="-fx-font-weight: bold" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
+
+                    <!-- Type Concert -->
+                    <Label managed="false" visible="false" fx:id="lbtyConcert" text="Type Concert *:" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
+                    <ComboBox managed="false" visible="false" fx:id="tyConcert" promptText="Choisir un type" GridPane.rowIndex="9" GridPane.columnIndex="1" prefWidth="400"/>
+                    <!-- Message d'erreur Type concert -->
+                    <Label managed="false" fx:id="lblErrTypeConcert" textFill="red" style="-fx-font-weight: bold" GridPane.rowIndex="10" GridPane.columnIndex="1"/>
+
+                    <!-- Type Spectacle -->
+                    <Label managed="false" visible="false" fx:id="lbTySpectacle" text="Type de Spectacle *:" GridPane.rowIndex="11" GridPane.columnIndex="0"/>
+                    <ComboBox managed="false" visible="false" fx:id="tySpectacle" promptText="Choisir un type" GridPane.rowIndex="11" GridPane.columnIndex="1" prefWidth="400"/>
+                    <!-- Message d'erreur Type Spectacle -->
+                    <Label managed="false" fx:id="lblErrTypeSpectacle" textFill="red" style="-fx-font-weight: bold" GridPane.rowIndex="12" GridPane.columnIndex="1"/>
+
+                    <!-- Niveau expertise -->
+                    <Label managed="false" visible="false" fx:id="lbNvExpert" text="Niveau Expertise *:" GridPane.rowIndex="13" GridPane.columnIndex="0"/>
+                    <ComboBox managed="false" visible="false" fx:id="nvExpert" promptText="Choisir un niveau" GridPane.rowIndex="13" GridPane.columnIndex="1" prefWidth="400"/>
+                    <!-- Message d'erreur Nv Expert -->
+                    <Label managed="false" fx:id="lblErrNvExpert" textFill="red" style="-fx-font-weight: bold" GridPane.rowIndex="14" GridPane.columnIndex="1"/>
+
+                    <!-- Domaine -->
+                    <Label managed="false" visible="false" fx:id="lbDomaine" text="Domaine *:" GridPane.rowIndex="15" GridPane.columnIndex="0"/>
+                    <TextField managed="false" visible="false" fx:id="Domaine" promptText="Ex : IT, Agriculture..." GridPane.rowIndex="15" GridPane.columnIndex="1" prefWidth="400"/>
+                    <!-- Message d'erreur Domaine -->
+                    <Label managed="false" fx:id="lblErrDomaine" textFill="red" style="-fx-font-weight: bold" GridPane.rowIndex="16" GridPane.columnIndex="1"/>
+
+                    <!-- Intervenant -->
+                    <Label managed="false" visible="false" fx:id="lbIntervenant" text="Intervenant :" GridPane.rowIndex="17" GridPane.columnIndex="0"/>
+                    <TextField managed="false" visible="false" fx:id="Intervenant" GridPane.rowIndex="17" GridPane.columnIndex="1" prefWidth="400"/>
+
+                    <!-- Age minimal -->
+                    <Label managed="false" visible="false" fx:id="lbtfAge" text="Age minimal * :" GridPane.rowIndex="18" GridPane.columnIndex="0"/>
+                    <Spinner managed="false" visible="false" fx:id="tfAge" GridPane.rowIndex="18" GridPane.columnIndex="1" prefWidth="200" editable="false" />
+                    <!-- Message d'erreur Age Min -->
+                    <Label managed="false" fx:id="lblErrAge" textFill="red" style="-fx-font-weight: bold" GridPane.rowIndex="19" GridPane.columnIndex="1"/>
+
+                    <!-- Artiste / Groupe -->
+                    <Label fx:id="lbtfArtits" managed="false" visible="false" text="Artiste / Groupe * :" GridPane.rowIndex="20" GridPane.columnIndex="0"/>
+                    <TextField managed="false" visible="false" fx:id="tfArtits" promptText="Ex : Nom de l'artiste ou du groupe" GridPane.rowIndex="20" GridPane.columnIndex="1" prefWidth="400"/>
+                    <!-- Message d'erreur Artiste -->
+                    <Label managed="false" fx:id="lblErrArtiste" textFill="red" style="-fx-font-weight: bold" GridPane.rowIndex="21" GridPane.columnIndex="1"/>
+
+                </GridPane>
+
+                <Separator/>
+                <!-- Prix par catégorie -->
+                <VBox spacing="10" style="-fx-padding: 10; -fx-border-color: #ccc; -fx-border-radius: 5; -fx-background-color: #fff;" prefWidth="800">
+                    <Label text="Prix de place par catégorie" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
+                    <Separator />
+                    <GridPane hgap="20" vgap="10" style="-fx-padding: 10; -fx-border-color: black; -fx-border-width: 1; -fx-magging:auto">
+                        <columnConstraints>
+                            <ColumnConstraints minWidth="100"/>
+                            <ColumnConstraints minWidth="150"/>
+                            <ColumnConstraints minWidth="150"/>
+                            <ColumnConstraints minWidth="30"/>
+                        </columnConstraints>
+                        
+                        <Label text="Catégorie" GridPane.rowIndex="0" GridPane.columnIndex="0" style="-fx-font-weight: bold;" />
+                        <Label text="Nombre de places *" GridPane.rowIndex="0" GridPane.columnIndex="1" style="-fx-font-weight: bold;" />
+                        <Label text="Prix par place" GridPane.rowIndex="0" GridPane.columnIndex="2" style="-fx-font-weight: bold;" />
+                        <Label text="" GridPane.rowIndex="0" GridPane.columnIndex="3" style="-fx-font-weight: bold;" />
+
+                        <!-- Standard -->
+                        <Label text="Standard" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <TextField text="0" fx:id="nbPlacesStandard" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="150"/>
+                        <TextField text="0" fx:id="prixPlaceStandard" GridPane.rowIndex="1" GridPane.columnIndex="2" prefWidth="150"/>
+                        <Label text="€" GridPane.rowIndex="1" GridPane.columnIndex="3" style="-fx-font-weight: bold;"/>
+
+                        <!-- VIP -->
+                        <Label text="VIP" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <TextField text="0" fx:id="nbPlacesVip" GridPane.rowIndex="2" GridPane.columnIndex="1" prefWidth="150"/>
+                        <TextField text="0" fx:id="prixPlaceVip" GridPane.rowIndex="2" GridPane.columnIndex="2" prefWidth="150"/>
+                        <Label text="€" GridPane.rowIndex="2" GridPane.columnIndex="3" style="-fx-font-weight: bold;"/>
+
+                        <!-- Premium -->
+                        <Label text="Premium" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <TextField text="0" fx:id="nbPlacesPremium" GridPane.rowIndex="3" GridPane.columnIndex="1" prefWidth="150"/>
+                        <TextField text="0" fx:id="prixPlacePremium" GridPane.rowIndex="3" GridPane.columnIndex="2" prefWidth="150"/>
+                        <Label text="€" GridPane.rowIndex="3" GridPane.columnIndex="3" style="-fx-font-weight: bold;"/>
+                    </GridPane>
+                </VBox>
+                <Separator/>
+
+
+                <!-- Message d'erreur -->
+                <Label fx:id="lblError" textFill="red" style="-fx-font-weight: bold"/>
+
+                <!-- Boutons d'action -->
+                <HBox alignment="CENTER" spacing="20">
+                    <Button text="💾 Sauvegarder" onAction="#saveModifications" 
+                            style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 12 25 12 25; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                    
+                    <Button text="❌ Annuler" onAction="#returnToDashboard" 
+                            style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 12 25 12 25; -fx-background-radius: 6; -fx-cursor: hand;"/>
+                </HBox>
+            </VBox>
+    </ScrollPane>
+</VBox>

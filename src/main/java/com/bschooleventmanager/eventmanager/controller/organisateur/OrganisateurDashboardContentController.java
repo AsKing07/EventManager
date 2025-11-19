@@ -57,62 +57,136 @@ public class OrganisateurDashboardContentController {
 
     @FXML
     private void initialize() {
-        // Préparer les types avec l'option "Tous"
+        logger.info("Initialisation du contrôleur dashboard organisateur");
+        
+        // Préparer les types avec l'option "Tous" 
+        setupTypeFilter();
+        
+        // Configuration des événements des boutons
+        setupButtonActions();
+        
+        // Chargement initial avec un petit délai pour permettre l'initialisation complète
+        Platform.runLater(() -> {
+            // Définir les valeurs par défaut
+            cbType.setValue("Tous les types");
+            refreshData();
+        });
+    }
+    
+    /**
+     * Configure le filtre de types avec chargement dynamique depuis les enums
+     */
+    private void setupTypeFilter() {
         List<String> typeOptions = new ArrayList<>();
         typeOptions.add("Tous les types");
-        typeOptions.addAll(Arrays.stream(TypeEvenement.values())
-                .map(TypeEvenement::getLabel)
-                .collect(Collectors.toList()));
+        
+        // Charger dynamiquement depuis l'enum au lieu de coder en dur
+        for (TypeEvenement type : TypeEvenement.values()) {
+            typeOptions.add(type.getLabel());
+        }
         
         cbType.setItems(FXCollections.observableArrayList(typeOptions));
-
+    }
+    
+    /**
+     * Configure les actions des boutons
+     */
+    private void setupButtonActions() {
         btnApplyFilters.setOnAction(e -> refreshData());
+        
         btnCreateEvent.setOnAction(e -> {
-            if (parentController != null) parentController.showCreateEvent();
+            if (parentController != null) {
+                parentController.showCreateEvent();
+            }
         });
 
         btnExportCsv.setOnAction(e -> exportCsv());
-    btnExportPdf.setOnAction(e -> NotificationUtils.showInfo("Info", "Export PDF non implémenté. Utilisez l'export CSV pour l'instant."));
-
-        // Chargement initial
-        Platform.runLater(this::refreshData);
+        
+        btnExportPdf.setOnAction(e -> 
+            NotificationUtils.showInfo("Info", "Export PDF non implémenté. Utilisez l'export CSV pour l'instant.")
+        );
     }
 
     private void refreshData() {
         try {
+            logger.info("Rafraîchissement des données du dashboard");
+            
             Utilisateur user = SessionManager.getUtilisateurConnecte();
-            int userId = user != null ? user.getIdUtilisateur() : -1;
-
-            LocalDate from = dpFrom.getValue();
-            LocalDate to = dpTo.getValue();
-            String typeLabel = cbType.getValue();
-
-            List<Evenement> events;
-            if (userId >= 0) {
-                events = evenementService.getEvenementsParOrganisateur(userId);
-            } else {
-                events = evenementService.getAllEvents();
+            if (user == null) {
+                logger.warn("Aucun utilisateur connecté");
+                NotificationUtils.showError("Utilisateur non connecté");
+                return;
             }
+            
+            int userId = user.getIdUtilisateur();
 
-            // Apply filters
-            List<Evenement> filtered = events.stream()
-                    .filter(ev -> {
-                        if (from != null && ev.getDateEvenement().toLocalDate().isBefore(from)) return false;
-                        if (to != null && ev.getDateEvenement().toLocalDate().isAfter(to)) return false;
-                        if (typeLabel != null && !typeLabel.isBlank() && !"Tous les types".equals(typeLabel)) {
-                            return ev.getTypeEvenement().getLabel().equals(typeLabel);
-                        }
-                        return true;
-                    })
-                    .collect(Collectors.toList());
+            // Récupération des événements de l'organisateur
+            List<Evenement> events = evenementService.getEvenementsParOrganisateur(userId);
+            logger.info("Événements chargés : {}", events.size());
 
+            // Application des filtres avec validation
+            List<Evenement> filtered = applyFilters(events);
+            logger.info("Événements après filtres : {}", filtered.size());
+
+            // Mise à jour des métriques et graphiques
             updateMetrics(filtered);
             updateCharts(filtered);
+            
+            logger.info("Dashboard mis à jour avec succès");
 
         } catch (Exception e) {
             logger.error("Erreur rafraîchissement dashboard", e);
-            NotificationUtils.showError("Impossible de charger les données du dashboard");
+            NotificationUtils.showError("Impossible de charger les données du dashboard: " + e.getMessage());
+            
+            // Afficher des valeurs par défaut en cas d'erreur
+            displayEmptyState();
         }
+    }
+    
+    /**
+     * Applique les filtres de date et de type aux événements
+     */
+    private List<Evenement> applyFilters(List<Evenement> events) {
+        LocalDate from = dpFrom.getValue();
+        LocalDate to = dpTo.getValue();
+        String typeLabel = cbType.getValue();
+        
+        return events.stream()
+                .filter(ev -> {
+                    // Filtre par date de début
+                    if (from != null && ev.getDateEvenement().toLocalDate().isBefore(from)) {
+                        return false;
+                    }
+                    
+                    // Filtre par date de fin
+                    if (to != null && ev.getDateEvenement().toLocalDate().isAfter(to)) {
+                        return false;
+                    }
+                    
+                    // Filtre par type
+                    if (typeLabel != null && !typeLabel.isBlank() && !"Tous les types".equals(typeLabel)) {
+                        return ev.getTypeEvenement().getLabel().equals(typeLabel);
+                    }
+                    
+                    return true;
+                })
+                .collect(Collectors.toList());
+    }
+    
+    /**
+     * Affiche un état vide en cas d'erreur
+     */
+    private void displayEmptyState() {
+        lblTotalEvents.setText("0");
+        lblTotalRevenue.setText("0 €");
+        lblAvgFillRate.setText("0%");
+        lblTotalTicketsSold.setText("0");
+        lblActiveEvents.setText("0");
+        lblSummary.setText("Erreur de chargement des données");
+        
+        pieByType.getData().clear();
+        barRevenueByType.getData().clear();
+        barRevenueByType.setTitle("Aucune donnée disponible");
     }
 
     private void updateMetrics(List<Evenement> events) {
@@ -206,30 +280,70 @@ public class OrganisateurDashboardContentController {
             pieByType.getData().add(new PieChart.Data(label, count));
         });
 
-        // Bar chart: chiffre d'affaires RÉEL par type (basé sur les ventes)
-        Map<String, BigDecimal> revenueByType = new LinkedHashMap<>();
-        for (TypeEvenement t : TypeEvenement.values()) {
-            revenueByType.put(t.getLabel(), BigDecimal.ZERO);
+        // Bar chart: chiffre d'affaires RÉEL par type (basé sur les ventes) - AMÉLIORÉ
+        updateRevenueBarChart(events);
+    }
+    
+    /**
+     * Met à jour le graphique en barres du chiffre d'affaires avec une logique améliorée
+     */
+    private void updateRevenueBarChart(List<Evenement> events) {
+        barRevenueByType.getData().clear();
+        
+        // Si aucun événement, afficher un graphique vide avec message
+        if (events.isEmpty()) {
+            barRevenueByType.setTitle("Aucun événement à afficher");
+            return;
         }
-
+        
+        // Calculer le chiffre d'affaires par type présent dans les événements filtrés
+        Map<String, BigDecimal> revenueByType = new LinkedHashMap<>();
+        
+        // Initialiser seulement les types présents dans les événements filtrés
+        Set<String> presentTypes = events.stream()
+                .map(ev -> ev.getTypeEvenement().getLabel())
+                .collect(Collectors.toSet());
+        
+        for (String type : presentTypes) {
+            revenueByType.put(type, BigDecimal.ZERO);
+        }
+        
+        // Calculer les revenus réels pour chaque événement
         for (Evenement ev : events) {
             String label = ev.getTypeEvenement().getLabel();
             BigDecimal realRevenue = calculateRealRevenue(ev);
-            revenueByType.put(label, revenueByType.getOrDefault(label, BigDecimal.ZERO).add(realRevenue));
+            revenueByType.put(label, revenueByType.get(label).add(realRevenue));
         }
-
-        barRevenueByType.getData().clear();
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        series.setName("Chiffre d'affaires réel");
-        revenueByType.forEach((k, v) -> {
-            if (v.compareTo(BigDecimal.ZERO) > 0) { // Afficher seulement les types avec des ventes
-                series.getData().add(new XYChart.Data<>(k, v.doubleValue()));
-            }
-        });
-        barRevenueByType.getData().add(series);
         
-        // Titre du graphique en fonction du mode
-        barRevenueByType.setTitle("Chiffre d'affaires par type d'événement");
+        // Créer la série de données
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Chiffre d'affaires réel (€)");
+        
+        // Ajouter toutes les données, même celles à 0 pour maintenir la cohérence visuelle
+        revenueByType.entrySet().stream()
+                .sorted(Map.Entry.<String, BigDecimal>comparingByValue().reversed()) // Trier par revenus décroissants
+                .forEach(entry -> {
+                    String type = entry.getKey();
+                    BigDecimal revenue = entry.getValue();
+                    series.getData().add(new XYChart.Data<>(type, revenue.doubleValue()));
+                });
+        
+        // S'assurer qu'il y a au moins une donnée à afficher
+        if (!series.getData().isEmpty()) {
+            barRevenueByType.getData().add(series);
+            
+            // Titre dynamique en fonction du contenu
+            BigDecimal totalRevenue = revenueByType.values().stream()
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+            
+            if (totalRevenue.compareTo(BigDecimal.ZERO) > 0) {
+                barRevenueByType.setTitle(String.format("Chiffre d'affaires par type (Total: %.2f €)", totalRevenue.doubleValue()));
+            } else {
+                barRevenueByType.setTitle("Chiffre d'affaires par type (Aucune vente)");
+            }
+        } else {
+            barRevenueByType.setTitle("Aucun type d'événement sélectionné");
+        }
     }
 
     private void exportCsv() {

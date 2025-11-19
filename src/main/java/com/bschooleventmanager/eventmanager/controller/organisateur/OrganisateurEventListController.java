@@ -2,6 +2,7 @@ package com.bschooleventmanager.eventmanager.controller.organisateur;
 import com.bschooleventmanager.eventmanager.model.Evenement;
 import com.bschooleventmanager.eventmanager.service.EvenementService;
 import com.bschooleventmanager.eventmanager.util.NotificationUtils;
+import com.bschooleventmanager.eventmanager.controller.events.ModifyEventController;
 import com.bschooleventmanager.eventmanager.exception.BusinessException;
 
 import javafx.collections.FXCollections;
@@ -29,6 +30,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -57,6 +59,7 @@ public class OrganisateurEventListController implements Initializable {
 
     private final EvenementService evenementService = new EvenementService();
     private int organisateurId = -1;
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
 
     public void setParentController(OrganisateurDashboardController parent) {
@@ -84,9 +87,31 @@ public class OrganisateurEventListController implements Initializable {
         nomColumn.setCellValueFactory(new PropertyValueFactory<>("nom"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("dateEvenement"));
         statutColumn.setCellValueFactory(new PropertyValueFactory<>("statut"));
+        
+        // Configure date column formatting
+        setupDateCellFactory();
+        
         configurerColonneActions();
 
         logger.info("Colonnes configurées avec succès");
+    }
+
+    /**
+     * Configure le formatage de la colonne date
+     */
+    private void setupDateCellFactory() {
+        dateColumn.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(LocalDateTime item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText("");
+                } else {
+                    setText(item.format(dateFormatter));
+                }
+                setStyle("-fx-text-fill: black;");
+            }
+        });
     }
 
 
@@ -265,11 +290,11 @@ public class OrganisateurEventListController implements Initializable {
         try {
             logger.info("Ouverture de la fenêtre de modification pour l'événement: {}", evt.getNom());
             
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/organisateur/Events/addEvent.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/organisateur/Events/editEvent.fxml"));
             Parent root = loader.load();
 
-            // Pour l'instant, utiliser l'interface d'ajout en mode modification
-            // TODO: Créer une interface dédiée à la modification ou adapter addEvent.fxml
+            ModifyEventController controller = loader.getController();
+            controller.setEvenementInfo(evt.getIdEvenement(), evt.getTypeEvenement());
             
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
