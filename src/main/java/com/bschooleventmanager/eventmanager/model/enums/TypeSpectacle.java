@@ -3,7 +3,10 @@ package com.bschooleventmanager.eventmanager.model.enums;
 public enum TypeSpectacle {
     THEATRE("Théatre"),
     CIRQUE("Cirque"),
-    HUMOUR("Humour");
+    HUMOUR("Humour"),
+    DANSE("Danse"),
+    OPERA("Opéra"),
+    CABARET("Cabaret");
 
     private final String label;
 

@@ -3,7 +3,9 @@ package com.bschooleventmanager.eventmanager.model.enums;
 public enum NiveauExpertise {
     DEBUTANT("Debutant"),
     INTERMEDIAIRE("Intermediaire"),
-    PROFESSIONNEL("Professionnel");
+    PROFESSIONNEL("Professionnel"),
+    EXPERT("Expert"),
+    MASTER("Master");
 
 
     private final String label;

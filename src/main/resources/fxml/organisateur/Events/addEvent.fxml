@@ -4,10 +4,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
-<?import java.lang.Integer?>
 <?import javafx.scene.image.ImageView?>
 
 
@@ -73,13 +69,6 @@
                         <!-- Type d'évènement -->
                         <Label text="Type d'évènement *:" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
                         <ComboBox onAction="#typeEventChange" fx:id="evType" promptText="Choisir un type" GridPane.rowIndex="7" GridPane.columnIndex="1">
-                            <items>
-                                <FXCollections fx:factory="observableArrayList">
-                                    <String fx:value="Concert"/>
-                                    <String fx:value="Spectacle"/>
-                                    <String fx:value="Conférence"/>
-                                </FXCollections>
-                            </items>
                         </ComboBox>
                         <!-- Message d'erreur Type Event -->
                         <Label managed="false" fx:id="lblErrTyEvent" textFill="red" style="-fx-font-weight: bold" GridPane.rowIndex="8" GridPane.columnIndex="1"/>
@@ -87,12 +76,6 @@
                         <!-- Type Concert -->
                         <Label managed="false" visible="false" fx:id="lbtyConcert" text="Type Concert *:" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
                         <ComboBox managed="false" visible="false" fx:id="tyConcert" promptText="Choisir un type" GridPane.rowIndex="9" GridPane.columnIndex="1">
-                            <items>
-                                <FXCollections fx:factory="observableArrayList">
-                                    <String fx:value="Live"/>
-                                    <String fx:value="Acoustique"/>
-                                </FXCollections>
-                            </items>
                         </ComboBox>
                         <!-- Message d'erreur Type concert -->
                         <Label managed="false" fx:id="lblErrTypeConcert" textFill="red" style="-fx-font-weight: bold" GridPane.rowIndex="10" GridPane.columnIndex="1"/>
@@ -100,13 +83,6 @@
                         <!-- Type Spectacle -->
                         <Label managed="false" visible="false" fx:id="lbTySpectacle" text="Type de Spectable *:" GridPane.rowIndex="11" GridPane.columnIndex="0"/>
                         <ComboBox managed="false" visible="false" fx:id="tySpectacle" promptText="Choisir un type" GridPane.rowIndex="11" GridPane.columnIndex="1">
-                            <items>
-                                <FXCollections fx:factory="observableArrayList">
-                                    <String fx:value="Cirque"/>
-                                    <String fx:value="Humour"/>
-                                    <String fx:value="Théatre"/>
-                                </FXCollections>
-                            </items>
                         </ComboBox>
                         <!-- Message d'erreur Type Spectacle -->
                         <Label managed="false" fx:id="lblErrTypeSpectacle" textFill="red" style="-fx-font-weight: bold" GridPane.rowIndex="12" GridPane.columnIndex="1"/>
@@ -114,13 +90,6 @@
                         <!-- Niveau expertise -->
                         <Label managed="false" visible="false" fx:id="lbNvExpert" text="Niveau Expertise *:" GridPane.rowIndex="13" GridPane.columnIndex="0"/>
                         <ComboBox managed="false" visible="false" fx:id="nvExpert" promptText="Choisir un niveau" GridPane.rowIndex="13" GridPane.columnIndex="1">
-                            <items>
-                                <FXCollections fx:factory="observableArrayList">
-                                    <String fx:value="Debutant"/>
-                                    <String fx:value="Intermediaire"/>
-                                    <String fx:value="Professionnel"/>
-                                </FXCollections>
-                            </items>
                         </ComboBox>
                         <!-- Message d'erreur Nv Expert -->
                         <Label managed="false" fx:id="lblErrNvExpert" textFill="red" style="-fx-font-weight: bold" GridPane.rowIndex="14" GridPane.columnIndex="1"/>
@@ -138,24 +107,6 @@
                         <!-- Age minimal -->
                         <Label managed="false" visible="false" fx:id="lbtfAge" text="Age minimal * :" GridPane.rowIndex="18" GridPane.columnIndex="0"/>
                         <ComboBox managed="false" visible="false" fx:id="tfAge" promptText="Age minimal accepté" GridPane.rowIndex="18" GridPane.columnIndex="1">
-                            <items>
-                                <FXCollections fx:factory="observableArrayList">
-                                    <java.lang.Integer fx:value="5"/>
-                                    <java.lang.Integer fx:value="6"/>
-                                    <java.lang.Integer fx:value="7"/>
-                                    <java.lang.Integer fx:value="8"/>
-                                    <java.lang.Integer fx:value="9"/>
-                                    <java.lang.Integer fx:value="10"/>
-                                    <java.lang.Integer fx:value="11"/>
-                                    <java.lang.Integer fx:value="12"/>
-                                    <java.lang.Integer fx:value="13"/>
-                                    <java.lang.Integer fx:value="14"/>
-                                    <java.lang.Integer fx:value="15"/>
-                                    <java.lang.Integer fx:value="16"/>
-                                    <java.lang.Integer fx:value="17"/>
-                                    <java.lang.Integer fx:value="18"/>
-                                </FXCollections>
-                            </items>
                         </ComboBox>
                         <!-- Message d'erreur Age Min -->
                         <Label managed="false" fx:id="lblErrAge" textFill="red" style="-fx-font-weight: bold" GridPane.rowIndex="19" GridPane.columnIndex="1"/>

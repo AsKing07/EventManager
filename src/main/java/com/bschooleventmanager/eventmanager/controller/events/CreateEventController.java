@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 public class CreateEventController {
     @FXML private Label lbtfAge, lbtfArtits, lbtyConcert, lbTySpectacle, lbNvExpert, lbDomaine, lbIntervenant;
     @FXML private Label lblErrDate, lblErrTitre, lbErrLieu, lblErrTyEvent, lblErrTypeConcert, lblErrTypeSpectacle, lblErrNvExpert, lblErrDomaine, lblErrAge, lblErrArtiste;
-    @FXML private TextField tfNom, tfLieu, prixPlaceStandard, nbPlacesVip, prixPlaceVip, nbPlacesPremium, prixPlacePremium, nbPlacesStandard, tfArtits, Domaine, Intervenant,tfIdEvent;
+    @FXML private TextField tfNom, tfLieu, prixPlaceStandard, nbPlacesVip, prixPlaceVip, nbPlacesPremium, prixPlacePremium, nbPlacesStandard, tfArtits, Domaine, Intervenant, tfIdEvent;
     @FXML private TextArea Description;
     @FXML private DatePicker dpDate;
     @FXML private Spinner<Integer> spHour, spMinute;
@@ -55,6 +55,110 @@ public class CreateEventController {
         if (spMinute != null) {
             spMinute.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59, 0));
             spMinute.setEditable(true);
+        }
+        
+        // Chargement dynamique des ComboBox depuis les enums
+        loadComboBoxValues();
+        
+        // Configuration de la validation numérique pour les champs places et prix
+        setupNumericValidation();
+    }
+
+    /**
+     * Charge dynamiquement les valeurs des ComboBox depuis les enums
+     */
+    private void loadComboBoxValues() {
+        logger.info("Chargement dynamique des valeurs des ComboBox depuis les enums");
+        
+        // Charger les types d'événements
+        if (evType != null) {
+            evType.getItems().clear();
+            for (TypeEvenement type : TypeEvenement.values()) {
+                evType.getItems().add(type.getLabel());
+            }
+        }
+        
+        // Charger les types de concert
+        if (tyConcert != null) {
+            tyConcert.getItems().clear();
+            for (TypeConcert type : TypeConcert.values()) {
+                tyConcert.getItems().add(type.getLabel());
+            }
+        }
+        
+        // Charger les types de spectacle
+        if (tySpectacle != null) {
+            tySpectacle.getItems().clear();
+            for (TypeSpectacle type : TypeSpectacle.values()) {
+                tySpectacle.getItems().add(type.getLabel());
+            }
+        }
+        
+        // Charger les niveaux d'expertise
+        if (nvExpert != null) {
+            nvExpert.getItems().clear();
+            for (NiveauExpertise niveau : NiveauExpertise.values()) {
+                nvExpert.getItems().add(niveau.getLabel());
+            }
+        }
+        
+        // Charger les âges (pour les concerts et spectacles)
+        if (tfAge != null) {
+            tfAge.getItems().clear();
+            for (int age = 5; age <= 18; age++) {
+                tfAge.getItems().add(age);
+            }
+        }
+        
+        logger.info("Valeurs des ComboBox chargées avec succès");
+    }
+
+    /**
+     * Configure la validation numérique pour les champs places et prix
+     */
+    private void setupNumericValidation() {
+        logger.info("Configuration de la validation numérique des champs");
+        
+        // Validation pour les champs de places (entiers uniquement)
+        setupIntegerField(nbPlacesStandard);
+        setupIntegerField(nbPlacesVip);
+        setupIntegerField(nbPlacesPremium);
+        
+        // Validation pour les champs de prix (décimaux)
+        setupDecimalField(prixPlaceStandard);
+        setupDecimalField(prixPlaceVip);
+        setupDecimalField(prixPlacePremium);
+        
+        logger.info("Validation numérique configurée avec succès");
+    }
+    
+    /**
+     * Configure un champ TextField pour accepter uniquement des entiers
+     */
+    private void setupIntegerField(TextField field) {
+        if (field != null) {
+            field.setTextFormatter(new TextFormatter<>(change -> {
+                String newText = change.getControlNewText();
+                if (newText.matches("\\d*")) { // Accepte uniquement les chiffres
+                    return change;
+                }
+                return null; // Rejette la modification
+            }));
+        }
+    }
+    
+    /**
+     * Configure un champ TextField pour accepter uniquement des décimaux
+     */
+    private void setupDecimalField(TextField field) {
+        if (field != null) {
+            field.setTextFormatter(new TextFormatter<>(change -> {
+                String newText = change.getControlNewText();
+                if (newText.matches("\\d*\\.?\\d{0,2}")) { // Accepte les décimaux avec max 2 décimales
+                    return change;
+                }
+                return null; // Rejette la modification
+            }));
         }
     }
 

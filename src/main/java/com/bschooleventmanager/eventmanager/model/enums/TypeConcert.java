@@ -2,7 +2,10 @@ package com.bschooleventmanager.eventmanager.model.enums;
 
 public enum TypeConcert {
     LIVE("Live"),
-    ACOUSTIQUE("Acoustique");
+    ACOUSTIQUE("Acoustique"),
+    JAZZ("Jazz"),
+    ROCK("Rock"),
+    CLASSIQUE("Classique");
 
     private final String label;
 
