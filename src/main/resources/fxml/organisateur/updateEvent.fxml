@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="15" xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.bschooleventmanager.eventmanager.controller.organisateur.UpdateEventController"
+      alignment="CENTER_LEFT" style="-fx-padding:20;">
+
+    <Label text="Modifier l'Événement" style="-fx-font-size:20px; -fx-font-weight:bold;"/>
+
+    <HBox spacing="10">
+        <Label text="Nom:"/>
+        <TextField fx:id="nomField" prefWidth="250"/>
+    </HBox>
+
+    <HBox spacing="10">
+        <Label text="Date :" />
+        <DatePicker fx:id="datePicker"/>
+    </HBox>
+
+    <HBox spacing="10">
+        <Label text="Heure :" />
+        <TextField fx:id="heureField" promptText="HH:MM"/>
+    </HBox>
+
+    <HBox spacing="10">
+        <Label text="Statut:"/>
+        <ComboBox fx:id="statutCombo" prefWidth="150"/>
+    </HBox>
+
+    <HBox spacing="15" alignment="CENTER_RIGHT">
+        <Button text="Annuler" onAction="#handleCancel"/>
+        <Button text="Enregistrer" style="-fx-background-color:#27ae60; -fx-text-fill:white;"
+                onAction="#saveChanges"/>
+    </HBox>
+
+</VBox>

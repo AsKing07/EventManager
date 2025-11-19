@@ -6,6 +6,7 @@ import com.bschooleventmanager.eventmanager.model.Evenement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class EvenementService {
@@ -34,4 +35,25 @@ public class EvenementService {
 
         return evenements;
     }
+
+    public void supprimerEvenement(int eventId) throws BusinessException {
+        boolean ok = evenementDAO.deleteEvent(eventId);
+
+        if (!ok) {
+            throw new BusinessException("La suppression a échoué.");
+        }
+    }
+
+    public void updateEvent(Evenement evenement) throws BusinessException, SQLException {
+        if (evenement == null || evenement.getIdEvenement() <= 0) {
+            throw new BusinessException("Événement invalide.");
+        }
+
+        boolean success = evenementDAO.updateEvent(evenement); // make sure your DAO has this method
+        if (!success) {
+            throw new BusinessException("La mise à jour de l'événement a échoué.");
+        }
+    }
+
+
 }

@@ -86,4 +86,59 @@ public class EvenementDAO {
 
         return evenements;
     }
+
+
+    public boolean updateEvent(Evenement evenement) throws SQLException {
+        String sql = "UPDATE evenements SET " +
+                "nom = ?, " +
+                "date_evenement = ?, " +
+                "lieu = ?, " +
+                "type_evenement = ?, " +
+                "description = ?, " +
+                "places_standard_disponibles = ?, " +
+                "places_vip_disponibles = ?, " +
+                "places_premium_disponibles = ?, " +
+                "prix_standard = ?, " +
+                "prix_vip = ?, " +
+                "prix_premium = ?, " +
+                "statut = ? " +
+                "WHERE id_evenement = ?";
+
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, evenement.getNom());
+            stmt.setTimestamp(2, Timestamp.valueOf(evenement.getDateEvenement()));
+            stmt.setString(3, evenement.getLieu());
+            stmt.setString(4, evenement.getTypeEvenement().name());
+            stmt.setString(5, evenement.getDescription());
+            stmt.setInt(6, evenement.getPlacesStandardDisponibles());
+            stmt.setInt(7, evenement.getPlacesVipDisponibles());
+            stmt.setInt(8, evenement.getPlacesPremiumDisponibles());
+            stmt.setBigDecimal(9, evenement.getPrixStandard());
+            stmt.setBigDecimal(10, evenement.getPrixVip());
+            stmt.setBigDecimal(11, evenement.getPrixPremium());
+            stmt.setString(12, evenement.getStatut().name());
+            stmt.setInt(13, evenement.getIdEvenement());
+
+            int rowsUpdated = stmt.executeUpdate();
+            return rowsUpdated > 0;  // return true if at least one row was updated
+        }
+    }
+
+
+    public boolean deleteEvent(int eventId) {
+        String sql = "DELETE FROM evenements WHERE id = ?";
+
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+             ps.setInt(1, eventId);
+             return ps.executeUpdate() > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
