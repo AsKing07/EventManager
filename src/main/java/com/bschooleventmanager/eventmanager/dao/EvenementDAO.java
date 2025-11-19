@@ -81,16 +81,9 @@ deleteEventById(id);
      *    le second à l'identifiant de l'événement.
      *  - on capture et re-propage l'exception SQL en RuntimeException
      */
-    public void suppEvent(int id){
+    public boolean suppEvent(int id) throws DatabaseException {
         String query = "UPDATE evenements SET etat_event=? WHERE id_evenement=?;";
-        /*try {
-            Connection conn = DatabaseConnection.getInstance().getConnection();
-            String query = "UPDATE evenements SET etat_event=? WHERE id_evenement=?;";
-            PreparedStatement st = conn.prepareStatement(query);
-            st.setInt(1, EtatEvent.SUPPRIME.getCode());
-            st.setInt(2,id);
-            st.executeUpdate();
-            conn.close();*/
+   
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
              PreparedStatement st = conn.prepareStatement(query)) {
 
@@ -102,11 +95,13 @@ deleteEventById(id);
             int rows = st.executeUpdate();
             if (rows == 0) {
                 logger.warn("Aucun événement trouvé pour l'ID {} lors de la suppression logique.", id);
+                return false;
             } else {
                 logger.info("Événement ID {} marqué comme supprimé.", id);
+                return true;
             }
         }catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Erreur lors de la suppression de l'événement", e);
         }
     }
    
@@ -299,6 +294,26 @@ deleteEventById(id);
     public static List<Evenement> getEventsByOrganizerId(int organizerId) throws DatabaseException {
         List<Evenement> evenements = new ArrayList<>();
         String sql = "SELECT * FROM evenements WHERE organisateur_id = ? ORDER BY date_evenement ASC";
+
+        try( Connection conn = DatabaseConnection.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);) {
+            stmt.setInt(1, organizerId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                evenements.add(mapRowToEvenement(rs));
+            }
+
+            return evenements;
+
+        } catch (SQLException e) {
+            logger.error("Erreur lors de la récupération des événements de l'organisateur", e);
+            throw new DatabaseException("Erreur lors de la récupération des événements de l'organisateur", e);
+        }
+    }
+    public static List<Evenement> getActifEventsByOrganizerId(int organizerId) throws DatabaseException {
+        List<Evenement> evenements = new ArrayList<>();
+        String sql = "SELECT * FROM evenements WHERE organisateur_id = ? AND etat_event = 1 ORDER BY date_evenement ASC";
 
         try( Connection conn = DatabaseConnection.getInstance().getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);) {

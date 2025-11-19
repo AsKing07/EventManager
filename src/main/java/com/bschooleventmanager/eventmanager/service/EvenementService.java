@@ -43,9 +43,18 @@ public class EvenementService {
      * @param idEvent identifiant de l'événement à supprimer
      * @throws RuntimeException si le DAO lève une exception non contrôlée
      */
-    public void suppEvent(int idEvent){
-        logger.info("Fonction suppEven dans le service EvenementService");
-        evenementDAO.suppEvent(idEvent);
+    public boolean suppEvent(int idEvent) throws BusinessException {
+        try {
+              logger.info("Fonction suppEven dans le service EvenementService");
+        return evenementDAO.suppEvent(idEvent);
+        
+        } catch (DatabaseException e) {
+             logger.error("Erreur création concert", e);
+            throw new BusinessException("Erreur lors de la création du concert", e);
+    
+        }
+      
+      
 
     }
 
@@ -57,9 +66,6 @@ public class EvenementService {
         try {
             // Validation des données
             validerDonneesEvenement(concert.getNom(), concert.getDateEvenement(), concert.getLieu(), concert.getPlacesStandardDisponibles(), concert.getPlacesVipDisponibles(), concert.getPlacesPremiumDisponibles());
-
-
-
             Concert result = concertDAO.creer(concert);
             
             logger.info("✓ Concert créé: {}", concert.getNom());
@@ -199,6 +205,22 @@ public class EvenementService {
         }
        
     }
+
+    /**
+     * Lister les événements actifs d'un organisateur
+     */
+    public List<Evenement> getEvenementsActifsParOrganisateur(int organisateurId) throws BusinessException {
+        try {
+            return evenementDAO.getActifEventsByOrganizerId(organisateurId);
+        } catch (DatabaseException e) {
+            logger.error("Erreur récupération événements organisateur", e);
+            throw new BusinessException("Erreur récupération événements organisateur", e);
+        }
+       
+    }
+
+
+
 
     /**
      * Lister les événements par type
