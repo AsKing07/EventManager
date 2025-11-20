@@ -19,6 +19,16 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO principal pour la gestion des événements (Concert, Conférence, Spectacle).
+ * 
+ * <p>Fournit les opérations CRUD et des méthodes spécialisées pour la gestion
+ * des places vendues, changement d'état et recherche par organisateur.</p>
+ * 
+ * @author Équipe EventManager
+ * @version 1.0
+ * @since 1.0
+ */
 public class EvenementDAO extends BaseDAO<Evenement> {
     private static final Logger logger = LoggerFactory.getLogger(EvenementDAO.class);
 
@@ -356,6 +366,12 @@ deleteEventById(id);
     }
         
 
+    /**
+     * Mappe une ligne de résultat SQL à un objet Evenement (Concert, Conference, Spectacle).
+     * @param rs (ResultSet)
+     * @return Un objet Evenement
+     * @throws SQLException
+     */
     private static Evenement mapRowToEvenement(ResultSet rs) throws SQLException {
         // Gestion sécurisée du type d'événement
         String typeStr = rs.getString("type_evenement");

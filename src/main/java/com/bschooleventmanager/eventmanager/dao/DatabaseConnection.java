@@ -9,15 +9,33 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Gestionnaire singleton de connexion à la base de données MySQL.
+ * 
+ * <p>Fournit une connexion unique et réutilisable avec reconnexion automatique
+ * en cas de perte de connexion. Les paramètres sont chargés depuis application.properties.</p>
+ * 
+ * @author Charbel SONON (@AsKing07)
+ * @version 1.0
+ * @since 1.0
+ */
 public class DatabaseConnection {
     private static final Logger logger = LoggerFactory.getLogger(DatabaseConnection.class);
     private static DatabaseConnection instance;
     private Connection connection;
 
+    /**
+     * Constructeur privé pour empêcher l'instanciation directe (pattern Singleton).
+     */
     private DatabaseConnection() {
         // Constructeur privé pour le singleton
     }
 
+    /**
+     * Retourne l'instance unique du gestionnaire de connexion.
+     * 
+     * @return L'instance singleton de DatabaseConnection
+     */
     public static synchronized DatabaseConnection getInstance() {
         if (instance == null) {
             instance = new DatabaseConnection();
@@ -25,6 +43,12 @@ public class DatabaseConnection {
         return instance;
     }
 
+    /**
+     * Établit la connexion à la base de données en chargeant la configuration.
+     * 
+     * <p>Charge les paramètres depuis application.properties et établit
+     * la connexion MySQL avec gestion d'erreurs complète.</p>
+     */
     private void connect() {
         try {
             // Fermer l'ancienne connexion si elle existe
@@ -64,6 +88,14 @@ public class DatabaseConnection {
         }
     }
 
+    /**
+     * Retourne une connexion valide à la base de données avec reconnexion automatique.
+     * 
+     * <p>Vérifie la validité de la connexion existante et se reconnecte automatiquement
+     * si nécessaire. Thread-safe grâce à la synchronisation.</p>
+     * 
+     * @return La connexion active à la base de données
+     */
     public synchronized Connection getConnection() {
         try {
             // Vérifier si la connexion est valide avec un timeout de 3 secondes
@@ -78,6 +110,12 @@ public class DatabaseConnection {
         return connection;
     }
 
+    /**
+     * Ferme proprement la connexion à la base de données.
+     * 
+     * <p>Méthode à appeler lors de l'arrêt de l'application pour libérer
+     * les ressources de connexion.</p>
+     */
     public void closeConnection() {
         try {
             if (connection != null && !connection.isClosed()) {

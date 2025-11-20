@@ -1,6 +1,5 @@
 package com.bschooleventmanager.eventmanager.dao;
 
-
 import com.bschooleventmanager.eventmanager.exception.DatabaseException;
 import com.bschooleventmanager.eventmanager.model.Utilisateur;
 import com.bschooleventmanager.eventmanager.model.Client;
@@ -17,9 +16,22 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO pour la gestion des utilisateurs (Clients et Organisateurs).
+ * 
+ * <p>Fournit les opérations CRUD de base plus des méthodes spécialisées
+ * pour la recherche par email, vérification d'existence et changement de mot de passe.</p>
+ * 
+ * @author Équipe EventManager
+ * @version 1.0
+ * @since 1.0
+ */
 public class UtilisateurDAO extends BaseDAO<Utilisateur> {
     private static final Logger logger = LoggerFactory.getLogger(UtilisateurDAO.class);
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Utilisateur creer(Utilisateur user) throws DatabaseException {
         String query = "INSERT INTO utilisateurs (nom, email, mot_de_passe, type_utilisateur) VALUES (?, ?, ?, ?)";
@@ -72,6 +84,13 @@ public class UtilisateurDAO extends BaseDAO<Utilisateur> {
         return null;
     }
 
+    /**
+     * Recherche un utilisateur par son adresse email.
+     * 
+     * @param email L'adresse email à rechercher
+     * @return L'utilisateur trouvé ou null si non trouvé
+     * @throws DatabaseException En cas d'erreur de base de données
+     */
     public Utilisateur chercherParEmail(String email) throws DatabaseException {
         String query = "SELECT * FROM utilisateurs WHERE email = ?";
         
@@ -93,6 +112,13 @@ public class UtilisateurDAO extends BaseDAO<Utilisateur> {
         return null;
     }
 
+    /**
+     * Vérifie si un email existe déjà en base de données.
+     * 
+     * @param email L'adresse email à vérifier
+     * @return true si l'email existe, false sinon
+     * @throws DatabaseException En cas d'erreur de base de données
+     */
     public boolean emailExiste(String email) throws DatabaseException {
         String query = "SELECT COUNT(*) FROM utilisateurs WHERE email = ?";
         
@@ -114,6 +140,9 @@ public class UtilisateurDAO extends BaseDAO<Utilisateur> {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Utilisateur> listerTous() throws DatabaseException {
         List<Utilisateur> utilisateurs = new ArrayList<>();
@@ -202,6 +231,12 @@ public class UtilisateurDAO extends BaseDAO<Utilisateur> {
         }
     }
 
+    /**
+     * Mappe une ligne de résultat SQL à un objet Utilisateur.
+     * @param rs (ResultSet)
+     * @return Un objet Utilisateur
+     * @throws SQLException
+     */
     private Utilisateur mapRowToUtilisateur(ResultSet rs) throws SQLException {
         TypeUtilisateur type = TypeUtilisateur.valueOf(rs.getString("type_utilisateur"));
         Utilisateur user;
