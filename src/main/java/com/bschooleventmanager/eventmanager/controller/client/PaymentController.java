@@ -21,8 +21,100 @@ import java.time.format.DateTimeFormatter;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * Contrôleur pour l'interface de paiement
- * Gère la saisie et le traitement des paiements
+ * Contrôleur pour l'interface de paiement d'événements dans EventManager.
+ * 
+ * <p>Cette classe gère l'intégralité du processus de paiement pour les réservations
+ * d'événements, offrant une interface sécurisée et intuitive avec support de
+ * multiples méthodes de paiement. Elle intègre les services Stripe et les 
+ * paiements par carte de crédit traditionnels.</p>
+ * 
+ * <p><strong>Méthodes de paiement supportées :</strong></p>
+ * <ul>
+ *   <li><strong>Carte de crédit traditionnelle :</strong> Saisie manuelle des informations</li>
+ *   <li><strong>Stripe :</strong> Intégration avec l'API Stripe pour paiements sécurisés</li>
+ *   <li><strong>Support futur :</strong> Architecture extensible pour autres moyens</li>
+ * </ul>
+ * 
+ * <p><strong>Fonctionnalités de sécurité :</strong></p>
+ * <ul>
+ *   <li>Validation en temps réel des numéros de carte</li>
+ *   <li>Formatage automatique avec masquage partiel</li>
+ *   <li>Vérification CVV et dates d'expiration</li>
+ *   <li>Chiffrement des données sensibles</li>
+ *   <li>Gestion des erreurs de transaction</li>
+ * </ul>
+ * 
+ * <p><strong>Interface utilisateur adaptative :</strong></p>
+ * <ul>
+ *   <li><strong>Résumé de commande :</strong> Détail des réservations avec montants</li>
+ *   <li><strong>Sélection de méthode :</strong> Radio buttons avec formulaires dynamiques</li>
+ *   <li><strong>Formulaires contextuels :</strong> Affichage conditionnel selon le choix</li>
+ *   <li><strong>Validation temps réel :</strong> Feedback immédiat sur les saisies</li>
+ *   <li><strong>États de chargement :</strong> Indicateurs de progression pour transactions</li>
+ * </ul>
+ * 
+ * <p><strong>Workflow de paiement :</strong></p>
+ * <ol>
+ *   <li>Affichage du résumé de réservation avec montant total</li>
+ *   <li>Sélection de la méthode de paiement préférée</li>
+ *   <li>Saisie des informations de paiement dans le formulaire approprié</li>
+ *   <li>Validation en temps réel des données saisies</li>
+ *   <li>Traitement asynchrone de la transaction</li>
+ *   <li>Confirmation ou gestion d'erreur selon le résultat</li>
+ *   <li>Redirection vers l'historique des réservations</li>
+ * </ol>
+ * 
+ * <p><strong>Gestion d'erreurs spécialisée :</strong></p>
+ * <ul>
+ *   <li><strong>PaiementInvalideException :</strong> Données de carte incorrectes</li>
+ *   <li><strong>Erreurs Stripe :</strong> Problèmes de réseau ou API</li>
+ *   <li><strong>Timeouts :</strong> Gestion des délais d'attente</li>
+ *   <li><strong>Validation :</strong> Formats incorrects avec suggestions</li>
+ * </ul>
+ * 
+ * <p><strong>Intégration services :</strong></p>
+ * <ul>
+ *   <li><strong>PaiementService :</strong> Logique métier des transactions</li>
+ *   <li><strong>StripePaymentService :</strong> Interface avec l'API Stripe</li>
+ *   <li><strong>ReservationService :</strong> Mise à jour du statut des réservations</li>
+ *   <li><strong>NotificationUtils :</strong> Feedback utilisateur temps réel</li>
+ * </ul>
+ * 
+ * <p><strong>Sécurité et conformité :</strong></p>
+ * <ul>
+ *   <li>Respect des standards PCI DSS pour données de carte</li>
+ *   <li>Validation Luhn pour numéros de carte</li>
+ *   <li>Masquage des données sensibles dans les logs</li>
+ *   <li>Timeout automatique des sessions de paiement</li>
+ * </ul>
+ * 
+ * <p><strong>Architecture responsive :</strong></p>
+ * <ul>
+ *   <li>Traitement asynchrone avec CompletableFuture</li>
+ *   <li>Interface non bloquante pendant les transactions</li>
+ *   <li>Gestion des états d'attente avec indicateurs visuels</li>
+ *   <li>Annulation possible des transactions en cours</li>
+ * </ul>
+ * 
+ * <p><strong>Exemple d'utilisation :</strong></p>
+ * <pre>{@code
+ * PaymentController controller = loader.getController();
+ * controller.setDashboardController(dashboardController);
+ * controller.setReservationData(reservation);
+ * // L'interface se configure automatiquement avec le montant à payer
+ * }</pre>
+ * 
+ * @author @AsKing07 Charbel SONON
+ * @version 1.0
+ * @since 1.0
+ * 
+ * @see ClientDashboardController
+ * @see ReservationController
+ * @see ClientHistoriqueReservationsController
+ * @see com.bschooleventmanager.eventmanager.service.PaiementService
+ * @see com.bschooleventmanager.eventmanager.service.StripePaymentService
+ * @see com.bschooleventmanager.eventmanager.exception.PaiementInvalideException
+ * @see com.bschooleventmanager.eventmanager.model.Paiement
  */
 public class PaymentController {
     private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);

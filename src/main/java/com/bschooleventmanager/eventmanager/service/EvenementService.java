@@ -19,6 +19,16 @@ import org.slf4j.LoggerFactory;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Service métier principal pour la gestion complète des événements.
+ * 
+ * <p>Fournit les opérations CRUD pour tous types d'événements (Concert, Conférence, Spectacle)
+ * avec validation métier, gestion des places vendues et statistiques organisateur.</p>
+ * 
+ * @author Équipe EventManager
+ * @version 1.0
+ * @since 1.0
+ */
 public class EvenementService {
     private static final Logger logger = LoggerFactory.getLogger(EvenementService.class);
     private static final EvenementDAO evenementDAO = new EvenementDAO();
@@ -26,6 +36,11 @@ public class EvenementService {
     private static final SpectacleDAO spectacleDao = new SpectacleDAO();
     private static final ConferenceDAO conferenceDAO = new ConferenceDAO();
 
+    /**
+     * Récupère tous les événements triés par date.
+     * 
+     * @return Liste complète des événements
+     */
     public List<Evenement> getAllEvents() {
         logger.info("Service: Fetching all events...");
         List<Evenement> list = evenementDAO.getAllEvents();
