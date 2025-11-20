@@ -1,16 +1,13 @@
 package com.bschooleventmanager.eventmanager.model;
 
+import com.bschooleventmanager.eventmanager.model.enums.StatutEvenement;
 import com.bschooleventmanager.eventmanager.model.enums.TypeConcert;
 import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
-import com.bschooleventmanager.eventmanager.model.enums.StatutEvenement;
 
-import java.lang.reflect.Type;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
+// Classe Concert qui hérite de Evenement
 public class Concert extends Evenement {
     protected String artiste_groupe;
     protected TypeConcert type;

@@ -6,6 +6,10 @@ import com.bschooleventmanager.eventmanager.model.enums.StatutEvenement;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/**
+ * Classe abstraite représentant un événement.
+ * Contient les attributs et méthodes communs à tous les types d'événements.
+ */
 public abstract class Evenement {
     protected int idEvenement;
     protected int organisateurId;

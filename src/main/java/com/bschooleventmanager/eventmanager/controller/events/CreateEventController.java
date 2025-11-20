@@ -1,5 +1,6 @@
 package com.bschooleventmanager.eventmanager.controller.events;
 
+import com.bschooleventmanager.eventmanager.controller.organisateur.OrganisateurDashboardController;
 import com.bschooleventmanager.eventmanager.exception.BusinessException;
 import com.bschooleventmanager.eventmanager.model.Concert;
 import com.bschooleventmanager.eventmanager.model.Conference;
@@ -21,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * Contrôleur pour la création d'événements dans EventManager.
@@ -523,7 +525,7 @@ public class CreateEventController {
      * @see #returnToDashboard()
      * @see com.bschooleventmanager.eventmanager.controller.organisateur.OrganisateurDashboardController
      */
-    public void setDashboardController(com.bschooleventmanager.eventmanager.controller.organisateur.OrganisateurDashboardController dashboardController) {
+    public void setDashboardController(OrganisateurDashboardController dashboardController) {
         this.dashboardController = dashboardController;
     }
 
@@ -909,7 +911,7 @@ public class CreateEventController {
     /**
      * Création d'un spectacle
      * @param baseData
-     * @param create_or_modif pour savoir si on est en création ou modification du spectacle (1 = création, 2 = modification)
+     * @param createOrModif pour savoir si on est en création ou modification du spectacle (1 = création, 2 = modification)
      * @Author Loic Vanel
      * @throws BusinessException
      */
@@ -951,7 +953,7 @@ public class CreateEventController {
 
     /**
      * Création d'une conférence
-     * @param create_or_modif pour savoir si on est en création ou modification de la conférence (1 = création, 2 = modification)
+     * @param createOrModif pour savoir si on est en création ou modification de la conférence (1 = création, 2 = modification)
      * @param baseData
      * @Author Loic Vanel
      * @throws BusinessException
@@ -1120,7 +1122,7 @@ public class CreateEventController {
             }
             // Vérifier l'heure si c'est aujourd'hui
             else if (selectedDate.isEqual(today)) {
-                int currentHour = java.time.LocalTime.now().getHour();
+                int currentHour = LocalTime.now().getHour();
                 int selectedHour = (spHour != null && spHour.getValue() != null) ? spHour.getValue() : 0;
                 
                 if (selectedHour <= currentHour) {

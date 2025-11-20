@@ -3,6 +3,10 @@ package com.bschooleventmanager.eventmanager.model;
 import com.bschooleventmanager.eventmanager.model.enums.TypeUtilisateur;
 import java.time.LocalDateTime;
 
+/**
+ * Classe représentant un Organisateur, qui hérite de la classe Utilisateur.
+ * Un organisateur peut créer et gérer des événements.
+ */
 public class Organisateur extends Utilisateur {
     
     // Constructeur vide

@@ -2,7 +2,7 @@ package com.bschooleventmanager.eventmanager.model;
 
 import com.bschooleventmanager.eventmanager.model.enums.TypeUtilisateur;
 import java.time.LocalDateTime;
-
+// Classe Client qui hérite de Utilisateur
 public class Client extends Utilisateur {
     
     // Constructeur vide

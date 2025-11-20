@@ -1,5 +1,8 @@
 package com.bschooleventmanager.eventmanager.model.enums;
 
+/**
+ * Enumération représentant les types de concerts.
+ */
 public enum TypeConcert {
     LIVE("Live"),
     ACOUSTIQUE("Acoustique"),

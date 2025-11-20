@@ -1,15 +1,13 @@
 package com.bschooleventmanager.eventmanager.model;
 
 import com.bschooleventmanager.eventmanager.model.enums.NiveauExpertise;
-import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
 import com.bschooleventmanager.eventmanager.model.enums.StatutEvenement;
+import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
+// Classe Conference qui hérite de Evenement
 public class Conference extends Evenement {
     protected String theme;
     protected String intervenants;

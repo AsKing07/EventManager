@@ -2,6 +2,7 @@ package com.bschooleventmanager.eventmanager.model;
 
 
 import com.bschooleventmanager.eventmanager.model.enums.CategorieTicket;
+// Classe représentant le détail d'une réservation
 public class ReservationDetail {
 
 

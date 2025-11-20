@@ -1,5 +1,6 @@
 package com.bschooleventmanager.eventmanager.model.enums;
 
+// Enumération pour les types d'événements
 public enum TypeEvenement {
     CONCERT("Concert"),
     SPECTACLE("Spectacle"), 

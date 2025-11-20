@@ -1,5 +1,8 @@
 package com.bschooleventmanager.eventmanager.model.enums;
 
+/**
+ * Enumération représentant les différents statuts qu'un événement peut avoir.
+ */
 public enum StatutEvenement {
     A_VENIR("À venir"),
     EN_COURS("En cours"),

@@ -3,28 +3,19 @@ package com.bschooleventmanager.eventmanager.controller.organisateur;
 import com.bschooleventmanager.eventmanager.model.Evenement;
 import com.bschooleventmanager.eventmanager.service.EvenementService;
 import com.bschooleventmanager.eventmanager.util.NotificationUtils;
-import com.bschooleventmanager.eventmanager.controller.events.ModifyEventController;
-import com.bschooleventmanager.eventmanager.exception.BusinessException;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-
-import javafx.scene.control.TableView;
-import javafx.scene.control.TableColumn;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import javafx.scene.control.*;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -185,7 +176,7 @@ public class OrganisateurEventListController implements Initializable {
         logger.info("Initialisation du contrôleur des événements organisateur");
 
         // Defensive null checks (useful if FXML injection fails)
-        if (eventTable == null || nomColumn == null || dateColumn == null || statutColumn == null) {
+        if (eventTable == null || nomColumn == null || dateColumn == null || statutColumn == null|| typeColumn==null) {
             logger.error("⚠ FXML injection failed: One or more UI elements are NULL");
             return;
         }
@@ -193,6 +184,7 @@ public class OrganisateurEventListController implements Initializable {
         // Link table columns to Evenement model fields
         nomColumn.setCellValueFactory(new PropertyValueFactory<>("nom"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("dateEvenement"));
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("typeEvenement"));
         statutColumn.setCellValueFactory(new PropertyValueFactory<>("statut"));
         
         // Configure date column formatting
@@ -249,7 +241,15 @@ public class OrganisateurEventListController implements Initializable {
             );
             statisticsBtn.setOnAction(event -> {
                 Evenement evt = getTableView().getItems().get(getIndex());
-                ouvrirFenetreStatistiques(evt);
+                if(parentController != null)
+                {
+                    parentController.showEventStatistics(evt);
+
+                }
+                else{
+                    ouvrirFenetreStatistiques(evt);
+                }
+
             });
 
             // Bouton Modifier
@@ -309,12 +309,56 @@ public class OrganisateurEventListController implements Initializable {
     private void ouvrirFenetreStatistiques(Evenement evt) {
         try {
             logger.info("Ouverture des statistiques pour l'événement: {}", evt.getNom());
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/organisateur/Events/detailEvent.fxml"));
+            Parent root = loader.load();
+
+            EventDetailsController eventDetailsController = loader.getController();
+
+            eventDetailsController.setDetailsEvenement(evt);
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Details et statistque de l'événement - " + evt.getNom());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
             // TODO: Implémenter l'ouverture des statistiques
-            NotificationUtils.showInfo("Statistiques", 
-                "Statistiques de l'événement: " + evt.getNom() + "\nFonctionnalité en cours de développement.");
+            /*NotificationUtils.showInfo("Statistiques",
+                "Statistiques de l'événement: " + evt.getNom() + "\nFonctionnalité en cours de développement.");*/
+
+            // Rafraîchir la liste après fermeture de la fenêtre
+            chargerEvenementsOrganisateur();
+        } catch (IOException e) {
+            logger.error("Erreur lors de l'ouverture de la fenêtre de modification pour l'événement {}", evt.getIdEvenement(), e);
+            NotificationUtils.showError("Impossible d'ouvrir la fenêtre de modification");
         } catch (Exception e) {
             logger.error("Erreur lors de l'ouverture des statistiques pour l'événement {}", evt.getIdEvenement(), e);
             NotificationUtils.showError("Impossible d'afficher les statistiques de l'événement");
+        }
+
+        try {
+            logger.info("Ouverture de la fenêtre de modification pour l'événement: {}", evt.getNom());
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/organisateur/Events/editEvent.fxml"));
+            Parent root = loader.load();
+
+            ModifyEventController controller = loader.getController();
+            controller.setEvenementInfo(evt.getIdEvenement(), evt.getTypeEvenement());
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Modifier l'événement - " + evt.getNom());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+
+            // Rafraîchir la liste après fermeture de la fenêtre
+            chargerEvenementsOrganisateur();
+
+        } catch (IOException e) {
+            logger.error("Erreur lors de l'ouverture de la fenêtre de modification pour l'événement {}", evt.getIdEvenement(), e);
+            NotificationUtils.showError("Impossible d'ouvrir la fenêtre de modification");
+        } catch (Exception e) {
+            logger.error("Erreur technique lors de l'ouverture de la modification", e);
+            NotificationUtils.showError("Erreur technique lors de l'ouverture de la fenêtre");
         }
     }
 

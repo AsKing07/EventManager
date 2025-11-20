@@ -1,5 +1,6 @@
 package com.bschooleventmanager.eventmanager.model.enums;
 
+// Enumération pour les types d'utilisateurs
 public enum TypeUtilisateur {
     CLIENT("Client"),
     ORGANISATEUR("Organisateur");

@@ -1,16 +1,16 @@
 package com.bschooleventmanager.eventmanager.model;
 
-import com.bschooleventmanager.eventmanager.model.enums.TypeConcert;
-import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
 import com.bschooleventmanager.eventmanager.model.enums.StatutEvenement;
+import com.bschooleventmanager.eventmanager.model.enums.TypeEvenement;
 import com.bschooleventmanager.eventmanager.model.enums.TypeSpectacle;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
+/**
+ * Classe représentant un spectacle, qui est un type spécifique d'événement.
+ * Hérite de la classe Evenement.
+ */
 public class Spectacle extends Evenement {
     protected TypeSpectacle typeSpectacle;
     protected String troupe_artistes;
