@@ -82,7 +82,7 @@ import java.util.ResourceBundle;
  * @see ModifyEventController
  * @see Evenement
  * @see NotificationUtils
- * @see SessionManager
+ * @see com.bschooleventmanager.eventmanager.util.SessionManager
  */
 public class OrganisateurEventListController implements Initializable {
 
@@ -175,7 +175,6 @@ public class OrganisateurEventListController implements Initializable {
      * 
      * @see #setOrganisateurId(int)
      * @see #chargerEvenementsOrganisateur()
-     * @see #createActionsColumn()
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

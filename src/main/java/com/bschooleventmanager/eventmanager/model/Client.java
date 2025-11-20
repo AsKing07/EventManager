@@ -2,21 +2,44 @@ package com.bschooleventmanager.eventmanager.model;
 
 import com.bschooleventmanager.eventmanager.model.enums.TypeUtilisateur;
 import java.time.LocalDateTime;
-// Classe Client qui hérite de Utilisateur
+
+/**
+ * Représente un client dans l'application EventManager.
+ * Hérite de Utilisateur et implémente les fonctionnalités spécifiques aux clients,
+ * notamment la réservation d'événements et la gestion des réservations.
+ * @version 1.0
+ * @since 2024-11-20
+ * @see Utilisateur
+ */
 public class Client extends Utilisateur {
     
-    // Constructeur vide
+    /**
+     * Constructeur par défaut.
+     * Initialise un client vide pour les opérations de mapping.
+     */
     public Client() {
         super();
         this.typeUtilisateur = TypeUtilisateur.CLIENT;
     }
     
-    // Constructeur complet
+    /**
+     * Constructeur complet pour créer un client avec toutes ses informations.
+     *
+     * @param idUtilisateur Identifiant unique du client
+     * @param nom Nom complet du client  
+     * @param email Adresse email unique
+     * @param dateCreation Date de création du compte
+     */
     public Client(int idUtilisateur, String nom, String email, LocalDateTime dateCreation) {
         super(idUtilisateur, nom, email, TypeUtilisateur.CLIENT, dateCreation);
     }
     
-    // Constructeur pour création
+    /**
+     * Constructeur pour l'inscription d'un nouveau client.
+     *
+     * @param nom Nom complet du client
+     * @param email Adresse email unique
+     */
     public Client(String nom, String email) {
         super(nom, email, TypeUtilisateur.CLIENT);
     }
