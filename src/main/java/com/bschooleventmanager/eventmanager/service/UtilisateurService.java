@@ -15,12 +15,29 @@ import com.mysql.cj.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Service métier pour la gestion complète des utilisateurs (Clients et Organisateurs).
+ * 
+ * <p>Fournit les opérations d'inscription, authentification, mise à jour et gestion
+ * des mots de passe avec validation complète et gestion de session.</p>
+ * 
+ * @author Équipe EventManager
+ * @version 1.0
+ * @since 1.0
+ */
 public class UtilisateurService {
     private static final Logger logger = LoggerFactory.getLogger(UtilisateurService.class);
     private final UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
 
     /**
-     * Inscrire un nouvel utilisateur
+     * Inscrit un nouvel utilisateur avec validation complète.
+     * 
+     * @param nom Le nom complet de l'utilisateur
+     * @param email L'adresse email unique
+     * @param motDePasse Le mot de passe en clair (sera hashé)
+     * @param type Le type d'utilisateur (CLIENT ou ORGANISATEUR)
+     * @return L'utilisateur créé avec son ID généré
+     * @throws BusinessException Si validation échoue ou email existe déjà
      */
     public Utilisateur inscrire(String nom, String email, String motDePasse, String type)
             throws BusinessException {
@@ -67,7 +84,12 @@ public class UtilisateurService {
     }
 
     /**
-     * Authentifier un utilisateur
+     * Authentifie un utilisateur avec email et mot de passe.
+     * 
+     * @param email L'adresse email de connexion
+     * @param motDePasse Le mot de passe en clair
+     * @return L'utilisateur authentifié
+     * @throws BusinessException Si authentification échoue
      */
     public Utilisateur authentifier(String email, String motDePasse)
             throws BusinessException {
@@ -96,7 +118,11 @@ public class UtilisateurService {
     }
 
     /**
-     * Récupérer un utilisateur par ID
+     * Récupère un utilisateur par son identifiant.
+     * 
+     * @param id L'identifiant unique de l'utilisateur
+     * @return L'utilisateur trouvé
+     * @throws BusinessException Si utilisateur non trouvé
      */
     public Utilisateur getUtilisateur(int id) throws BusinessException {
         try {
@@ -112,7 +138,10 @@ public class UtilisateurService {
     }
 
     /**
-     * Mettre à jour un utilisateur
+     * Met à jour les informations d'un utilisateur et synchronise la session.
+     * 
+     * @param utilisateur L'utilisateur avec les nouvelles données
+     * @return true si mise à jour réussie, false sinon
      */
     public boolean updateUtilisateur(Utilisateur utilisateur) {
         try {
@@ -142,7 +171,11 @@ public class UtilisateurService {
     }
 
     /**
-     * Changer le mot de passe d'un utilisateur
+     * Change le mot de passe d'un utilisateur avec validation sécurisée.
+     * 
+     * @param userId L'identifiant de l'utilisateur
+     * @param nouveauMotDePasse Le nouveau mot de passe en clair
+     * @return true si changement réussi, false sinon
      */
     public boolean changePassword(int userId, String nouveauMotDePasse) {
         try {
@@ -173,7 +206,11 @@ public class UtilisateurService {
     }
 
     /**
-     * Vérifier un mot de passe
+     * Vérifie la validité d'un mot de passe pour un utilisateur.
+     * 
+     * @param email L'adresse email de l'utilisateur
+     * @param motDePasse Le mot de passe à vérifier
+     * @return true si mot de passe valide, false sinon
      */
     public boolean verifyPassword(String email, String motDePasse) {
         try {

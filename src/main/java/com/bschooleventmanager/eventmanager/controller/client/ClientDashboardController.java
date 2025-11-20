@@ -22,36 +22,121 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 
 /**
- * Contrôleur principal pour l'interface Client
- * Gère la navigation entre les différents onglets et le contenu principal
+ * Contrôleur principal pour l'interface du tableau de bord client dans EventManager.
+ * 
+ * <p>Cette classe gère la navigation entre les différents onglets et le contenu principal
+ * de l'interface client. Elle orchestre l'affichage dynamique du contenu dans une zone
+ * centrale selon l'onglet sélectionné par l'utilisateur.</p>
+ * 
+ * <p><strong>Fonctionnalités principales :</strong></p>
+ * <ul>
+ *   <li>Navigation par onglets (Événements, Réservations, Profil)</li>
+ *   <li>Affichage dynamique du contenu dans la zone principale</li>
+ *   <li>Gestion de session utilisateur avec personnalisation d'accueil</li>
+ *   <li>Déconnexion sécurisée avec nettoyage de session</li>
+ *   <li>Navigation vers les détails d'événements et formulaires</li>
+ *   <li>Interface de paiement intégrée</li>
+ * </ul>
+ * 
+ * <p><strong>Architecture de navigation :</strong></p>
+ * <ul>
+ *   <li><strong>Onglet Événements :</strong> Liste des événements disponibles avec filtres</li>
+ *   <li><strong>Onglet Réservations :</strong> Historique des réservations client</li>
+ *   <li><strong>Onglet Profil :</strong> Interface de gestion du profil utilisateur</li>
+ * </ul>
+ * 
+ * <p><strong>Gestion du contenu dynamique :</strong></p>
+ * <ul>
+ *   <li>Chargement FXML selon l'onglet sélectionné</li>
+ *   <li>Injection de références aux contrôleurs enfants</li>
+ *   <li>Gestion des erreurs de chargement avec notifications</li>
+ *   <li>Application automatique des styles CSS</li>
+ * </ul>
+ * 
+ * <p><strong>Workflows supportés :</strong></p>
+ * <ol>
+ *   <li>Consultation des événements → Détails → Réservation → Paiement</li>
+ *   <li>Gestion des réservations → Consultation → Paiement/Annulation</li>
+ *   <li>Gestion du profil utilisateur → Modification des informations</li>
+ * </ol>
+ * 
+ * <p><strong>Exemple d'utilisation FXML :</strong></p>
+ * <pre>{@code
+ * <StackPane fx:id="contentArea"/>
+ * <Button fx:id="eventsTab" text="Événements" onAction="#showEvents"/>
+ * <Button fx:id="reservationsTab" text="Réservations" onAction="#showReservations"/>
+ * <Button fx:id="profileTab" text="Profil" onAction="#showProfile"/>
+ * }</pre>
+ * 
+ * @author EventManager Team
+ * @version 1.0
+ * @since 1.0
+ * 
+ * @see ClientEventsController
+ * @see ClientEventDetailsController
+ * @see ClientHistoriqueReservationsController
+ * @see ReservationController
+ * @see PaymentController
+ * @see com.bschooleventmanager.eventmanager.controller.shared.ProfileController
  */
 public class ClientDashboardController {
+    /** Logger pour le traçage des actions et erreurs du dashboard client */
     private static final Logger logger = LoggerFactory.getLogger(ClientDashboardController.class);
 
     // === Éléments FXML ===
+    
+    /** Texte d'accueil personnalisé avec le nom de l'utilisateur connecté */
     @FXML
     private Text welcomeText;
     
+    /** Affichage de la version de l'application */
     @FXML
     private Text versionText;
     
+    /** Bouton de déconnexion pour terminer la session */
     @FXML
     private Button logoutButton;
     
+    /** Onglet pour accéder à la liste des événements */
     @FXML
     private Button eventsTab;
     
+    /** Onglet pour accéder à l'historique des réservations */
     @FXML
     private Button reservationsTab;
     
+    /** Onglet pour accéder au profil utilisateur */
     @FXML
     private Button profileTab;
     
+    /** Zone de contenu principal où s'affichent les différentes interfaces */
     @FXML
     private StackPane contentArea;
 
     /**
-     * Initialisation du contrôleur
+     * Initialise le contrôleur après le chargement du FXML.
+     * 
+     * <p>Configure l'interface utilisateur avec les informations de l'utilisateur
+     * connecté et affiche par défaut la liste des événements. Cette méthode
+     * personnalise l'accueil et prépare l'interface pour l'utilisation.</p>
+     * 
+     * <p><strong>Opérations d'initialisation :</strong></p>
+     * <ul>
+     *   <li>Récupération de l'utilisateur depuis SessionManager</li>
+     *   <li>Personnalisation du message d'accueil</li>
+     *   <li>Affichage de la version de l'application</li>
+     *   <li>Chargement par défaut de la liste des événements</li>
+     * </ul>
+     * 
+     * <p><strong>Gestion de session :</strong></p>
+     * <ul>
+     *   <li>Vérification de la présence d'un utilisateur connecté</li>
+     *   <li>Récupération sécurisée des informations utilisateur</li>
+     *   <li>Affichage conditionnel selon l'état de la session</li>
+     * </ul>
+     * 
+     * @author @AsKing07 Charbel SONON
+     * @since 1.0
      */
     @FXML
     public void initialize() {
@@ -71,7 +156,25 @@ public class ClientDashboardController {
     }
 
     /**
-     * Affiche la liste des événements disponibles
+     * Affiche la liste des événements disponibles pour consultation.
+     * 
+     * <p>Charge l'interface de consultation des événements avec filtres et
+     * options de recherche. Met à jour la navigation pour indiquer l'onglet
+     * actif et configure le contrôleur enfant avec une référence au dashboard.</p>
+     * 
+     * <p><strong>Fonctionnalités de la liste des événements :</strong></p>
+     * <ul>
+     *   <li>Affichage tabulaire avec colonnes informatives</li>
+     *   <li>Filtres par type d'événement et critères de recherche</li>
+     *   <li>Actions de consultation des détails</li>
+     *   <li>Navigation vers les formulaires de réservation</li>
+     * </ul>
+     * 
+     * @see ClientEventsController
+     * @see #setActiveTab(String)
+     * @see #loadEventsContent()
+     * 
+     * @since 1.0
      */
     @FXML
     public void showEvents() {
@@ -81,7 +184,23 @@ public class ClientDashboardController {
     }
 
     /**
-     * Affiche l'interface de profil
+     * Affiche le profil de l'utilisateur connecté.
+     * 
+     * <p>Charge l'interface de consultation et de modification du profil et configure le contrôleur enfant avec une référence au dashboard.</p>
+     * 
+     * <p><strong>Fonctionnalités de la page profil :</strong></p>
+     * <ul>
+     *   <li>Affichage des informations du profil</li>
+     *   <li>Modification des informations personnelles</li>
+     *   <li>Modification du mot de passe</li>
+     * </ul>
+     * 
+     * @see ClientEventsController
+     * @see #setActiveTab(String)
+     * @see #loadEventsContent()
+     * 
+     * @author @AsKing07 Charbel SONON
+     * @since 1.0
      */
     @FXML
     private void showProfile() {
@@ -92,6 +211,20 @@ public class ClientDashboardController {
 
     /**
      * Affiche l'historique des réservations
+     * <p>Charge l'interface de l'historique des réservations effectuées par le client.
+     * Met à jour la navigation pour indiquer l'onglet actif et configure le contrôleur
+     * enfant avec une référence au dashboard.</p>
+     * <p><strong>Fonctionnalités de l'historique des réservations :</strong></p>
+     * <ul>
+     *   <li>Affichage tabulaire des réservations avec détails</li>
+     *  <li>Actions pour consulter, payer ou annuler des réservations</li>
+     * </ul>
+     * @see ClientHistoriqueReservationsController
+     * @see #setActiveTab(String)
+     * @see #loadReservationsContent()
+     * @author @AsKing07 Charbel SONON
+     * @since 1.0
+     * 
      */
     @FXML
     public void showReservations() {
@@ -102,6 +235,16 @@ public class ClientDashboardController {
 
     /**
      * Gère la déconnexion de l'utilisateur
+     * <p>Termine la session utilisateur en cours, efface les données de session
+     * et redirige vers la page de connexion. Assure une déconnexion sécurisée
+     * avec nettoyage de session.</p>
+     * <p><strong>Étapes de la déconnexion :</strong></p>
+     * <ul>
+     *   <li>Effacement des données de session via SessionManager</li>
+     *  <li>Redirection vers l'interface de connexion</li>
+     * </ul>
+     * @author @AsKing07 Charbel SONON
+     * @since 1.0
      */
     @FXML
     private void handleLogout() {
@@ -115,6 +258,8 @@ public class ClientDashboardController {
 
     /**
      * Redirige vers la page de connexion
+     * <p>Charge l'interface de connexion et remplace la scène actuelle
+     * avec celle de connexion. Applique le CSS et centre la fenêtre.</p>
      */
     private void redirectToLogin() {
         try {
@@ -148,6 +293,7 @@ public class ClientDashboardController {
 
     /**
      * Applique le CSS à une scène
+     * @param scene la scène à laquelle appliquer le CSS
      */
     private void applyCssToScene(Scene scene) {
         try {
@@ -159,6 +305,13 @@ public class ClientDashboardController {
 
     /**
      * Met à jour l'apparence des onglets selon l'onglet actif
+     * <p>Applique des styles CSS pour indiquer visuellement
+     * l'onglet actuellement sélectionné dans la navigation.</p>
+     * <p><strong>Fonctionnalités :</strong></p>
+     * <ul>
+     *  <li>Style par défaut pour les onglets inactifs</li>
+     * <li>Mise en évidence de l'onglet actif avec un style distinct</li>
+     * </ul>
      */
     private void setActiveTab(String tabName) {
         // Style par défaut pour tous les onglets
@@ -188,6 +341,20 @@ public class ClientDashboardController {
 
     /**
      * Affiche les détails d'un événement spécifique
+     * <p>Charge l'interface des détails d'un événement sélectionné.
+     * Met à jour la navigation pour indiquer l'onglet actif et configure
+     * le contrôleur enfant avec une référence au dashboard.</p>
+     * <p><strong>Fonctionnalités :</strong></p>
+     * <ul>
+     *   <li>Affichage des informations complètes de l'événement</li>
+     *   <li>Navigation vers les formulaires de réservation</li>
+     * </ul>
+     * 
+     * @see ClientEventDetailsController
+     * @see #setActiveTab(String)
+     * @see #loadEventDetailsContent(Evenement)
+     * @author @AsKing07 Charbel SONON
+     * @since 1.0
      */
     public void showEventDetails(Evenement event) {
         logger.info("Affichage des détails de l'événement: {}", event.getNom());
@@ -197,6 +364,17 @@ public class ClientDashboardController {
 
     /**
      * Charge le contenu des détails d'un événement
+     * @param event l'événement dont les détails doivent être affichés
+     * <p>Charge l'interface des détails d'un événement sélectionné.
+     * Met à jour la navigation pour indiquer l'onglet actif et configure
+     * le contrôleur enfant avec une référence au dashboard.</p>
+     * <p><strong>Fonctionnalités :</strong></p>
+     * <ul>
+     *   <li>Affichage des informations complètes de l'événement</li>
+     *  <li>Navigation vers les formulaires de réservation</li>
+     * </ul>
+     * @since 1.0
+     * @author @AsKing07 Charbel SONON
      */
     private void loadEventDetailsContent(Evenement event) {
         contentArea.getChildren().clear();
@@ -219,6 +397,24 @@ public class ClientDashboardController {
             NotificationUtils.showError("Impossible de charger les détails de l'événement");
         }
     }
+    
+    /**
+     * Charge le contenu de la liste des événements
+     * <p>Charge l'interface de consultation des événements avec filtres et
+     * options de recherche. Met à jour la navigation pour indiquer l'onglet
+     * actif et configure le contrôleur enfant avec une référence au dashboard.</p>
+     * <p><strong>Fonctionnalités de la liste des événements :</strong></p>
+     * <ul>
+     *  <li>Affichage tabulaire avec colonnes informatives</li>
+     *  <li>Filtres par type d'événement et critères de recherche</li>
+     *  <li>Actions de consultation des détails</li>
+     * </ul>
+     * @see ClientEventsController
+     * @see #setActiveTab(String)
+     * @see #loadEventsContent()
+     * @since 1.0
+     * @author @koki-pickles Yvonne NJOKI
+     */ 
     private void loadEventsContent()   {
         contentArea.getChildren().clear();
         try {
@@ -240,6 +436,15 @@ public class ClientDashboardController {
 
     /**
      * Charge le contenu du profil
+     * <p>Charge l'interface de consultation et de modification du profil et configure le contrôleur enfant avec une référence au dashboard.</p>
+     * <p><strong>Fonctionnalités de la page profil :</strong></p
+     * <ul>
+     *   <li>Affichage des informations du profil</li>
+     *  <li>Modification des informations personnelles</li>
+     * </ul>
+     * @author @AsKing07 Charbel SONON
+     * @since 1.0
+     * 
      */
     private void loadProfileContent() {
         contentArea.getChildren().clear();
@@ -263,6 +468,22 @@ public class ClientDashboardController {
 
     /**
      * Affiche le formulaire de réservation pour un événement
+     * @param event l'événement à réserver
+     * <p>Charge le formulaire de réservation pour l'événement sélectionné.
+     * Met à jour la navigation pour indiquer l'onglet actif et configure
+     * le contrôleur enfant avec une référence au dashboard.</p>
+     * <p><strong>Fonctionnalités :</strong></p>
+     * <ul>
+     *   <li>Collecte des informations nécessaires à la réservation</li>
+     *  <li>Validation des données saisies</li>
+     *  <li>Soumission de la réservation</li>
+     * <li>Redirection vers la page de paiement après réservation</li>
+     * </ul>
+     * @see ReservationController
+     * @see #setActiveTab(String)
+     * @see #loadReservationFormContent(Evenement)
+     * @since 1.0
+     * @author @AsKing07 Charbel SONON
      */
     public void showReservationForm(Evenement event) {
         logger.info("Affichage du formulaire de réservation pour l'événement: {}", event.getNom());
@@ -272,6 +493,23 @@ public class ClientDashboardController {
 
     /**
      * Charge le formulaire de réservation
+     * @param event l'événement à réserver
+     * <p>Charge le formulaire de réservation pour l'événement sélectionné.
+     * Met à jour la navigation pour indiquer l'onglet actif et configure
+     * le contrôleur enfant avec une référence au dashboard.</p>
+     * <p><strong>Fonctionnalités :</strong></p>
+     * <ul>
+     *   <li>Collecte des informations nécessaires à la réservation</li>
+     *  <li>Validation des données saisies</li>
+     *  <li>Soumission de la réservation</li>
+     * <li>Redirection vers la page de paiement après réservation</li>
+     * </ul>
+     * @since 1.0
+     * @author @AsKing07 Charbel SONON
+     * @see ReservationController
+     * @see #setActiveTab(String)
+     * @see #loadReservationFormContent(Evenement)
+     * 
      */
     private void loadReservationFormContent(Evenement event) {
         contentArea.getChildren().clear();
@@ -297,6 +535,19 @@ public class ClientDashboardController {
 
     /**
      * Charge le contenu de l'historique des réservations
+     * <p>Charge l'interface de l'historique des réservations effectuées par le client.
+     * Met à jour la navigation pour indiquer l'onglet actif et configure le contrôleur
+     * enfant avec une référence au dashboard.</p>
+     * <p><strong>Fonctionnalités de l'historique des réservations :</strong></p>
+     * <ul>
+     *  <li>Affichage tabulaire des réservations avec détails</li>
+     * <li>Actions pour consulter, payer ou annuler des réservations</li>
+     * </ul>
+     * @see ClientHistoriqueReservationsController
+     * @see #setActiveTab(String)
+     * @see #loadReservationsContent()
+     * @author @AsKing07 Charbel SONON
+     * @since 1.0
      */
     private void loadReservationsContent() {
         contentArea.getChildren().clear();
@@ -322,6 +573,17 @@ public class ClientDashboardController {
 
     /**
      * Affiche l'interface de paiement dans la zone de contenu
+     * @param paymentContent le contenu de l'interface de paiement à afficher
+     * <p>Charge l'interface de paiement dans la zone de contenu principale.
+     * <p><strong>Fonctionnalités :</strong></p>
+     * <ul>
+     *  <li>Intégration avec les passerelles de paiement</li>
+     * <li>Collecte sécurisée des informations de paiement</li>
+     * <li>Validation et traitement des paiements</li>
+     * </ul>
+     * @since 1.0
+     * 
+     * 
      */
     public void showPaymentInterface(Parent paymentContent) {
         logger.info("Affichage de l'interface de paiement");

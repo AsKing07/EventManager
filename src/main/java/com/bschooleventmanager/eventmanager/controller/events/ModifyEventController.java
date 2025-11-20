@@ -16,45 +16,269 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
- * Contrôleur pour la modification d'événements
+ * Contrôleur pour la modification d'événements existants dans EventManager.
+ * 
+ * <p>Cette classe gère l'intégralité du processus de modification d'événements
+ * avec support des trois types d'événements : concerts, spectacles et conférences.
+ * Elle fournit une interface de modification sécurisée avec validation complète
+ * et préservation de l'intégrité des données.</p>
+ * 
+ * <p><strong>Fonctionnalités principales :</strong></p>
+ * <ul>
+ *   <li>Chargement et affichage des données existantes</li>
+ *   <li>Interface adaptative selon le type d'événement</li>
+ *   <li>Validation complète des modifications</li>
+ *   <li>Gestion des contraintes d'intégrité référentielle</li>
+ *   <li>Sauvegarde sécurisée avec rollback automatique</li>
+ * </ul>
+ * 
+ * <p><strong>Types d'événements supportés :</strong></p>
+ * <ul>
+ *   <li><strong>Concert :</strong> Modification artiste/groupe, type musical, âge minimum</li>
+ *   <li><strong>Spectacle :</strong> Modification troupe/artiste, type de spectacle, âge minimum</li>
+ *   <li><strong>Conférence :</strong> Modification domaine, intervenant, niveau d'expertise</li>
+ * </ul>
+ * 
+ * <p><strong>Sécurité et autorisations :</strong></p>
+ * <ul>
+ *   <li><strong>Vérification organisateur :</strong> Seul le propriétaire peut modifier</li>
+ *   <li><strong>Validation session :</strong> Authentification requise</li>
+ *   <li><strong>Type d'événement :</strong> Non modifiable (contrainte métier)</li>
+ *   <li><strong>Intégrité données :</strong> Préservation des réservations existantes</li>
+ * </ul>
+ * 
+ * <p><strong>Validation et contraintes :</strong></p>
+ * <ul>
+ *   <li><strong>Champs obligatoires :</strong> Nom, lieu, date, type (lecture seule)</li>
+ *   <li><strong>Contraintes temporelles :</strong> Date future avec délai minimum</li>
+ *   <li><strong>Limites numériques :</strong> Places (0-10000), Prix (5-2000€)</li>
+ *   <li><strong>Cohérence tarifaire :</strong> Premium ≥ VIP ≥ Standard</li>
+ *   <li><strong>Validation spécifique :</strong> Selon le type d'événement existant</li>
+ * </ul>
+ * 
+ * <p><strong>Interface utilisateur :</strong></p>
+ * <ul>
+ *   <li>Pré-remplissage automatique avec données existantes</li>
+ *   <li>Champs conditionnels selon le type (non modifiable)</li>
+ *   <li>Validation en temps réel avec feedback immédiat</li>
+ *   <li>Messages d'erreur contextuels par champ</li>
+ *   <li>Indicateurs visuels de modification</li>
+ * </ul>
+ * 
+ * <p><strong>Workflow de modification :</strong></p>
+ * <ol>
+ *   <li><strong>Chargement :</strong> Récupération de l'événement par ID</li>
+ *   <li><strong>Affichage :</strong> Pré-remplissage de l'interface</li>
+ *   <li><strong>Configuration :</strong> Adaptation selon le type existant</li>
+ *   <li><strong>Modification :</strong> Saisie des nouvelles valeurs</li>
+ *   <li><strong>Validation :</strong> Contrôle complet des données</li>
+ *   <li><strong>Sauvegarde :</strong> Application des modifications</li>
+ * </ol>
+ * 
+ * <p><strong>Gestion des erreurs :</strong></p>
+ * <ul>
+ *   <li>Validation progressive avec arrêt sur première erreur</li>
+ *   <li>Messages contextuels par champ avec labels dédiés</li>
+ *   <li>Gestion des contraintes référentielles</li>
+ *   <li>Rollback automatique en cas d'échec</li>
+ *   <li>Logging détaillé pour audit et diagnostic</li>
+ * </ul>
+ * 
+ * <p><strong>Architecture de validation :</strong></p>
+ * <ol>
+ *   <li><strong>Validation de base :</strong> Champs obligatoires et formats</li>
+ *   <li><strong>Validation temporelle :</strong> Date et heure cohérentes</li>
+ *   <li><strong>Validation numérique :</strong> Places et prix dans les limites</li>
+ *   <li><strong>Validation spécifique :</strong> Selon le type d'événement</li>
+ *   <li><strong>Validation finale :</strong> Cohérence globale et autorisations</li>
+ * </ol>
+ * 
+ * <p><strong>Intégration services :</strong></p>
+ * <ul>
+ *   <li><strong>EvenementService :</strong> Modification et gestion des événements</li>
+ *   <li><strong>SessionManager :</strong> Vérification des autorisations</li>
+ *   <li><strong>NotificationUtils :</strong> Feedback utilisateur temps réel</li>
+ * </ul>
+ * 
+ * <p><strong>Exemple d'utilisation :</strong></p>
+ * <pre>{@code
+ * ModifyEventController controller = loader.getController();
+ * controller.setDashboardController(dashboardController);
+ * controller.setEvenementInfo(eventId, eventType);
+ * // L'interface se charge automatiquement avec les données existantes
+ * }</pre>
+ * 
+ * @author Charbel SONON
+ * @author MABOMESI Loïc
+ * @version 1.0
+ * @since 1.0
+ * 
+ * @see CreateEventController
+ * @see com.bschooleventmanager.eventmanager.service.EvenementService
+ * @see com.bschooleventmanager.eventmanager.model.Concert
+ * @see com.bschooleventmanager.eventmanager.model.Spectacle
+ * @see com.bschooleventmanager.eventmanager.model.Conference
+ * @see com.bschooleventmanager.eventmanager.controller.organisateur.OrganisateurDashboardController
  */
 public class ModifyEventController {
     
+    /** Logger pour traçage des opérations de modification d'événements. */
     private static final Logger logger = LoggerFactory.getLogger(ModifyEventController.class);
     
-    // === FXML Elements ===
-    @FXML private Label tfIdEvent; // Affichage de l'ID en lecture seule
-    @FXML private TextField tfNom, tfLieu, nbPlacesStandard, prixPlaceStandard, nbPlacesVip, prixPlaceVip, nbPlacesPremium, prixPlacePremium;
-    @FXML private TextField tfArtits, Domaine, Intervenant; // Champs spécifiques selon le type
+    // === Éléments FXML - Interface utilisateur ===
+    
+    /** Label d'affichage de l'ID événement en lecture seule. */
+    @FXML private Label tfIdEvent;
+    
+    // Champs de saisie principaux
+    /** Champ de saisie pour le nom de l'événement. */
+    @FXML private TextField tfNom;
+    /** Champ de saisie pour le lieu de l'événement. */
+    @FXML private TextField tfLieu;
+    /** Champ de saisie pour le nombre de places standard. */
+    @FXML private TextField nbPlacesStandard;
+    /** Champ de saisie pour le prix des places standard. */
+    @FXML private TextField prixPlaceStandard;
+    /** Champ de saisie pour le nombre de places VIP. */
+    @FXML private TextField nbPlacesVip;
+    /** Champ de saisie pour le prix des places VIP. */
+    @FXML private TextField prixPlaceVip;
+    /** Champ de saisie pour le nombre de places premium. */
+    @FXML private TextField nbPlacesPremium;
+    /** Champ de saisie pour le prix des places premium. */
+    @FXML private TextField prixPlacePremium;
+    
+    // Champs spécifiques selon le type d'événement
+    /** Champ de saisie pour l'artiste ou groupe (concerts/spectacles). */
+    @FXML private TextField tfArtits;
+    /** Champ de saisie pour le domaine de la conférence. */
+    @FXML private TextField Domaine;
+    /** Champ de saisie pour l'intervenant de la conférence. */
+    @FXML private TextField Intervenant;
+    
+    /** Zone de texte pour la description détaillée de l'événement. */
     @FXML private TextArea Description;
+    
+    /** Sélecteur de date pour la date de l'événement. */
     @FXML private DatePicker dpDate;
-    @FXML private Spinner<Integer> spHour, spMinute, tfAge;
+    
+    // Spinners pour heure et âge
+    /** Spinner pour la sélection de l'heure (0-23). */
+    @FXML private Spinner<Integer> spHour;
+    /** Spinner pour la sélection des minutes (0-59). */
+    @FXML private Spinner<Integer> spMinute;
+    /** Spinner pour la sélection de l'âge minimum (concerts/spectacles). */
+    @FXML private Spinner<Integer> tfAge;
+    
+    // ComboBox pour les sélections (type non modifiable)
+    /** ComboBox pour l'affichage du type d'événement (lecture seule). */
     @FXML private ComboBox<TypeEvenement> evType;
+    /** ComboBox pour la sélection du type de concert. */
     @FXML private ComboBox<TypeConcert> tyConcert;
+    /** ComboBox pour la sélection du type de spectacle. */
     @FXML private ComboBox<TypeSpectacle> tySpectacle;
+    /** ComboBox pour la sélection du niveau d'expertise (conférences). */
     @FXML private ComboBox<NiveauExpertise> nvExpert;
     
-    // Labels pour champs conditionnels
-    @FXML private Label lbtfAge, lbtfArtits, lbtyConcert, lbTySpectacle, lbNvExpert, lbDomaine, lbIntervenant;
+    // Labels pour champs conditionnels selon le type
+    /** Label pour le champ âge minimum (affiché pour concerts et spectacles). */
+    @FXML private Label lbtfAge;
+    /** Label pour le champ artiste/groupe (affiché pour concerts et spectacles). */
+    @FXML private Label lbtfArtits;
+    /** Label pour le type de concert (affiché uniquement pour les concerts). */
+    @FXML private Label lbtyConcert;
+    /** Label pour le type de spectacle (affiché uniquement pour les spectacles). */
+    @FXML private Label lbTySpectacle;
+    /** Label pour le niveau d'expertise (affiché uniquement pour les conférences). */
+    @FXML private Label lbNvExpert;
+    /** Label pour le domaine (affiché uniquement pour les conférences). */
+    @FXML private Label lbDomaine;
+    /** Label pour l'intervenant (affiché uniquement pour les conférences). */
+    @FXML private Label lbIntervenant;
     
-    // Labels d'erreur
-    @FXML private Label lblErrDate, lblErrTitre, lbErrLieu, lblErrTyEvent, lblErrTypeConcert;
-    @FXML private Label lblErrTypeSpectacle, lblErrNvExpert, lblErrDomaine, lblErrAge, lblErrArtiste, lblError;
+    // Labels d'erreur pour validation temps réel
+    /** Label d'erreur pour la validation de la date de l'événement. */
+    @FXML private Label lblErrDate;
+    /** Label d'erreur pour la validation du titre de l'événement. */
+    @FXML private Label lblErrTitre;
+    /** Label d'erreur pour la validation du lieu de l'événement. */
+    @FXML private Label lbErrLieu;
+    /** Label d'erreur pour la validation du type d'événement. */
+    @FXML private Label lblErrTyEvent;
+    /** Label d'erreur pour la validation du type de concert. */
+    @FXML private Label lblErrTypeConcert;
+    /** Label d'erreur pour la validation du type de spectacle. */
+    @FXML private Label lblErrTypeSpectacle;
+    /** Label d'erreur pour la validation du niveau d'expertise. */
+    @FXML private Label lblErrNvExpert;
+    /** Label d'erreur pour la validation du domaine de conférence. */
+    @FXML private Label lblErrDomaine;
+    /** Label d'erreur pour la validation de l'âge minimum. */
+    @FXML private Label lblErrAge;
+    /** Label d'erreur pour la validation de l'artiste/groupe. */
+    @FXML private Label lblErrArtiste;
+    /** Label d'erreur global pour messages d'erreur généraux. */
+    @FXML private Label lblError;
     
-    // Boutons
+    // Boutons d'action
+    /** Bouton de retour au tableau de bord sans sauvegarde. */
     @FXML private Button btnReturn;
     
-    // Services
+    // === Services et données ===
+    
+    /** Service métier pour la gestion des événements. */
     private final EvenementService evenementService = new EvenementService();
     
-    // Données
+    // Données de l'événement en cours de modification
+    /** Objet événement chargé depuis la base pour modification. */
     private Evenement evenementAModifier;
+    /** Identifiant de l'événement à modifier. */
     private int evenementId;
+    /** Type de l'événement à modifier (non modifiable). */
     private TypeEvenement evenementType;
+    
+    /** Référence vers le contrôleur de tableau de bord organisateur pour navigation. */
     private com.bschooleventmanager.eventmanager.controller.organisateur.OrganisateurDashboardController dashboardController;
     
     /**
-     * Initialisation du contrôleur
+     * Initialise les composants de l'interface de modification d'événements.
+     * 
+     * <p>Cette méthode est appelée automatiquement par JavaFX après le chargement
+     * du fichier FXML. Elle configure tous les contrôles de l'interface pour
+     * la modification d'événements existants avec leurs contraintes spécifiques.</p>
+     * 
+     * <p><strong>Configuration effectuée :</strong></p>
+     * <ul>
+     *   <li><strong>Spinners :</strong> Configuration des plages horaires et âges</li>
+     *   <li><strong>ComboBox :</strong> Chargement des valeurs depuis les enums</li>
+     *   <li><strong>Validation numérique :</strong> Formatage automatique des champs</li>
+     *   <li><strong>Interface adaptative :</strong> Masquage initial des champs conditionnels</li>
+     *   <li><strong>Écouteurs :</strong> Réaction aux changements de type d'événement</li>
+     * </ul>
+     * 
+     * <p><strong>Contraintes spécifiques à la modification :</strong></p>
+     * <ul>
+     *   <li><strong>Type d'événement :</strong> ComboBox désactivée (non modifiable)</li>
+     *   <li><strong>Spinners :</strong> Heures (0-23), minutes (0-59), âge (0-99)</li>
+     *   <li><strong>Validation :</strong> Entiers pour places, décimaux pour prix</li>
+     * </ul>
+     * 
+     * <p><strong>État initial de l'interface :</strong></p>
+     * <ul>
+     *   <li>Masquage de tous les champs conditionnels</li>
+     *   <li>Réinitialisation des messages d'erreur</li>
+     *   <li>Configuration des écouteurs d'événements</li>
+     *   <li>Préparation pour le chargement des données</li>
+     * </ul>
+     * 
+     * <p>Cette méthode prépare l'interface pour recevoir les données de l'événement
+     * à modifier via {@link #setEvenementInfo(int, TypeEvenement)}.</p>
+     * 
+     * @see #initializeSpinners()
+     * @see #initializeComboBoxes()
+     * @see #setupNumericValidation()
+     * @see #hideAllConditionalFields()
+     * @see #setupListeners()
      */
     @FXML
     private void initialize() {
@@ -238,7 +462,35 @@ public class ModifyEventController {
     }
     
     /**
-     * Définit les informations d'événement et charge l'objet complet depuis la base
+     * Définit les informations d'événement et charge l'objet complet depuis la base.
+     * 
+     * <p>Cette méthode est le point d'entrée principal pour initialiser l'interface
+     * de modification avec un événement spécifique. Elle stocke les identifiants
+     * et déclenche le chargement complet des données depuis la base de données.</p>
+     * 
+     * <p><strong>Processus d'initialisation :</strong></p>
+     * <ol>
+     *   <li>Stockage de l'ID et du type d'événement</li>
+     *   <li>Appel de {@link #loadEventById()} pour chargement complet</li>
+     *   <li>Configuration automatique de l'interface</li>
+     *   <li>Adaptation des champs selon le type</li>
+     * </ol>
+     * 
+     * <p><strong>Validation des paramètres :</strong></p>
+     * <ul>
+     *   <li>Vérification de la validité de l'ID événement</li>
+     *   <li>Contrôle de cohérence du type d'événement</li>
+     *   <li>Validation des permissions d'accès</li>
+     * </ul>
+     * 
+     * <p>Cette méthode doit être appelée après l'initialisation du contrôleur
+     * et avant l'affichage de l'interface à l'utilisateur.</p>
+     * 
+     * @param eventId L'identifiant unique de l'événement à modifier
+     * @param eventType Le type de l'événement (Concert, Spectacle, Conférence)
+     * 
+     * @see #loadEventById()
+     * @see TypeEvenement
      */
     public void setEvenementInfo(int eventId, TypeEvenement eventType) {
         this.evenementId = eventId;
@@ -374,7 +626,63 @@ public class ModifyEventController {
     }
     
     /**
-     * Sauvegarde les modifications avec validation complète
+     * Sauvegarde les modifications avec validation complète et sécurité.
+     * 
+     * <p>Cette méthode orchestre l'intégralité du processus de sauvegarde des
+     * modifications, de la validation des saisies jusqu'à la persistance en base
+     * de données. Elle implémente une approche sécurisée avec contrôles multiples.</p>
+     * 
+     * <p><strong>Workflow de sauvegarde :</strong></p>
+     * <ol>
+     *   <li><strong>Validation des champs :</strong> Contrôle complet des saisies</li>
+     *   <li><strong>Vérification existence :</strong> Événement toujours présent</li>
+     *   <li><strong>Application modifications :</strong> Mise à jour de l'objet</li>
+     *   <li><strong>Validation finale :</strong> Autorisations et cohérence</li>
+     *   <li><strong>Sauvegarde :</strong> Persistance selon le type concret</li>
+     *   <li><strong>Navigation :</strong> Retour au dashboard en cas de succès</li>
+     * </ol>
+     * 
+     * <p><strong>Validations effectuées :</strong></p>
+     * <ul>
+     *   <li><strong>Champs obligatoires :</strong> Nom, lieu, date, places</li>
+     *   <li><strong>Contraintes temporelles :</strong> Date future avec délai</li>
+     *   <li><strong>Limites numériques :</strong> Places et prix dans les bornes</li>
+     *   <li><strong>Cohérence tarifaire :</strong> Premium ≥ VIP ≥ Standard</li>
+     *   <li><strong>Autorisations :</strong> Propriétaire et session valide</li>
+     * </ul>
+     * 
+     * <p><strong>Sécurité et autorisations :</strong></p>
+     * <ul>
+     *   <li><strong>Session utilisateur :</strong> Vérification de la connexion</li>
+     *   <li><strong>Propriété événement :</strong> Seul le créateur peut modifier</li>
+     *   <li><strong>Validation finale :</strong> Contrôles avant persistance</li>
+     * </ul>
+     * 
+     * <p><strong>Gestion d'erreurs :</strong></p>
+     * <ul>
+     *   <li><strong>BusinessException :</strong> Erreurs métier avec message contextualisé</li>
+     *   <li><strong>Exception générale :</strong> Erreurs techniques avec fallback</li>
+     *   <li><strong>Rollback :</strong> Préservation de l'état en cas d'échec</li>
+     *   <li><strong>Feedback utilisateur :</strong> Notifications et messages d'erreur</li>
+     * </ul>
+     * 
+     * <p><strong>Sauvegarde par type :</strong></p>
+     * <ul>
+     *   <li><strong>Concert :</strong> {@link EvenementService#modifierConcert(Concert)}</li>
+     *   <li><strong>Spectacle :</strong> {@link EvenementService#modifierSpectacle(Spectacle)}</li>
+     *   <li><strong>Conférence :</strong> {@link EvenementService#modifierConference(Conference)}</li>
+     * </ul>
+     * 
+     * <p>Cette méthode est liée au bouton de sauvegarde via l'annotation @FXML
+     * et représente l'aboutissement du processus de modification.</p>
+     * 
+     * @author Charbel SONON
+     * @author MABOMESI Loïc
+     * 
+     * @see #validerChamps()
+     * @see #appliquerModifications()
+     * @see #validateBeforeSave()
+     * @see #performSave()
      */
     @FXML
     private void saveModifications() {

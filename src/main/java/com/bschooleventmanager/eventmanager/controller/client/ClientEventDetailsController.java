@@ -12,44 +12,168 @@ import org.slf4j.LoggerFactory;
 import java.time.format.DateTimeFormatter;
 import java.math.BigDecimal;
 
+/**
+ * Contrôleur pour l'interface de détails d'événement côté client dans EventManager.
+ * 
+ * <p>Cette classe gère l'affichage complet des informations d'un événement spécifique,
+ * incluant les détails de base, la tarification, la disponibilité des places, et
+ * les actions que peut effectuer un client (réservation, partage).</p>
+ * 
+ * <p><strong>Fonctionnalités principales :</strong></p>
+ * <ul>
+ *   <li>Affichage détaillé des informations d'événement</li>
+ *   <li>Présentation de la tarification par catégorie de places</li>
+ *   <li>Indicateurs de disponibilité en temps réel</li>
+ *   <li>Actions client : réservation et partage</li>
+ *   <li>Navigation de retour vers la liste des événements</li>
+ *   <li>Formatage automatique des données (dates, prix, statuts)</li>
+ * </ul>
+ * 
+ * <p><strong>Informations affichées :</strong></p>
+ * <ul>
+ *   <li><strong>Informations de base :</strong> Nom, date, lieu, type, statut</li>
+ *   <li><strong>Description :</strong> Texte descriptif complet de l'événement</li>
+ *   <li><strong>Tarification :</strong> Prix par catégorie (Standard, VIP, Premium)</li>
+ *   <li><strong>Disponibilité :</strong> Nombre de places disponibles par catégorie</li>
+ * </ul>
+ * 
+ * <p><strong>Actions utilisateur :</strong></p>
+ * <ul>
+ *   <li><strong>Réservation :</strong> Redirection vers le formulaire de réservation</li>
+ *   <li><strong>Partage :</strong> Copie des informations pour partage externe</li>
+ *   <li><strong>Retour :</strong> Navigation vers la liste des événements</li>
+ * </ul>
+ * 
+ * <p><strong>Validation des actions :</strong></p>
+ * <ul>
+ *   <li>Vérification de la disponibilité avant réservation</li>
+ *   <li>Gestion des événements complets avec messages appropriés</li>
+ *   <li>Contrôle de l'état de l'événement (annulé, terminé, etc.)</li>
+ * </ul>
+ * 
+ * <p><strong>Exemple d'utilisation :</strong></p>
+ * <pre>{@code
+ * ClientEventDetailsController controller = loader.getController();
+ * controller.setDashboardController(dashboardController);
+ * controller.setEventData(selectedEvent);
+ * }</pre>
+ * 
+ * @author EventManager Team
+ * @version 1.0
+ * @since 1.0
+ * 
+ * @see ClientDashboardController
+ * @see ClientEventsController
+ * @see ReservationController
+ * @see com.bschooleventmanager.eventmanager.model.Evenement
+ */
 public class ClientEventDetailsController {
     
+    /** Logger pour le traçage des actions sur les détails d'événements */
     private static final Logger logger = LoggerFactory.getLogger(ClientEventDetailsController.class);
     
+    // === Éléments FXML - Navigation ===
+    
+    /** Bouton de retour vers la liste des événements */
     @FXML private Button backButton;
+    
+    // === Éléments FXML - Informations de base ===
+    
+    /** Label affichant le nom de l'événement */
     @FXML private Label eventNameLabel;
+    
+    /** Label affichant la date et l'heure de l'événement */
     @FXML private Label eventDateLabel;
+    
+    /** Label affichant le lieu de l'événement */
     @FXML private Label eventLocationLabel;
+    
+    /** Label affichant le type d'événement (Concert, Spectacle, Conférence) */
     @FXML private Label eventTypeLabel;
+    
+    /** Label affichant le statut de l'événement (À venir, En cours, etc.) */
     @FXML private Label eventStatusLabel;
+    
+    /** Zone de texte affichant la description complète de l'événement */
     @FXML private TextArea eventDescriptionArea;
     
-    // Prix et places
+    // === Éléments FXML - Tarification ===
+    
+    /** Label affichant le prix des places Standard */
     @FXML private Label priceStandardLabel;
+    
+    /** Label affichant le prix des places VIP */
     @FXML private Label priceVipLabel;
+    
+    /** Label affichant le prix des places Premium */
     @FXML private Label pricePremiumLabel;
+    
+    /** Label affichant le nombre de places Standard disponibles */
     @FXML private Label placesStandardLabel;
+    
+    /** Label affichant le nombre de places VIP disponibles */
     @FXML private Label placesVipLabel;
+    
+    /** Label affichant le nombre de places Premium disponibles */
     @FXML private Label placesPremiumLabel;
     
-    // Boutons d'action
+    // === Éléments FXML - Actions ===
+    
+    /** Bouton pour initier une réservation */
     @FXML private Button reserveButton;
+    
+    /** Bouton pour partager les informations de l'événement */
     @FXML private Button shareButton;
 
+    // === Données et références ===
+    
+    /** Événement actuellement affiché */
     private Evenement currentEvent;
+    
+    /** Référence au contrôleur dashboard pour la navigation */
     private ClientDashboardController dashboardController;
+    
+    /** Formateur pour l'affichage des dates */
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy à HH:mm");
 
     /**
-     * Définit le contrôleur parent du dashboard pour la navigation
+     * Définit le contrôleur parent du dashboard pour permettre la navigation.
+     * 
+     * <p>Injecte la référence au contrôleur principal du dashboard client
+     * pour permettre la navigation de retour et la coordination entre
+     * les différentes interfaces.</p>
+     * 
+     * @param dashboardController le contrôleur principal du dashboard client,
+     *                           ne doit pas être null pour assurer la navigation
+     * 
+     * @since 1.0
      */
     public void setDashboardController(ClientDashboardController dashboardController) {
         this.dashboardController = dashboardController;
     }
 
     /**
-     * Called by ClientEventsController to inject the selected event data.
-     * @param event The Evenement object to display.
+     * Injecte les données de l'événement à afficher et met à jour l'interface.
+     * 
+     * <p>Cette méthode est appelée par le contrôleur parent pour transmettre
+     * les informations de l'événement sélectionné. Elle déclenche automatiquement
+     * la mise à jour de tous les éléments d'interface.</p>
+     * 
+     * <p><strong>Données traitées :</strong></p>
+     * <ul>
+     *   <li>Informations de base : nom, date, lieu, type, statut</li>
+     *   <li>Description complète de l'événement</li>
+     *   <li>Tarification par catégorie de places</li>
+     *   <li>Disponibilité des places en temps réel</li>
+     * </ul>
+     * 
+     * @param event l'objet Evenement contenant toutes les informations à afficher,
+     *              ne doit pas être null
+     * 
+     * @see #populateUI()
+     * @see com.bschooleventmanager.eventmanager.model.Evenement
+     * 
+     * @since 1.0
      */
     public void setEventData(Evenement event) {
         this.currentEvent = event;

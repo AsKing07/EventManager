@@ -11,12 +11,28 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+/**
+ * Service métier spécialisé pour la gestion des organisateurs d'événements.
+ * 
+ * <p>Fournit les opérations spécifiques aux organisateurs : inscription,
+ * authentification, gestion d'événements et consultation de statistiques.</p>
+ * 
+ * @author Équipe EventManager
+ * @version 1.0
+ * @since 1.0
+ */
 public class OrganisateurService {
     private static final Logger logger = LoggerFactory.getLogger(OrganisateurService.class);
     private final OrganisateurDAO organisateurDAO = new OrganisateurDAO();
 
     /**
-     * Inscrire un nouvel organisateur
+     * Inscrit un nouvel organisateur avec validation spécialisée.
+     * 
+     * @param nom Le nom complet de l'organisateur
+     * @param email L'adresse email unique pour l'organisateur
+     * @param motDePasse Le mot de passe sécurisé
+     * @return L'organisateur créé avec son ID
+     * @throws BusinessException Si validation échoue ou email existe
      */
     public Organisateur inscrireOrganisateur(String nom, String email, String motDePasse) throws BusinessException {
         try {
@@ -53,7 +69,12 @@ public class OrganisateurService {
     }
 
     /**
-     * Authentifier un organisateur
+     * Authentifie un organisateur pour accès au dashboard.
+     * 
+     * @param email L'email de connexion
+     * @param motDePasse Le mot de passe de l'organisateur
+     * @return L'organisateur authentifié
+     * @throws BusinessException Si authentification échoue
      */
     public Organisateur authentifierOrganisateur(String email, String motDePasse) throws BusinessException {
         try {
@@ -81,7 +102,11 @@ public class OrganisateurService {
     }
 
     /**
-     * Récupérer un organisateur par ID
+     * Récupère un organisateur par son identifiant unique.
+     * 
+     * @param id L'identifiant de l'organisateur
+     * @return L'organisateur trouvé
+     * @throws BusinessException Si organisateur non trouvé
      */
     public Organisateur getOrganisateur(int id) throws BusinessException {
         try {

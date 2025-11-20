@@ -1,4 +1,5 @@
 package com.bschooleventmanager.eventmanager.controller.organisateur;
+
 import com.bschooleventmanager.eventmanager.model.Evenement;
 import com.bschooleventmanager.eventmanager.service.EvenementService;
 import com.bschooleventmanager.eventmanager.util.NotificationUtils;
@@ -34,45 +35,151 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Contrôleur de la liste des événements côté organisateur avec gestion complète CRUD.
+ * 
+ * <p><b>Fonctionnalités principales :</b></p>
+ * <ul>
+ *   <li>Affichage tabulaire de tous les événements de l'organisateur connecté</li>
+ *   <li>Colonnes détaillées : nom, date/heure, lieu, type, statut, capacité et actions</li>
+ *   <li>Actions par ligne : modification et suppression avec confirmation</li>
+ *   <li>Rafraîchissement automatique après modifications</li>
+ *   <li>Gestion des erreurs avec notifications utilisateur appropriées</li>
+ * </ul>
+ * 
+ * <p><b>Architecture de la table :</b></p>
+ * <ul>
+ *   <li>TableView avec colonnes configurées automatiquement via PropertyValueFactory</li>
+ *   <li>Colonne d'actions personnalisée avec boutons inline (Modifier/Supprimer)</li>
+ *   <li>Formatage automatique des dates avec DateTimeFormatter localisé</li>
+ *   <li>Indicateurs visuels de statut (actif/inactif) et de type d'événement</li>
+ * </ul>
+ * 
+ * <p><b>Workflow de gestion des événements :</b></p>
+ * <ol>
+ *   <li>Chargement initial des événements de l'organisateur depuis le service</li>
+ *   <li>Configuration des colonnes et formatage des données d'affichage</li>
+ *   <li>Actions modification : ouverture de ModifyEventController en fenêtre modale</li>
+ *   <li>Actions suppression : confirmation utilisateur puis suppression sécurisée</li>
+ *   <li>Rafraîchissement automatique de la table après chaque opération</li>
+ * </ol>
+ * 
+ * <p><b>Intégration système :</b></p>
+ * <ul>
+ *   <li>Communication avec EvenementService pour toutes les opérations CRUD</li>
+ *   <li>Utilisation de SessionManager pour identification de l'organisateur</li>
+ *   <li>Notifications via NotificationUtils pour feedback utilisateur</li>
+ *   <li>Navigation modale vers ModifyEventController pour éditions</li>
+ * </ul>
+ * 
+ * <p><b>Sécurité et validation :</b></p>
+ * <ul>
+ *   <li>Vérification systématique de la session utilisateur connecté</li>
+ *   <li>Validation des droits d'accès aux événements de l'organisateur</li>
+ *   <li>Confirmations de suppression pour éviter les pertes de données</li>
+ *   <li>Gestion robuste des erreurs avec logging et notifications</li>
+ * </ul>
+ * 
+ * @author Yvonne NJOKI  @koki-pickles
+ * @version 1.0
+ * @since 1.0
+ * 
+ * @see EvenementService
+ * @see ModifyEventController
+ * @see Evenement
+ * @see NotificationUtils
+ * @see SessionManager
+ */
 public class OrganisateurEventListController implements Initializable {
 
-    private static final Logger logger =
-            LoggerFactory.getLogger(OrganisateurEventListController.class);
+    /** Logger pour traçage des opérations de gestion des événements et interactions table. */
+    private static final Logger logger = LoggerFactory.getLogger(OrganisateurEventListController.class);
 
-    @FXML
-    private TableView<Evenement> eventTable;
+    /** Table principale d'affichage des événements de l'organisateur avec colonnes configurées. */
+    @FXML private TableView<Evenement> eventTable;
 
-    @FXML
-    private TableColumn<Evenement, String> nomColumn;
+    /** Colonne d'affichage du nom/titre de l'événement avec formatage automatique. */
+    @FXML private TableColumn<Evenement, String> nomColumn;
 
-    @FXML
-    private TableColumn<Evenement, LocalDateTime> dateColumn;
+    /** Colonne d'affichage de la date et heure avec formatage localisé DD/MM/YYYY HH:MM. */
+    @FXML private TableColumn<Evenement, LocalDateTime> dateColumn;
 
-    @FXML
-    private TableColumn<Evenement, String> statutColumn;
+    /** Colonne d'affichage du statut de l'événement (Actif/Inactif) avec indicateurs visuels. */
+    @FXML private TableColumn<Evenement, String> statutColumn;
 
-    @FXML
-    private TableColumn<Evenement, Void> actionsColumn;
+    /** Colonne personnalisée d'actions avec boutons inline (Modifier/Supprimer). */
+    @FXML private TableColumn<Evenement, Void> actionsColumn;
 
-          // Référence au contrôleur parent (injected par le loader dans le parent)
+    /** Référence vers le contrôleur parent pour navigation et coordination. */
     private OrganisateurDashboardController parentController;
 
+    /** Service métier pour toutes les opérations CRUD sur les événements. */
     private final EvenementService evenementService = new EvenementService();
+    
+    /** ID de l'organisateur connecté pour filtrage des événements (-1 si non initialisé). */
     private int organisateurId = -1;
+    
+    /** Formatage des dates pour affichage uniforme dans la table (format français). */
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
 
+    /**
+     * Définit la référence vers le contrôleur parent pour navigation et coordination.
+     * 
+     * @param parent Le contrôleur dashboard organisateur principal
+     * 
+     * @see OrganisateurDashboardController
+     */
     public void setParentController(OrganisateurDashboardController parent) {
         this.parentController = parent;
     }
 
-
+    /**
+     * Définit l'ID de l'organisateur connecté et charge ses événements automatiquement.
+     * 
+     * <p>Cette méthode est appelée après l'initialisation du contrôleur pour
+     * configurer le contexte utilisateur et déclencher le chargement initial
+     * des données spécifiques à cet organisateur.</p>
+     * 
+     * @param id L'identifiant unique de l'organisateur connecté
+     * 
+     * @see #chargerEvenementsOrganisateur()
+     */
     public void setOrganisateurId(int id) {
         this.organisateurId = id;
         chargerEvenementsOrganisateur(); // Load events only after ID is set
     }
 
-
+    /**
+     * Initialise la table des événements avec configuration des colonnes et gestionnaires.
+     * 
+     * <p><b>Configuration de la table :</b></p>
+     * <ol>
+     *   <li>Validation défensive des injections FXML pour détection d'erreurs</li>
+     *   <li>Configuration des PropertyValueFactory pour colonnes automatiques</li>
+     *   <li>Formatage personnalisé de la colonne date avec DateTimeFormatter</li>
+     *   <li>Configuration de la colonne statut avec indicateurs Actif/Inactif</li>
+     *   <li>Création de la colonne d'actions avec boutons inline personnalisés</li>
+     * </ol>
+     * 
+     * <p><b>Colonnes configurées :</b></p>
+     * <ul>
+     *   <li>nomColumn : Affichage direct du nom de l'événement</li>
+     *   <li>dateColumn : Formatage localisé DD/MM/YYYY HH:MM</li>
+     *   <li>statutColumn : Conversion boolean vers texte Actif/Inactif</li>
+     *   <li>actionsColumn : Boutons Modifier et Supprimer avec gestionnaires</li>
+     * </ul>
+     * 
+     * <p><b>Note :</b> Le chargement des données est différé jusqu'à la réception
+     * de l'ID organisateur via setOrganisateurId().</p>
+     * 
+     * @param url URL de localisation (non utilisé)
+     * @param resourceBundle Bundle de ressources pour localisation (non utilisé)
+     * 
+     * @see #setOrganisateurId(int)
+     * @see #chargerEvenementsOrganisateur()
+     * @see #createActionsColumn()
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         logger.info("Initialisation du contrôleur des événements organisateur");

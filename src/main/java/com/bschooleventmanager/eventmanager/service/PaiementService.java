@@ -21,8 +21,14 @@ import java.util.UUID;
 import java.util.regex.Pattern;
 
 /**
- * Service de gestion des paiements
- * Gère la logique métier liée aux transactions de paiement
+ * Service métier de gestion des paiements avec intégration Stripe et simulation carte.
+ * 
+ * <p>Traite les paiements sécurisés pour les réservations d'événements avec
+ * validation complète, gestion d'erreurs et mise à jour des statuts.</p>
+ * 
+ * @author Équipe EventManager
+ * @version 1.0
+ * @since 1.0
  */
 public class PaiementService {
     private static final Logger logger = LoggerFactory.getLogger(PaiementService.class);
@@ -42,7 +48,18 @@ public class PaiementService {
     }
 
     /**
-     * Traite un paiement pour une réservation donnée
+     * Traite un paiement complet pour une réservation avec validation et intégration.
+     * 
+     * @param idReservation L'ID de la réservation à payer
+     * @param nomPorteur Le nom du porteur de carte
+     * @param numeroCarteOuToken Le numéro de carte ou token Stripe
+     * @param cvv Le code de vérification de la carte
+     * @param moisExpiration Le mois d'expiration (MM)
+     * @param anneeExpiration L'année d'expiration (YY)
+     * @param methode La méthode de paiement choisie
+     * @return Le paiement créé avec son statut
+     * @throws PaiementInvalideException Si données de paiement invalides
+     * @throws BusinessException Si erreur métier
      */
     public Paiement traiterPaiement(int idReservation, String nomPorteur, String numeroCarteOuToken, 
                                    String cvv, String moisExpiration, String anneeExpiration, 
