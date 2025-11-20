@@ -1,5 +1,8 @@
 package com.bschooleventmanager.eventmanager.model.enums;
 
+/**
+ * Enumération représentant les types de spectacles disponibles.
+ */
 public enum TypeSpectacle {
     THEATRE("Théatre"),
     CIRQUE("Cirque"),

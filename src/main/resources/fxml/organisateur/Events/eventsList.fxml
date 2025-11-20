@@ -24,6 +24,7 @@
             <columns>
                 <TableColumn fx:id="nomColumn" prefWidth="200.0" text="Nom de l'Événement" />
                 <TableColumn fx:id="dateColumn" prefWidth="150.0" text="Date et Heure" />
+                <TableColumn fx:id="typeColumn" prefWidth="150.0" text="type d'évènement" />
                 <TableColumn fx:id="statutColumn" prefWidth="100.0" text="Statut" />
                 <TableColumn fx:id="actionsColumn" prefWidth="160.0" text="Actions" />
             </columns>

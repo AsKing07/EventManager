@@ -1,5 +1,8 @@
 package com.bschooleventmanager.eventmanager.model.enums;
 
+/**
+ * Enumération des méthodes de paiement disponibles.
+ */
 public enum MethodePaiement {
     CARTE_CREDIT("Carte de crédit"),
     CARTE_DEBIT("Carte de débit"),

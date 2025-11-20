@@ -2,10 +2,10 @@ package com.bschooleventmanager.eventmanager.model;
 
 
 import com.bschooleventmanager.eventmanager.model.enums.StatutReservation;
-import com.bschooleventmanager.eventmanager.model.ReservationDetail;
 
 import java.time.LocalDateTime;
 import java.util.List;
+// Classe représentant une réservation
 public class Reservation {
 
     private int idReservation;

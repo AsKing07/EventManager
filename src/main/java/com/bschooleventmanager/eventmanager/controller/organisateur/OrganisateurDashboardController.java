@@ -81,6 +81,7 @@ public class OrganisateurDashboardController {
         loadDashboardContent();
     }
 
+
     /**
      * Affiche la liste des événements
      */
@@ -90,7 +91,15 @@ public class OrganisateurDashboardController {
         setActiveTab("events");
         loadEventsContent();
     }
-
+    /**
+     * Affiche la page statisique d'un evenement
+     */
+    @FXML
+    public void showEventStatistics(Evenement evt) {
+        logger.info("Affichage des details");
+        setActiveTab("event details");
+        loadEventStats(evt);
+    }
     /**
      * Affiche l'interface de profil
      */
@@ -273,6 +282,32 @@ public class OrganisateurDashboardController {
 
             contentArea.getChildren().add(dashboardContent);
             
+        } catch (Exception e) {
+            logger.error("Erreur lors du chargement des événements", e);
+            NotificationUtils.showError("Erreur lors du chargement des événements: ");
+        }
+    }
+  /**
+     * Charge le contenu de la liste des événements
+     */
+    private void loadEventStats(Evenement evt) {
+        contentArea.getChildren().clear();
+
+        try {
+            // Charger le contenu FXML dédié au dashboard
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/organisateur/Events/detailEvent.fxml"));
+            Parent detailContent = loader.load();
+
+            // Transmettre la référence du contrôleur parent au contrôleur du contenu afin de pouvoir
+            // rediriger vers la création d'événement
+            com.bschooleventmanager.eventmanager.controller.events.EventDetailsController contentController = loader.getController();
+            contentController.setParentController(this);
+            contentController.setDetailsEvenement(evt);
+
+
+
+            contentArea.getChildren().add(detailContent);
+
         } catch (Exception e) {
             logger.error("Erreur lors du chargement des événements", e);
             NotificationUtils.showError("Erreur lors du chargement des événements: ");

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.chart.*?>
+
+<VBox xmlns="http://javafx.com/javafx/24"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.bschooleventmanager.eventmanager.controller.events.EventDetailsController"
+      spacing="20" alignment="TOP_CENTER">
+
+    <padding>
+        <Insets top="20" right="30" bottom="20" left="30"/>
+    </padding>
+
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" spacing="20">
+        <Button text="← Retour Liste Evenement" fx:id="btnReturn" onAction="#returnToDashboard"
+                style="-fx-background-color: #7f8c8d; -fx-text-fill: white; -fx-padding: 8 15;"/>
+        <Text text="Détails de l'Événement" style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
+    </HBox>
+
+    <Separator/>
+
+    <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+        <VBox alignment="TOP_CENTER" spacing="25"
+              style="-fx-padding: 20; -fx-background-color: #f4f4f4; -fx-background-radius: 10;">
+
+            <!-- SECTION : Informations générales -->
+            <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;
+                                      -fx-border-color: #dcdcdc; -fx-border-radius: 10;">
+
+                <Text text="Informations Générales"
+                      style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+                <Separator/>
+
+                <GridPane hgap="20" vgap="15">
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="180" halignment="RIGHT"/>
+                        <ColumnConstraints hgrow="ALWAYS"/>
+                    </columnConstraints>
+
+                    <Label text="Nom :" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblNom" GridPane.rowIndex="0" GridPane.columnIndex="1" style="-fx-font-weight: bold;"/>
+
+                    <Label text="Description :" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblDescription" wrapText="true" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="Date :" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblDate" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                    <Label text="Lieu :" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblLieu" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                    <Label text="Type d'évènement :" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblType" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                    <Label visible="false" managed="false" text="Organisateur :" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <Label visible="false" managed="false" fx:id="lblOrganisateur" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                    <Label visible="false" managed="false" text="Status :" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                    <Label visible="false" managed="false" fx:id="lblStatus" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+                    <Label visible="false" managed="false" text="État événement :" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+                    <Label visible="false" managed="false" fx:id="lblEtatEvent" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+                </GridPane>
+            </VBox>
+
+            <!-- SECTION : Champs spécifiques selon le type -->
+            <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;
+                                      -fx-border-color: #dcdcdc; -fx-border-radius: 10;">
+                <Text text="Informations spécifiques"
+                      style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+                <Separator/>
+
+                <GridPane hgap="20" vgap="15">
+
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="180" halignment="RIGHT"/>
+                        <ColumnConstraints hgrow="ALWAYS"/>
+                    </columnConstraints>
+
+                    <!-- Pour CONCERT -->
+                    <Label fx:id="lblArtisteGroupe1" text="Artiste / Groupe :" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblArtisteGroupe" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label fx:id="lblAgeMin1" text="Âge minimum :" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblAgeMin" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label fx:id="lblTypeConcert1" text="Type de concert :" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblTypeConcert" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                    <!-- Pour SPECTACLE -->
+                    <Label fx:id="lblTypeSpectacle1" text="Type de spectacle :" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblTypeSpectacle" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                    <Label fx:id="lblNiveauExpertise1" text="Niveau expertise :" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblNiveauExpertise" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+                    <!-- Pour CONFERENCE -->
+                    <Label fx:id="lblIntervenant1" text="Intervenant :" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblIntervenant" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+
+                    <Label fx:id="lblDomaine1" text="Domaine :" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+                    <Label fx:id="lblDomaine" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+                </GridPane>
+            </VBox>
+
+            <!-- SECTION : Statistiques -->
+            <VBox spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;
+                                      -fx-border-color: #dcdcdc; -fx-border-radius: 10;">
+
+                <Text text="Statistiques de l'Événement"
+                      style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+                <Separator/>
+
+                <GridPane hgap="40" vgap="20">
+                    <VBox spacing="5" GridPane.rowIndex="0" GridPane.columnIndex="0">
+                        <Label text="Taux de remplissage" style="-fx-font-weight: bold;"/>
+                        <ProgressBar fx:id="pBarTauxRemplissage" prefWidth="200"/>
+                        <Label fx:id="lblTauxRemplissage"/>
+                    </VBox>
+
+                    <VBox spacing="5" GridPane.rowIndex="0" GridPane.columnIndex="1">
+                        <Label text="Billets vendus" style="-fx-font-weight: bold;"/>
+                        <Label fx:id="lblBilletsVendus" style="-fx-font-size: 16px;"/>
+                    </VBox>
+
+                    <VBox managed="false" visible="false" spacing="5" GridPane.rowIndex="1" GridPane.columnIndex="0">
+                        <Label text="Tickets annulés" style="-fx-font-weight: bold;"/>
+                        <Label fx:id="lblTicketsAnnules" style="-fx-font-size: 16px;"/>
+                    </VBox>
+
+                    <VBox spacing="5" GridPane.rowIndex="1" GridPane.columnIndex="1">
+                        <Label text="Chiffre d’affaires" style="-fx-font-weight: bold;"/>
+                        <Label fx:id="lblChiffreAffaire" style="-fx-font-size: 16px;"/>
+                    </VBox>
+                </GridPane>
+            </VBox>
+
+            <!-- SECTION : Graphiques -->
+            <HBox spacing="20" alignment="CENTER">
+
+                <!-- PieChart -->
+                <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;
+                                          -fx-border-color: #dcdcdc; -fx-border-radius: 10;">
+                    <Label text="Répartition des ventes par catégorie" style="-fx-font-weight: bold;"/>
+                    <PieChart fx:id="pieVentesCategorie" prefWidth="350" prefHeight="300"/>
+                </VBox>
+
+                <!-- LineChart -->
+                <VBox visible="false" managed="false" spacing="10" style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 10;
+                                          -fx-border-color: #dcdcdc; -fx-border-radius: 10;">
+                    <Label text="Évolution des ventes (CA)" style="-fx-font-weight: bold;"/>
+                    <LineChart fx:id="lineChartCA" prefWidth="400" prefHeight="300">
+                        <xAxis>
+                            <CategoryAxis label="Date"/>
+                        </xAxis>
+                        <yAxis>
+                            <NumberAxis label="Montant (€)"/>
+                        </yAxis>
+                    </LineChart>
+                </VBox>
+            </HBox>
+
+            <!-- Boutons -->
+            <HBox visible="false" managed="false" spacing="20" alignment="CENTER">
+                <Button text="Modifier l'évènement" fx:id="btnModifier" onAction="#modifyEvent"
+                        style="-fx-background-color: #2980b9; -fx-text-fill: white; -fx-padding: 12 25;"/>
+                <Button text="Supprimer" fx:id="btnSupprimer" onAction="#deleteEvent"
+                        style="-fx-background-color: #c0392b; -fx-text-fill: white; -fx-padding: 12 25;"/>
+            </HBox>
+
+        </VBox>
+    </ScrollPane>
+
+</VBox>

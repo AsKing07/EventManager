@@ -1,5 +1,5 @@
 package com.bschooleventmanager.eventmanager.model.enums;
-
+// Enum pour les niveaux d'expertise dans un spectacle
 public enum NiveauExpertise {
     DEBUTANT("Debutant"),
     INTERMEDIAIRE("Intermediaire"),

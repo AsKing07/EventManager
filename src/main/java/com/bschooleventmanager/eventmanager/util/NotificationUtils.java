@@ -6,6 +6,9 @@ import javafx.scene.control.Alert.AlertType;
 
 public class NotificationUtils {
 
+    /*  Méthodes utilitaires pour afficher des notifications à l'utilisateur.
+     * Utilise les boîtes de dialogue JavaFX pour différents types de messages.
+     */
     public static void showInfo(String title, String message) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle(title);

@@ -1,5 +1,5 @@
 package com.bschooleventmanager.eventmanager.model.enums;
-
+// Enum représentant les différents statuts possibles d'une réservation
 public enum StatutReservation {
     CONFIRMEE("Confirmée"),
     ANNULEE("Annulée"),

@@ -4,6 +4,10 @@ import com.bschooleventmanager.eventmanager.model.enums.TypeUtilisateur;
 
 import java.time.LocalDateTime;
 
+/**
+ * Classe abstraite représentant un utilisateur du système de gestion d'événements.
+ * Cette classe sert de base pour différents types d'utilisateurs tels que les organisateurs et les participants.
+ */
 public abstract class Utilisateur {
     protected int idUtilisateur;
     protected String nom;
