@@ -1,5 +1,8 @@
 package com.bschooleventmanager.eventmanager.controller.organisateur;
 
+import com.bschooleventmanager.eventmanager.controller.events.EventDetailsController;
+import com.bschooleventmanager.eventmanager.controller.events.ModifyEventController;
+import com.bschooleventmanager.eventmanager.exception.BusinessException;
 import com.bschooleventmanager.eventmanager.model.Evenement;
 import com.bschooleventmanager.eventmanager.service.EvenementService;
 import com.bschooleventmanager.eventmanager.util.NotificationUtils;
@@ -95,8 +98,11 @@ public class OrganisateurEventListController implements Initializable {
     /** Colonne d'affichage de la date et heure avec formatage localisé DD/MM/YYYY HH:MM. */
     @FXML private TableColumn<Evenement, LocalDateTime> dateColumn;
 
+
     /** Colonne d'affichage du statut de l'événement (Actif/Inactif) avec indicateurs visuels. */
-    @FXML private TableColumn<Evenement, String> statutColumn;
+    @FXML private TableColumn<Evenement, String> statutColumn, typeColumn;
+
+
 
     /** Colonne personnalisée d'actions avec boutons inline (Modifier/Supprimer). */
     @FXML private TableColumn<Evenement, Void> actionsColumn;
